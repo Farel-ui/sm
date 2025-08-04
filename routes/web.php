@@ -17,4 +17,22 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+
+    // Tambahkan CRUD di sini
+    Route::resource('masterplans', App\Http\Controllers\Admin\MasterplanController::class);
+    Route::resource('quickwins', App\Http\Controllers\Admin\QuickWinController::class);
+    Route::resource('dimensions', App\Http\Controllers\Admin\DimensionController::class);
+    Route::resource('booklets', App\Http\Controllers\Admin\BookletController::class);
+    Route::resource('igas', App\Http\Controllers\Admin\IgaController::class);
+    Route::resource('assessments', App\Http\Controllers\Admin\AssessmentController::class);
+});
+
+Route::middleware(['auth', 'is_admin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+});
+
 require __DIR__.'/auth.php';
