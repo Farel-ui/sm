@@ -29,7 +29,7 @@
           @foreach ($items as $item)
             <div class="border border-gray-500 rounded-tr-3xl rounded-bl-3xl rounded-tl-none rounded-br-none px-4 py-4 shadow-sm hover:shadow-md transition">
               <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ $item->title }}</h3>
-              <a href="{{ asset('storage/' . $item->file) }}" target="_blank"
+              <a href="{{ asset('storage/masterplans/' . $item->file) }}" target="_blank"
                  class="text-gray-600 text-xs font-semibold hover:text-blue-600 transition-colors duration-200">
                 LIHAT SELENGKAPNYA &gt;&gt;
               </a>

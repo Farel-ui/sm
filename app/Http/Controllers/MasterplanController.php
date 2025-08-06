@@ -4,56 +4,77 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Masterplan;
+use App\Models\Dimension;
+use App\Models\QuickWin;
+use App\Models\Booklet;
+use App\Models\Iga;
+use App\Models\Assessment;
 
 class MasterplanController extends Controller
 {
-   
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index()
     {
-        //
+        $masterplans = Masterplan::orderBy('period')->get();
+        $dimensions = Dimension::all();
+        $quickwins = QuickWin::all();
+        $booklets = Booklet::all();
+        $igas = Iga::all();
+        $assessments = Assessment::orderBy('year')->get();
+
+        return view('welcome', compact(
+            'masterplans',
+            'dimensions',
+            'quickwins',
+            'booklets',
+            'igas',
+            'assessments'
+        ));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function buku()
     {
-        //
+        $title = 'Masterplan Smart City (Buku)';
+        $masterplans = Masterplan::where('type', 'buku')->orderBy('period')->get();
+        return view('masterplans.buku', compact('title', 'masterplans'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Masterplan $masterplan)
+    public function paparan()
     {
-        //
+        $title = 'Paparan Masterplan Smart City';
+        $masterplans = Masterplan::where('type', 'paparan')->get();
+        return view('masterplans.paparan', compact('title', 'masterplans'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Masterplan $masterplan)
-    {
-        //
-    }
+    public function penilaian()
+{
+    $assessments = \App\Models\Assessment::orderBy('year')->get();
+    return view('penilaian', compact('assessments'));
+}
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Masterplan $masterplan)
-    {
-        //
-    }
+public function iga()
+{
+    $igas = \App\Models\Iga::all();
+    return view('iga', compact('igas'));
+}
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Masterplan $masterplan)
-    {
-        //
-    }
+public function admin()
+{
+    return view('admin.dashboard', [
+        'masterplans' => Masterplan::all(),
+        'dimensions' => Dimension::all(),
+        'quickwins' => QuickWin::all(),
+        'booklets' => Booklet::all(),
+        'igas' => Iga::all(),
+        'assessments' => Assessment::all(),
+    ]);
+}
+
+
+    // Tambahan kosong untuk CRUD jika nanti ingin digunakan di admin
+    public function create() {}
+    public function store(Request $request) {}
+    public function show(Masterplan $masterplan) {}
+    public function edit(Masterplan $masterplan) {}
+    public function update(Request $request, Masterplan $masterplan) {}
+    public function destroy(Masterplan $masterplan) {}
 }

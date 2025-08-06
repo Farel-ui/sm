@@ -94,27 +94,7 @@
     }
   </script>
 </section>
-
-<!-- Visi & Misi Section Tengah Halaman -->
-<section class="max-w-5xl mx-auto px-7 py-[100px] bg-gradient-to-r from-blue-200 via-blue-200 to-blue-200 rounded-[100px] shadow-inner relative overflow-hidden">
-    <div class="flex flex-col md:flex-row items-center justify-center gap-72 relative z-20">
-
-        <!-- Visi -->
-        <div class="bg-blue-600 text-white p-6 rounded-lg w-64 h-[260px] text-center shadow-lg z-20 flex flex-col justify-center">
-            <h2 class="text-2xl font-bold mb-3">VISI</h2>
-            <p class="text-xl leading-relaxed">Terwujudnya Kota Bogor sebagai Kota Ramah Keluarga.</p>
-        </div>
-
-        <!-- Misi -->
-        <div class="bg-blue-600 text-white p-6 rounded-lg w-64 h-[260px] text-center shadow-lg z-20 flex flex-col justify-center">
-            <h2 class="text-2xl font-bold mb-3">MISI</h2>
-            <ul class="text-left list-disc ml-5 text-[17px] leading-relaxed">
-                <li>Mewujudkan Kota Yang Sehat</li>
-                <li>Mewujudkan Kota Yang Cerdas</li>
-                <li>Mewujudkan Kota Yang Sejahtera</li>
-            </ul>
-        </div>
-    </div>
+@include('components.vimi')
 
 </section>
 <br><br>
