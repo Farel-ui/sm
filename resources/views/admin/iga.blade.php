@@ -146,8 +146,8 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            @if(isset($masterplan) && $masterplan->count() > 0)
-                                @foreach ($masterplan as $index => $mp)
+                            @if(isset($iga) && $iga->count() > 0)
+                                @foreach ($iga as $index => $mp)
                                 <tr class="table-row hover:bg-blue-50 transition-all duration-200 searchable-row">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         <span class="bg-gray-100 px-3 py-1 rounded-full text-xs font-medium">

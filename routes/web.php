@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MasterplanController;
 use App\Http\Controllers\AdminMasterplanController;
+use App\Http\Controllers\AdminIgaController;
 
 // ✅ Tampilan awal website
 Route::get('/', [MasterplanController::class, 'index'])->name('home');
@@ -27,6 +28,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/masterplan/{id}', [AdminMasterplanController::class, 'destroy'])->name('masterplan.destroy');
 
     // ✅ CRUD tambahan lain jika kamu punya dimension, quickwin, booklet, iga, dll
+        Route::get('/admin/iga/', [AdminIgaController::class, 'index'])->name('iga');
+    Route::get('/admin/iga/create', [AdminIgaController::class, 'create'])->name('iga.create');
+    Route::post('/admin/iga/store', [AdminIgaController::class, 'store'])->name('iga.store');
+    Route::get('/admin/iga/{id}/edit', [AdminIgaController::class, 'edit'])->name('iga.edit');
+    Route::post('/admin/iga/update/{id}', [AdminIgaController::class, 'update'])->name('iga.update');
+    Route::post('/admin/iga/{id}', [AdminIgaController::class, 'destroy'])->name('iga.destroy');
     // Tambahkan di sini sesuai kebutuhan (opsional)
 
     // ✅ Breeze profile routes
