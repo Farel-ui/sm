@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Masterplan</title>
+    <title>Dasbor - Rencana Induk</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Custom scrollbar for modern browsers */
+        /* Bilah gulir khusus untuk peramban modern */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -52,6 +52,32 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
+        /* Button animations */
+        .btn-animate {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-animate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-animate:hover::before {
+            left: 100%;
+        }
+
+        .btn-animate:hover {
+            transform: translateY(-1px);
+        }
+
         /* Action buttons */
         .action-btn {
             padding: 8px;
@@ -71,7 +97,6 @@
 </head>
 <body class="gradient-bg min-h-screen">
     @include('layouts.navigation')
-
     <!-- Main Content -->
     <main class="pb-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -88,6 +113,73 @@
                 </div>
             </div>
 
+            <!-- Stats Cards -->
+            <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 fade-in">
+                <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 card-hover">
+                    <div class="p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="bg-blue-100 p-3 rounded-lg">
+                                    <i class="fas fa-file-alt text-blue-600 text-lg"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-500">Total Masterplan</p>
+                                <p class="text-2xl font-bold text-gray-900">{{ isset($masterplan) ? $masterplan->count() : 0 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 card-hover">
+                    <div class="p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="bg-green-100 p-3 rounded-lg">
+                                    <i class="fas fa-check-circle text-green-600 text-lg"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-500">Aktif</p>
+                                <p class="text-2xl font-bold text-gray-900">{{ isset($masterplan) ? $masterplan->count() : 0 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 card-hover">
+                    <div class="p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="bg-yellow-100 p-3 rounded-lg">
+                                    <i class="fas fa-file-pdf text-yellow-600 text-lg"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-500">With Files</p>
+                                <p class="text-2xl font-bold text-gray-900">{{ isset($masterplan) ? $masterplan->where('file', '!=', null)->count() : 0 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 card-hover">
+                    <div class="p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="bg-purple-100 p-3 rounded-lg">
+                                    <i class="fas fa-calendar-week text-purple-600 text-lg"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-500">Bulan Ini</p>
+                                <p class="text-2xl font-bold text-gray-900">{{ isset($masterplan) ? $masterplan->where('created_at', '>=', now()->startOfMonth())->count() : 0 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Card Container -->
             <div class="bg-white overflow-hidden shadow-sm rounded-xl mt-6 card-hover fade-in border border-gray-100">
                 <!-- Card Header -->
@@ -100,6 +192,11 @@
                             Daftar Masterplan
                         </h3>
                         <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                <input type="text" placeholder="Cari masterplan..." id="searchInput"
+                                       class="pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all">
+                            </div>
                             <a href="{{ route('masterplan.create') }}"
                                class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all btn-animate shadow-lg">
                                 <i class="fas fa-plus mr-2"></i> Tambah Baru
@@ -127,14 +224,14 @@
                                 </th>
                                 <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                     <div class="flex items-center">
-                                        <i class="fas fa-building mr-2 text-gray-400"></i>
-                                        Institution
+                                        <i class="fas fa-calendar mr-2 text-gray-400"></i>
+                                        Period
                                     </div>
                                 </th>
-                                <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-image mr-2 text-gray-400"></i>
-                                        Image
+                                <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <div class="flex items-center justify-center">
+                                        <i class="fas fa-clock mr-2 text-gray-400"></i>
+                                        Last Updated
                                     </div>
                                 </th>
                                 <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -155,24 +252,34 @@
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-semibold text-gray-900">
-                                            {{ $mp->title }}
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-12 w-12 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center shadow-sm">
+                                                <i class="fas fa-file-alt text-blue-600 text-lg"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-semibold text-gray-900 searchable-title">
+                                                    {{ $mp->title }}
+                                                </div>
+                                                <div class="text-xs text-gray-500">
+                                                    <i class="fas fa-tag mr-1"></i>Masterplan Document
+                                                </div>
+                                            </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-500">
-                                            {{ $mp->institution }}
-                                        </div>
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            <i class="fas fa-calendar-alt mr-1"></i>
+                                            {{ $mp->period ?? 'N/A' }}
+                                        </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        @if($mp->image ?? false)
-                                            <img src="{{ asset('storage/masterplans/' . $mp->image) }}" alt="Image" class="h-12 w-12 rounded-lg">
-                                        @else
-                                            <span class="inline-flex items-center px-3 py-2 bg-gray-50 text-gray-500 rounded-lg">
-                                                <i class="fas fa-image-slash mr-2"></i>
-                                                No image
-                                            </span>
-                                        @endif
+                                        <div class="flex items-center">
+                                            <i class="fas fa-history mr-2 text-gray-400"></i>
+                                            <span>{{ isset($mp->updated_at) ? date('d M Y', strtotime($mp->updated_at)) : 'N/A' }}</span>
+                                        </div>
+                                        <div class="text-xs text-gray-400 mt-1">
+                                            {{ isset($mp->updated_at) ? date('H:i', strtotime($mp->updated_at)) : '' }}
+                                        </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
                                         <div class="flex justify-center space-x-2">
@@ -221,6 +328,47 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Pagination -->
+                <div class="px-6 py-4 border-t border-gray-100 bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div class="flex-1 flex justify-between sm:hidden">
+                            <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                Previous
+                            </button>
+                            <button class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                Next
+                            </button>
+                        </div>
+                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                            <div>
+                                <p class="text-sm text-gray-700 flex items-center">
+                                    <i class="fas fa-info-circle mr-2 text-gray-400"></i>
+                                    Menampilkan <span class="font-medium mx-1">{{ isset($masterplan) ? $masterplan->count() : 0 }}</span> dari <span class="font-medium mx-1">{{ isset($masterplan) ? $masterplan->count() : 0 }}</span> hasil
+                                </p>
+                            </div>
+                            <div>
+                                <nav class="relative z-0 inline-flex rounded-lg shadow-sm -space-x-px" aria-label="Pagination">
+                                    <button class="relative inline-flex items-center px-3 py-2 rounded-l-lg border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <button aria-current="page" class="z-10 bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                        1
+                                    </button>
+                                    <button class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                        2
+                                    </button>
+                                    <button class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                        3
+                                    </button>
+                                    <button class="relative inline-flex items-center px-3 py-2 rounded-r-lg border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -234,20 +382,4 @@
             searchInput.addEventListener('input', function(e) {
                 const searchTerm = e.target.value.toLowerCase();
 
-                searchableRows.forEach(row => {
-                    const title = row.querySelector('.searchable-title').textContent.toLowerCase();
-                    if (title.includes(searchTerm)) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-
-                // Update results count
-                const visibleRows = Array.from(searchableRows).filter(row => row.style.display !== 'none');
-                console.log(`Showing ${visibleRows.length} results for "${searchTerm}"`);
-            });
-        });
-    </script>
-</body>
-</html>
+                searchableRows.forEach(row

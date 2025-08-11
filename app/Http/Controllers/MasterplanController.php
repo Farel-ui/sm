@@ -45,10 +45,10 @@ class MasterplanController extends Controller
         return view('masterplans.paparan', compact('title', 'masterplans'));
     }
 
-    public function penilaian()
+    public function assessment()
 {
     $assessments = \App\Models\Assessment::orderBy('year')->get();
-    return view('penilaian', compact('assessments'));
+    return view('assessment', compact('assessments'));
 }
 
 public function iga()

@@ -424,19 +424,19 @@
             .chart-container {
                 gap: 10px;
             }
-            
+
             .chart-bar .bar {
                 width: 120px;
             }
-            
+
             .progress-indicators {
                 gap: 40px;
             }
-            
+
             .penghargaan-images {
                 gap: 30px;
             }
-            
+
             .award-image {
                 max-width: 250px;
             }
@@ -446,16 +446,16 @@
             .chart-container {
                 gap: 8px;
             }
-            
+
             .chart-bar .bar {
                 width: 80px;
             }
-            
+
             .chart-bar .year {
                 padding: 15px 25px;
                 font-size: 28px;
             }
-            
+
             .award-image {
                 max-width: 200px;
             }

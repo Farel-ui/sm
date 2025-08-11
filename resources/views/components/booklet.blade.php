@@ -4,9 +4,9 @@
   <div class="relative max-w-7xl mx-auto overflow-hidden pb-10" id="booklet-slider-wrapper">
     <div id="booklet-slider" class="flex transition-transform duration-700 ease-in-out w-max">
       @foreach ($booklets as $booklet)
-        <a href="{{ asset('storage/' . $booklet->file) }}" target="_blank"
+        <a href="{{ asset('storage/booklet/' . $booklet->file) }}" target="_blank"
            class="booklet-card text-center mx-4 rounded-xl overflow-hidden shadow-md cursor-pointer">
-          <img src="{{ asset($booklet->image) }}" alt="{{ $booklet->title }}"
+          <img src="{{ asset('images/' . $booklet->image) }}" alt="{{ $booklet->title }}"
                class="w-full h-[420px] object-cover">
           <div class="p-4 font-bold text-lg title">{{ $booklet->title }}</div>
         </a>

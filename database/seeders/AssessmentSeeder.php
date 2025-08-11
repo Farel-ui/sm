@@ -23,5 +23,20 @@ class AssessmentSeeder extends Seeder
                 ['score' => $item['score'], 'color' => $item['color']]
             );
         }
+        Assessment::create([
+    'year' => '2020',
+    'score' => 3.45,
+    'color' => '#4CAF50',
+    'award_title' => 'Smart City Award 2020',
+    'award_image' => 'award2020.png',
+]);
+
+Assessment::create([
+    'year' => '2021',
+    'score' => 3.75,
+    'color' => '#2196F3',
+    'award_title' => null,
+    'award_image' => null,
+]);
     }
 }
