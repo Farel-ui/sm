@@ -6,7 +6,7 @@
       @foreach ($booklets as $booklet)
         <a href="{{ asset('storage/booklet/' . $booklet->file) }}" target="_blank"
            class="booklet-card text-center mx-4 rounded-xl overflow-hidden shadow-md cursor-pointer">
-          <img src="{{ asset('images/' . $booklet->image) }}" alt="{{ $booklet->title }}"
+          <img src="{{ asset('images/booklet/' . $booklet->image) }}" alt="{{ $booklet->title }}"
                class="w-full h-[420px] object-cover">
           <div class="p-4 font-bold text-lg title">{{ $booklet->title }}</div>
         </a>

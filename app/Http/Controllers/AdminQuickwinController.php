@@ -6,7 +6,7 @@ use App\Models\Quickwin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
-class QuickwinController extends Controller
+class AdminQuickwinController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class QuickwinController extends Controller
         $quickwins = Quickwin::all();
 
         return view('Admin.Quickwin',[
-            'quickwin' => $quickwin
+            'quickwins' => $quickwins
         ]);
     }
 
@@ -25,7 +25,7 @@ class QuickwinController extends Controller
      */
     public function create()
     {
-        return view('admin.quickwin.create');
+        return view('admin.create_qw');
     }
 
     /**
@@ -60,7 +60,7 @@ class QuickwinController extends Controller
     public function edit($id)
     {
         $quickwin = Quickwin::findOrFail($id);
-        return view('admin.quickwin.edit', compact('quickwin'));
+        return view('admin.edit_qw', compact('quickwin'));
     }
 
     /**

@@ -46,35 +46,35 @@ class MasterplanController extends Controller
     }
 
     public function assessment()
-{
-    $assessments = \App\Models\Assessment::orderBy('year')->get();
-    return view('assessment', compact('assessments'));
-}
+    {
+        $assessments = Assessment::orderBy('year')->get();
+        return view('assessment', compact('assessments'));
+    }
 
-public function iga()
-{
-    $igas = \App\Models\Iga::all();
-    return view('iga', compact('igas'));
-}
+    public function iga()
+    {
+        $igas = Iga::all();
+        return view('iga', compact('igas'));
+    }
 
-public function admin()
-{
-    return view('admin.dashboard', [
-        'masterplans' => Masterplan::all(),
-        'dimensions' => Dimension::all(),
-        'quickwins' => QuickWin::all(),
-        'booklets' => Booklet::all(),
-        'igas' => Iga::all(),
-        'assessments' => Assessment::all(),
-    ]);
-}
+    // Ambil video berdasarkan ID Dimension
+    public function dimensionVideo($id)
+    {
+        $dimension = Dimension::findOrFail($id);
+        return response()->json([
+            'video' => asset('storage/video/' . $dimension->video)
+        ]);
+    }
 
-
-    // Tambahan kosong untuk CRUD jika nanti ingin digunakan di admin
-    public function create() {}
-    public function store(Request $request) {}
-    public function show(Masterplan $masterplan) {}
-    public function edit(Masterplan $masterplan) {}
-    public function update(Request $request, Masterplan $masterplan) {}
-    public function destroy(Masterplan $masterplan) {}
+    public function admin()
+    {
+        return view('admin.dashboard', [
+            'masterplans' => Masterplan::all(),
+            'dimensions' => Dimension::all(),
+            'quickwins' => QuickWin::all(),
+            'booklets' => Booklet::all(),
+            'igas' => Iga::all(),
+            'assessments' => Assessment::all(),
+        ]);
+    }
 }
