@@ -101,7 +101,7 @@
 
             <!-- Right side menu -->
             <div class="hidden sm:flex sm:items-center sm:space-x-4">
-               
+
 
                 <!-- Settings Dropdown -->
                 <div class="relative" x-data="{ dropdownOpen: false }">
@@ -198,9 +198,21 @@
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
+            </form>
+        @else
+            <div class="mb-3">
+                <div class="text-sm font-medium text-gray-800 dark:text-gray-200">Tamu</div>
+                <div class="text-xs text-gray-500">Belum login</div>
             </div>
-        </div>
+            <a href="{{ route('login') }}"
+               class="block w-full px-4 py-2 text-sm text-left rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+                Login
+            </a>
+        @endauth
     </div>
+<<<<<<< HEAD
+</aside>
+=======
 
     <!-- Mobile Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-white border-t border-gray-100">
@@ -293,3 +305,4 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
 </
+>>>>>>> main

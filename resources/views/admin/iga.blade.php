@@ -1,3 +1,4 @@
+<x-app-layout>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +23,7 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
+
 
         /* Subtle animation for table rows */
         @keyframes fadeIn {
@@ -70,15 +72,15 @@
     </style>
 </head>
 <body class="gradient-bg min-h-screen">
-    @include('layouts.navigation')
+
 
     <!-- Main Content -->
     <main class="pb-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Welcome Section -->
             <div class="mt-6 fade-in">
-                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-xl p-6">
-                    <h1 class="text-2xl font-bold text-gray-800 mb-2 flex items-center">
+                <div class="bg-blue-700 rounded-xl p-6">
+                    <h1 class="text-2xl font-bold text-white mb-2 flex items-center">
                         <div class="bg-blue-500 p-2 rounded-lg mr-3">
                             <i class="fas fa-project-diagram text-white"></i>
                         </div>
@@ -87,6 +89,33 @@
                     <p class="text-gray-600">Kelola dan pantau semua iga Anda dengan mudah</p>
                 </div>
             </div>
+
+            {{-- card atas --}}
+            <div class="flex gap-4 mt-6">
+  <!-- Card 1 -->
+  <div class="bg-blue-700 shadow-lg rounded-xl p-4 flex-1">
+    <h3 class="text-white text-lg font-semibold mb-1">Total masterplan</h3>
+    <p class="text-white text-sm">data 1</p>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="bg-blue-700 shadow-lg rounded-xl p-4 flex-1">
+    <h3 class="text-white text-lg font-semibold mb-1">Masterplan aktif</h3>
+    <p class="text-white text-sm">data 2</p>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="bg-blue-700 shadow-lg rounded-xl p-4 flex-1">
+    <h3 class="text-white text-lg font-semibold mb-1">Masterplan tidak aktif</h3>
+    <p class="text-white text-sm">data 3</p>
+  </div>
+
+  <!-- Card 4 -->
+  <div class="bg-blue-700 shadow-lg rounded-xl p-4 flex-1">
+    <h3 class="text-white text-lg font-semibold mb-1">Bulan ini</h3>
+    <p class="text-white text-sm">data 4</p>
+  </div>
+</div>
 
             <!-- Card Container -->
             <div class="bg-white overflow-hidden shadow-sm rounded-xl mt-6 card-hover fade-in border border-gray-100">
@@ -250,3 +279,5 @@
     </script>
 </body>
 </html>
+</x-app-layout>
+

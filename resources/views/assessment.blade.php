@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,275 +9,297 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 @include('components.navbar')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <body>
 
     {{-- section penilaian --}}
+
     <section class="penghargaan-section">
-        <div class="container mx-auto px-4">
-            <h2 class="awards-title">
-                10 PENGHARGAAN RATING TRANSFORMASI DIGITAL DAN KOTA<br>
-                CERDAS INDONESIA KOTA BOGOR TAHUN 2021
-            </h2>
+    <h2>
+  10 PENGHARGAAN RATING TRANSFORMASI DIGITAL DAN KOTA<br>
+  CERDAS INDONESIA KOTA BOGOR TAHUN 2021
+</h2>
 
-            <div class="penghargaan-images">
-                <div class="award-image-container">
-                    <img src="{{ asset('images/penilaian1.jpeg') }}" alt="Piala" class="award-image">
-                </div>
-                <div class="award-image-container">
-                    <img src="{{ asset('images/penilaian2.jpeg') }}" alt="Piagam" class="award-image">
-                </div>
-            </div>
 
-            <ol class="penghargaan-list">
-                <li><span class="award-number">1</span>Kategori Kota Menuju Kota Cerdas (Peringkat 3)</li>
-                <li><span class="award-number">2</span>Kategori Kota Ekonomi Cerdas (Peringkat 2)</li>
-                <li><span class="award-number">3</span>Kategori Kota Masyarakat Cerdas (Peringkat 3)</li>
-                <li><span class="award-number">4</span>Kategori Kota Lingkungan Cerdas (Peringkat 4)</li>
-                <li><span class="award-number">5</span>Kategori Kota Mobilitas Cerdas (Peringkat 5)</li>
-                <li><span class="award-number">6</span>Kategori Kota Kesehatan Cerdas (Peringkat 4)</li>
-                <li><span class="award-number">7</span>Kategori Kota Pemerintahan Cerdas (Peringkat 2)</li>
-                <li><span class="award-number">8</span>Kategori Kota Tangguh pada Penyelenggaraan Smart City (Peringkat 2)</li>
-                <li><span class="award-number">9</span>Kategori Kota Cerdas Terbaik (Peringkat 3)</li>
-                <li><span class="award-number">10</span>Kategori Kota Keuangan Digital Terbaik (Peringkat 3)</li>
-            </ol>
-        </div>
-    </section>
+    <div class="penghargaan-images">
+        <img src="{{ asset('images/piala.jpg') }}" alt="Piala">
+        <img src="{{ asset('images/piaganm.jpg') }}" alt="Piagam">
+    </div>
 
-    {{-- Enhanced Smart City Chart Section dengan Database --}}
-    <section class="smartcity-section">
-        <div class="container mx-auto px-4">
-            <div class="chart-wrapper">
-                <div class="chart-container">
-                    @foreach ($assessments as $index => $data)
-                        @php
-                            $barHeight = $data->score * 80; // Adjusted multiplier for better proportion
-                            $delay = ($index + 1) * 0.1; // Staggered animation delay
-                        @endphp
-                        <div class="chart-bar" style="--bar-height: {{ $barHeight }}px; --delay: {{ $delay }}s;">
-                            <div class="top-info">
-                                <div class="value">{{ $data->score }}</div>
-                                <div class="label">HASIL SMART CITY<br>TAHUN {{ $data->year }}</div>
-                            </div>
-                            <div class="bar" style="background: {{ $data->color }}; background: linear-gradient(135deg, {{ $data->color }} 0%, {{ $data->color }}AA 100%);"></div>
-                            <div class="year" style="color: {{ $data->color }}">{{ $data->year }}</div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
+    <ol class="penghargaan-list">
+        <li>Kategori Kota Menuju Kota Cerdas (Peringkat 3)</li>
+        <li>Kategori Kota Ekonomi Cerdas (Peringkat 2)</li>
+        <li>Kategori Kota Masyarakat Cerdas (Peringkat 3)</li>
+        <li>Kategori Kota Lingkungan Cerdas (Peringkat 4)</li>
+        <li>Kategori Kota Mobilitas Cerdas (Peringkat 5)</li>
+        <li>Kategori Kota Kesehatan Cerdas (Peringkat 4)</li>
+        <li>Kategori Kota Pemerintahan Cerdas (Peringkat 2)</li>
+        <li>Kategori Kota Tangguh pada Penyelenggaraan Smart City (Peringkat 2)</li>
+        <li>Kategori Kota Cerdas Terbaik (Peringkat 3)</li>
+        <li>Kategori Kota Keuangan Digital Terbaik (Peringkat 3)</li>
+    </ol>
+</section>
 
-            <h2 class="smartcity-title">
-                HASIL PENILAIAN SMART CITY KOTA BOGOR
-            </h2>
+{{-- diagram --}}
+<section class="py-10 px-4 bg-white">
+    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">HASIL PENILAIAN SMART CITY KOTA BOGOR</h2>
+    <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow">
+
+        <canvas id="smartCityChart"></canvas>
+    </div>
+</section>
+
+
+{{-- footer --}}
+@include('components.footer')
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</body>
+</html>
+</body>
+<script>
+  const navbar = document.getElementById("navbar");
+  const menuText = document.getElementById("menuText");
+  let isScrolled = false;
+
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 50 && !isScrolled) {
+      navbar.classList.remove("bg-transparent");
+      navbar.classList.add("bg-blue-600", "shadow-md", "animate-slide-down");
+
+      // Ubah warna teks menu jadi putih
+      menuText.classList.remove("text-blue-700");
+      menuText.classList.add("text-white");
+
+      isScrolled = true;
+    } else if (window.scrollY <= 50 && isScrolled) {
+      navbar.classList.remove("bg-blue-600", "shadow-md", "animate-slide-down");
+      navbar.classList.add("bg-transparent");
+
+      // Kembalikan warna teks menu jadi biru
+      menuText.classList.remove("text-white");
+      menuText.classList.add("text-blue-700");
+
+      isScrolled = false;
+    }
+  });
+</script>
+<script>
+  const ctx = document.getElementById('smartCityChart').getContext('2d');
+
+  const tahun = {!! json_encode($charts->pluck('tahun')) !!};
+  const nilai = {!! json_encode($charts->pluck('nilai')) !!};
+  const sisa = nilai.map(n => 5 - n);
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: tahun,
+      datasets: [
+        {
+          label: 'Nilai Tercapai',
+          data: nilai,
+          backgroundColor: '#007bff',
+          stack: 'Stack 0',
+        },
+        {
+          label: 'Sisa ke Target',
+          data: sisa,
+          backgroundColor: '#d3d3d3',
+          stack: 'Stack 0',
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: {
+          stacked: true,
+          ticks: {
+            color: '#007bff',
+            font: {
+              weight: 'bold',
+              size: 12
+            }
+          },
+          grid: {
+            display: false
+          }
+        },
+        y: {
+          stacked: true,
+          beginAtZero: true,
+          max: 5,
+          ticks: {
+            stepSize: 1,
+            color: '#007bff',
+            font: {
+              size: 12
+            },
+            callback: function(value) {
+              return value.toFixed(1);
+            }
+          },
+          grid: {
+            color: '#ddd'
+          }
+        }
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const label = context.dataset.label;
+              const value = context.raw;
+              return `${label}: ${value}`;
+            }
+          }
+        },
+        legend: {
+          display: false
+        }
+      }
+    }
+  });
+</script>
+
+
+
+
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *.penghargaan-section {
+    background-color: #D6E4F0;
+    padding: 60px 20px;
+    text-align: center;
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-        }
+}
 
-        /* Enhanced Awards Section */
-        .penghargaan-section {
-            background: #D6E4F0;
-            padding: 80px 20px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
+.penghargaan-section h2 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 40px;
 
-        .penghargaan-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            pointer-events: none;
-        }
+    color: #3B3B3B;
+}
 
-        .awards-title {
-            font-size: clamp(24px, 4vw, 36px);
-            font-weight: 800;
-            margin-bottom: 50px;
-            color: black;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            position: relative;
-            z-index: 1;
-        }
+.penghargaan-images {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-bottom: 30px;
+}
 
-        .penghargaan-images {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 40px;
-            margin-bottom: 40px;
-            position: relative;
-            z-index: 1;
-        }
+.penghargaan-images img {
+    max-width: 300px;
+    height: auto;
 
-        .award-image-container {
-            position: relative;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
+}
 
-        .award-image-container:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
+.penghargaan-list {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: left;
+    padding-left: 30px;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.7;
+}
 
-        .award-image {
-            max-width: 300px;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
 
-        .penghargaan-list {
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: left;
-            padding: 0;
-            font-size: 17px;
-            color: black;
-            line-height: 2.2;
-            position: relative;
-            z-index: 1;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 50px 40px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 25px 45px rgba(0,0,0,0.1);
-        }
+/* style data */
 
-        .penghargaan-list li {
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            transition: all 0.4s ease;
-            padding: 15px 20px;
-            border-radius: 12px;
-            font-weight: 500;
-            border-left: 4px solid transparent;
-        }
+.smartcity-section {
+  padding: 80px 20px;
+  background-color: #ffffff;
+  text-align: center;
+}
 
-        .penghargaan-list li:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateX(15px);
-            border-left-color: #00f2fe;
-            box-shadow: 0 8px 25px rgba(0,242,254,0.2);
-        }
+.smartcity-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #3B3B3B;
+  margin-top: 50px;
+  font-family: 'Poppins', sans-serif;
+}
 
-        .award-number {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-right: 15px;
-            font-size: 14px;
-            flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(79, 172, 254, 0.3);
-        }
+.chart-container {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
 
-        /* Enhanced Smart City Section */
-        .smartcity-section {
-            padding: 100px 20px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            position: relative;
-            overflow: hidden;
-        }
+.chart-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: rise 0.6s ease-out forwards;
+  transform: translateY(40px);
+  margin: 0; /* hilangkan jarak antar bar */
+}
 
-        .smartcity-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(0,0,0,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
-            pointer-events: none;
-        }
+/* Tambahan animasi naik dari bawah */
+@keyframes rise {
+  from {
+    transform: translateY(40px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
 
-        .chart-wrapper {
-            background: white;
-            border-radius: 25px;
-            padding: 50px 30px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
-            margin-bottom: 60px;
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
+.top-info {
+  text-align: center;
+  margin-bottom: 8px;
+}
 
-        .smartcity-title {
-            font-size: clamp(28px, 4vw, 40px);
-            font-weight: 800;
-            color: #2d3748;
-            margin-bottom: 40px;
-            font-family: 'Poppins', sans-serif;
-            position: relative;
-            z-index: 1;
-            text-align: center;
-        }
+.chart-bar .value {
+  font-weight: bold;
+  font-size: 64px;
+  color: #3B3B3B;
+}
 
-        .chart-container {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            align-items: flex-end;
-            flex-wrap: wrap;
-            padding: 20px 0;
-            position: relative;
-        }
+.chart-bar .label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #3B3B3B;
+  margin-top: 0px;
+}
 
-        .chart-container::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent 0%, #e2e8f0 50%, transparent 100%);
-        }
+/* Animasikan tinggi batang grafik dari 0 ke target */
+.chart-bar .bar {
+  width: 213px;
+  height: 0;
+  background-color: #1E60D5;
+  border-radius: 0;
+  animation: growUp 0.8s ease-out forwards;
+}
 
-        .chart-bar {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: slideUp 1s ease-out forwards;
-            animation-delay: var(--delay);
-            transform: translateY(50px);
-            opacity: 0;
-            position: relative;
-            margin: 0;
-        }
+/* Tambahkan animasi tumbuh ke atas */
+@keyframes growUp {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--bar-height);
+  }
+}
 
-        @keyframes slideUp {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
+.chart-bar .year {
+  font-size: 48px;
+  font-weight: bold;
+  background-color: #d9d9d9;
+  padding: 20px 52px;
+  border-radius: 0 0 15px 15px;
+}
 
         .top-info {
             text-align: center;

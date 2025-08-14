@@ -9,6 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 @include('components.navbar')
 <body>
@@ -20,22 +21,30 @@
   <div class="relative z-10 max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center -mt-12">
 
     <!-- Kiri: Card Penjelasan -->
-    <div class="bg-blue-600 text-white p-10 rounded-[20px] shadow-md min-h-[500px] flex flex-col justify-start">
-      <h1 class="text-4xl md:text-5xl text-center font-bold leading-tight">
-        <span class="block">SMART <span class="italic font-medium">CITY</span></span>
-        <span class="block">
-          <span class="italic font-medium">KOTA</span>
-          <span class=" font-bold not-italic">BOGOR</span>
-        </span>
-      </h1>
-      <p class="text-base md:text-3xl text-center mt-7">
-        Smart City Kota Bogor adalah inisiatif transformasi digital yang bertujuan meningkatkan kualitas pelayanan <br>publik, efisiensi pemerintahan, dan kenyamanan hidup warga melalui pemanfaatan teknologi informasi dan komunikasi secara terpadu.
+    <div class="bg-blue-600 text-white p-6 rounded-[20px] shadow-md flex flex-col justify-start h-full w-full min-h-[540px]">
+
+      <h1 class="text-[32px] md:text-[64px] text-center font-bold leading-tight">
+  <span class="block">SMART <span class="italic font-medium">CITY</span></span>
+  <span class="block">
+    <span class="italic font-medium">KOTA</span>
+    <span class=" font-bold not-italic">BOGOR</span>
+  </span>
+</h1>
+
+      <p class="text-[24px] text-center mt-5  leading-relaxed">
+        Smart City Kota Bogor adalah inisiatif <br>
+        transformasi digital yang bertujuan<br>
+        meningkatkan kualitas pelayanan<br>
+        publik, efisiensi pemerintahan, dan <br>
+         kenyamanan hidup warga melalui <br>
+         pemanfaatan teknologi informasi dan<br>
+         komunikasi secara terpadu.
       </p>
     </div>
 
     <!-- Kanan: Gambar -->
-    <div class="min-h-[500px]">
-      <img src="{{ asset('images/e.svg') }}" alt="Smart City" class="w-full h-full object-cover rounded-[20px] shadow-lg">
+    <div class="h-full w-full">
+      <img src="{{ asset('images/kiyomasa.svg') }}" alt="Smart City" class="w-full h-full object-cover rounded-[20px] shadow-none">
     </div>
 
   </div>
@@ -50,7 +59,18 @@
     <source src="{{ asset('video/kotabogor.mp4') }}" type="video/mp4">
     Browser tidak mendukung video ini.
   </video>
-</section>
+</div>
+
+<script>
+function playInlineVideo() {
+  document.getElementById('thumbnail').style.display = 'none';
+  const video = document.getElementById('inlineVideo');
+  video.classList.remove('hidden');
+  video.play();
+}
+</script>
+
+
 @include('components.igi')
 @include('components.quickwin')
 <section class="bg-blue-100 py-12 px-4">

@@ -14,22 +14,24 @@ class MasterplanController extends Controller
 {
     public function index()
     {
-        $masterplans = Masterplan::orderBy('period')->get();
+        $masterplans = Masterplan::orderBy('period')->paginate(7);
         $dimensions = Dimension::all();
         $quickwins = QuickWin::all();
         $booklets = Booklet::all();
+        $implementasi = Masterplan::where('type', 'implementasi')->orderBy('period')->get();
+        $penghargaan = Masterplan::where('type', 'penghargaan')->orderBy('period')->get();
         $igas = Iga::all();
         $assessments = Assessment::orderBy('year')->get();
 
-        return view('welcome', compact(
-            'masterplans',
-            'dimensions',
-            'quickwins',
-            'booklets',
-            'igas',
-            'assessments'
-        ));
+        return view('welcome', compact('masterplans', 'dimensions', 'quickwins', 'booklets', 'igas', 'implementasi', 'assessments'));
     }
+
+    public function masterplan()
+{
+    $masterplans = Masterplan::orderBy('period')->paginate(7);
+    return view('masterplan', compact('masterplans'));
+}
+
 
     public function buku()
     {

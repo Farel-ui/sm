@@ -1,9 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\MasterplanController;
-use App\Http\Controllers\AdminMasterplanController;
 use App\Http\Controllers\AdminIgaController;
 use App\Http\Controllers\AdminAssessmentController;
 use App\Http\Controllers\AdminBookletController;
@@ -14,6 +10,8 @@ use App\Http\Controllers\AdminDimensionController;
 Route::get('/', [MasterplanController::class, 'index'])->name('home');
 Route::get('/assessment', [MasterplanController::class, 'assessment'])->name('assessment');
 Route::get('/iga', [MasterplanController::class, 'iga'])->name('iga');
+Route::get('/penilaian/data-chart', [MasterplanController::class, 'chartData']);
+Route::get('/chart', [ChartController::class, 'index'])->name('chart.index');
 Route::get('/masterplan/buku', [MasterplanController::class, 'buku'])->name('masterplan.buku');
 Route::get('/masterplan/paparan', [MasterplanController::class, 'paparan'])->name('masterplan.paparan');
 
@@ -23,6 +21,7 @@ Route::middleware(['auth'])->group(function () {
     // ✅ Halaman dashboard admin
     Route::get('/dashboard', [MasterplanController::class, 'admin'])->name('dashboard');
 
+
     // ✅ CRUD Masterplan
     Route::get('/admin/masterplan/', [AdminMasterplanController::class, 'index'])->name('masterplan');
     Route::get('/admin/masterplan/create', [AdminMasterplanController::class, 'create'])->name('masterplan.create');
@@ -30,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/masterplan/{id}/edit', [AdminMasterplanController::class, 'edit'])->name('masterplan.edit');
     Route::post('/admin/masterplan/update/{id}', [AdminMasterplanController::class, 'update'])->name('masterplan.update');
     Route::post('/admin/masterplan/{id}', [AdminMasterplanController::class, 'destroy'])->name('masterplan.destroy');
+    Route::get('/masterplan', [MasterplanController::class, 'masterplan'])->name('masterplan.frontend');
 
     // ✅ CRUD Iga
     Route::get('/admin/iga/', [AdminIgaController::class, 'index'])->name('iga');
@@ -78,5 +78,13 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+
 // ✅ Breeze auth route
 require __DIR__.'/auth.php';
+
+Route::get('/implementasi', function () {
+    return view('implemen');
+});
+
+

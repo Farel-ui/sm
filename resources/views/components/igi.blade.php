@@ -15,7 +15,7 @@
 
     <!-- Tombol Selengkapnya -->
     <div class="mt-8 text-center">
-      <a href="{{ url('/iga') }}" 
+      <a href="{{ url('/iga') }}"
          class="inline-block bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-800 transition">
         Lihat Selengkapnya
       </a>
