@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\AdminIgaController;
 use App\Http\Controllers\AdminAssessmentController;
 use App\Http\Controllers\AdminBookletController;
-use App\Http\Controllers\AdminQuickwinController;
 use App\Http\Controllers\AdminDimensionController;
+use App\Http\Controllers\AdminIgaController;
+use App\Http\Controllers\AdminQuickwinController;
+use App\Http\Controllers\MasterplanController;
+
 
 // ✅ Tampilan awal website
 Route::get('/', [MasterplanController::class, 'index'])->name('home');
