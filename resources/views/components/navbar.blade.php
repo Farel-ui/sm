@@ -10,7 +10,7 @@
   <div class="relative z-10 flex items-center w-full">
     <!-- Logo + Teks -->
     <a href="{{ url('/') }}" class="flex items-center space-x-5 text-blue-700">
-      <img src="/images/logo.png" alt="Logo" class="h-12 w-12"> 
+      <img src="/images/logo.png" alt="Logo" class="h-12 w-12">
       <span class="text-blue-600 text-xl font-bold leading-tight">
         KOTA<br>BOGOR
       </span>
@@ -18,8 +18,8 @@
 
    <!-- Tambahkan x-data ke parent UL jika belum -->
 <ul id="menuText" class="flex space-x-12 text-sxl font-medium relative z-10 ml-16 transition-colors duration-300 text-blue-700" x-data="{ openDropdown: false }">
-  <li><a href="{{ url('/') }}">Home</a></li>
-  <li><a href="#">Program Implementasi</a></li>
+  <li><a href="{{ url('/') }}">Beranda</a></li>
+  <li><a href="{{ url('/implementasi') }}">Program Implementasi</a></li>
   <li><a href="{{ url('/penilaian') }}">Penilaian</a></li>
 
   <!-- Dropdown Dokumen -->
@@ -32,9 +32,9 @@
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
     </svg>
   </button>
-  <ul 
-    x-show="open" 
-    x-transition 
+  <ul
+    x-show="open"
+    x-transition
     @click.outside="open = false"
     class="absolute left-0 mt-2 w-64 bg-white text-blue-700 dark:text-white rounded-md shadow-md text-sm z-50 transition-colors duration-300 dropdown-menu"
   >
