@@ -1,14 +1,13 @@
-<x-app-layout>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Iga</title>
+    <title>Dasbor - Rencana Induk</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Custom scrollbar for modern browsers */
+        /* Bilah gulir khusus untuk peramban modern */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -23,7 +22,6 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
-
 
         /* Subtle animation for table rows */
         @keyframes fadeIn {
@@ -54,6 +52,32 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
+        /* Button animations */
+        .btn-animate {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-animate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-animate:hover::before {
+            left: 100%;
+        }
+
+        .btn-animate:hover {
+            transform: translateY(-1px);
+        }
+
         /* Action buttons */
         .action-btn {
             padding: 8px;
@@ -72,50 +96,22 @@
     </style>
 </head>
 <body class="gradient-bg min-h-screen">
-
-
+    @include('layouts.navigation')
     <!-- Main Content -->
     <main class="pb-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Welcome Section -->
             <div class="mt-6 fade-in">
-                <div class="bg-blue-700 rounded-xl p-6">
-                    <h1 class="text-2xl font-bold text-white mb-2 flex items-center">
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-xl p-6">
+                    <h1 class="text-2xl font-bold text-gray-800 mb-2 flex items-center">
                         <div class="bg-blue-500 p-2 rounded-lg mr-3">
                             <i class="fas fa-project-diagram text-white"></i>
                         </div>
-                        Iga Dashboard
+                        Booklet Dashboard
                     </h1>
-                    <p class="text-gray-600">Kelola dan pantau semua iga Anda dengan mudah</p>
+                    <p class="text-gray-600">Kelola dan pantau semua booklet Anda dengan mudah</p>
                 </div>
             </div>
-
-            {{-- card atas --}}
-            <div class="flex gap-4 mt-6">
-  <!-- Card 1 -->
-  <div class="bg-blue-700 shadow-lg rounded-xl p-4 flex-1">
-    <h3 class="text-white text-lg font-semibold mb-1">Total masterplan</h3>
-    <p class="text-white text-sm">data 1</p>
-  </div>
-
-  <!-- Card 2 -->
-  <div class="bg-blue-700 shadow-lg rounded-xl p-4 flex-1">
-    <h3 class="text-white text-lg font-semibold mb-1">Masterplan aktif</h3>
-    <p class="text-white text-sm">data 2</p>
-  </div>
-
-  <!-- Card 3 -->
-  <div class="bg-blue-700 shadow-lg rounded-xl p-4 flex-1">
-    <h3 class="text-white text-lg font-semibold mb-1">Masterplan tidak aktif</h3>
-    <p class="text-white text-sm">data 3</p>
-  </div>
-
-  <!-- Card 4 -->
-  <div class="bg-blue-700 shadow-lg rounded-xl p-4 flex-1">
-    <h3 class="text-white text-lg font-semibold mb-1">Bulan ini</h3>
-    <p class="text-white text-sm">data 4</p>
-  </div>
-</div>
 
             <!-- Card Container -->
             <div class="bg-white overflow-hidden shadow-sm rounded-xl mt-6 card-hover fade-in border border-gray-100">
@@ -126,10 +122,15 @@
                             <div class="bg-indigo-500 p-2 rounded-lg mr-3">
                                 <i class="fas fa-list text-white text-sm"></i>
                             </div>
-                            Daftar Iga
+                            Daftar Booklet
                         </h3>
                         <div class="flex items-center space-x-3">
-                            <a href="{{ route('iga.create') }}"
+                            <div class="relative">
+                                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                <input type="text" placeholder="Cari booklet..." id="searchInput"
+                                       class="pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all">
+                            </div>
+                            <a href="{{ route('booklet.create') }}"
                                class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all btn-animate shadow-lg">
                                 <i class="fas fa-plus mr-2"></i> Tambah Baru
                             </a>
@@ -144,20 +145,14 @@
                             <tr>
                                 <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                     <div class="flex items-center">
-                                        <i class="fas fa-hashtag mr-2 text-gray-400"></i>
-                                        No.
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    <div class="flex items-center">
                                         <i class="fas fa-heading mr-2 text-gray-400"></i>
                                         Title
                                     </div>
                                 </th>
                                 <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                     <div class="flex items-center">
-                                        <i class="fas fa-building mr-2 text-gray-400"></i>
-                                        Institution
+                                        <i class="fas fa-file-alt mr-2 text-gray-400"></i>
+                                        File
                                     </div>
                                 </th>
                                 <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -175,33 +170,23 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            @if(isset($iga) && $iga->count() > 0)
-                                @foreach ($iga as $index => $ig)
+                            @if(isset($booklet) && $booklet->count() > 0)
+                                @foreach ($booklet as $index => $bk)
                                 <tr class="table-row hover:bg-blue-50 transition-all duration-200 searchable-row">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <span class="bg-gray-100 px-3 py-1 rounded-full text-xs font-medium">
-                                            {{ $index + 1 }}
-                                        </span>
-                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-semibold text-gray-900">
-                                            {{ $ig->title }}
+                                        <div class="text-sm font-semibold text-gray-900 searchable-title">
+                                            {{ $bk->title }}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-gray-500">
-                                            {{ $ig->institution }}
+                                            {{ $bk->file ?? 'N/A' }}
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        @if($ig->image ?? false)
-                                            <img src="{{ asset('images/iga/' . $ig->image) }}" alt="Image" class="h-12 w-12 rounded-lg">
-                                        @else
-                                            <span class="inline-flex items-center px-3 py-2 bg-gray-50 text-gray-500 rounded-lg">
-                                                <i class="fas fa-image-slash mr-2"></i>
-                                                No image
-                                            </span>
-                                        @endif
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-500">
+                                            <img src="{{ asset('images/' . $bk->image) }}" alt="Image" class="h-12 w-12 rounded-lg">
+                                        </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
                                         <div class="flex justify-center space-x-2">
@@ -209,15 +194,16 @@
                                                     title="View Details">
                                                 <i class="fas fa-eye"></i>
                                             </button>
-                                            <a href="{{ route('iga.edit', $ig->id ?? '#') }}"
+                                            <a href="{{ route('booklet.edit', $bk->id ?? '#') }}"
                                                class="action-btn bg-yellow-50 text-yellow-600 hover:bg-yellow-100 hover:text-yellow-700"
                                                title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('iga.destroy', $ig->id ?? '#') }}" method="POST"
-                                                  onsubmit="return confirm('Yakin ingin menghapus iga ini?')"
+                                            <form action="{{ route('booklet.destroy', $bk->id ?? '#') }}" method="POST"
+                                                  onsubmit="return confirm('Yakin ingin menghapus booklet ini?')"
                                                   class="inline">
                                                 @csrf
+                                                @method('DELETE')
                                                 <button type="submit"
                                                         class="action-btn bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700"
                                                         title="Delete">
@@ -230,17 +216,17 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="5" class="px-6 py-12 text-center">
+                                    <td colspan="4" class="px-6 py-12 text-center">
                                         <div class="flex flex-col items-center justify-center">
                                             <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                                                 <i class="fas fa-folder-open text-gray-400 text-2xl"></i>
                                             </div>
-                                            <h3 class="text-lg font-medium text-gray-900 mb-2">Belum ada iga</h3>
-                                            <p class="text-gray-500 mb-4">Mulai dengan menambahkan iga pertama Anda</p>
-                                            <a href="{{ route('iga.create') }}"
+                                            <h3 class="text-lg font-medium text-gray-900 mb-2">Belum ada booklet</h3>
+                                            <p class="text-gray-500 mb-4">Mulai dengan menambahkan booklet pertama Anda</p>
+                                            <a href="{{ route('booklet.create') }}"
                                                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700">
                                                 <i class="fas fa-plus mr-2"></i>
-                                                Tambah Iga
+                                                Tambah Booklet
                                             </a>
                                         </div>
                                     </td>
@@ -270,14 +256,8 @@
                         row.style.display = 'none';
                     }
                 });
-
-                // Update results count
-                const visibleRows = Array.from(searchableRows).filter(row => row.style.display !== 'none');
-                console.log(`Showing ${visibleRows.length} results for "${searchTerm}"`);
             });
         });
     </script>
 </body>
 </html>
-</x-app-layout>
-

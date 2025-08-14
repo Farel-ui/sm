@@ -301,6 +301,187 @@
   border-radius: 0 0 15px 15px;
 }
 
+        .top-info {
+            text-align: center;
+            margin-bottom: 15px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .chart-bar .value {
+            font-weight: 800;
+            font-size: clamp(48px, 6vw, 64px);
+            color: #2d3748;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            display: block;
+        }
+
+        .chart-bar .label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #4a5568;
+            margin-top: 8px;
+            line-height: 1.3;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Enhanced bar with database colors */
+        .chart-bar .bar {
+            width: 180px;
+            height: 0;
+            border-radius: 15px 15px 0 0;
+            animation: growUp 1.5s ease-out forwards;
+            animation-delay: calc(var(--delay) + 0.3s);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+        }
+
+        .chart-bar .bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, transparent 100%);
+            border-radius: 15px 15px 0 0;
+        }
+
+        @keyframes growUp {
+            from {
+                height: 0;
+            }
+            to {
+                height: var(--bar-height);
+            }
+        }
+
+        .chart-bar .year {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 800;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 20px 45px;
+            border-radius: 0 0 15px 15px;
+            margin-top: 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 2px solid rgba(255,255,255,0.8);
+            transition: all 0.3s ease;
+        }
+
+        .chart-bar:hover .year {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        /* Progress Indicators */
+        .progress-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            margin-top: 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-item {
+            text-align: center;
+        }
+
+        .progress-circle {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-circle {
+            fill: transparent;
+            stroke: #e2e8f0;
+            stroke-width: 6;
+            stroke-dasharray: 339.292;
+            stroke-dashoffset: calc(339.292 - (339.292 * var(--progress)) / 100);
+            stroke-linecap: round;
+            transition: stroke-dashoffset 2s ease-in-out;
+            animation: progressAnimation 2s ease-in-out forwards;
+        }
+
+        @keyframes progressAnimation {
+            from {
+                stroke-dashoffset: 339.292;
+            }
+            to {
+                stroke-dashoffset: calc(339.292 - (339.292 * var(--progress)) / 100);
+            }
+        }
+
+        .progress-ring-circle {
+            stroke: url(#gradient);
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .chart-container {
+                gap: 10px;
+            }
+
+            .chart-bar .bar {
+                width: 120px;
+            }
+
+            .progress-indicators {
+                gap: 40px;
+            }
+
+            .penghargaan-images {
+                gap: 30px;
+            }
+
+            .award-image {
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chart-container {
+                gap: 8px;
+            }
+
+            .chart-bar .bar {
+                width: 80px;
+            }
+
+            .chart-bar .year {
+                padding: 15px 25px;
+                font-size: 28px;
+            }
+
+            .award-image {
+                max-width: 200px;
+            }
+        }
     </style>
 
     <!-- Add gradient definitions for progress circles -->

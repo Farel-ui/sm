@@ -18,9 +18,9 @@
 
    <!-- Tambahkan x-data ke parent UL jika belum -->
 <ul id="menuText" class="flex space-x-12 text-sxl font-medium relative z-10 ml-16 transition-colors duration-300 text-blue-700" x-data="{ openDropdown: false }">
-  <li><a href="{{ url('/') }}">Beranda</a></li>
-  <li><a href="{{ url('/implementasi') }}">Program Implementasi</a></li>
-  <li><a href="{{ url('/penilaian') }}">Penilaian</a></li>
+  <li><a href="{{ url('/') }}">Home</a></li>
+  <li><a href="#">Program Implementasi</a></li>
+  <li><a href="{{ url('/assessment') }}">Penilaian</a></li>
 
   <!-- Dropdown Dokumen -->
 <li class="relative" x-data="{ open: false }">

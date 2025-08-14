@@ -47,16 +47,25 @@ class MasterplanController extends Controller
         return view('masterplans.paparan', compact('title', 'masterplans'));
     }
 
-    public function penilaian()
+    public function assessment()
     {
-        $assessments = \App\Models\Assessment::orderBy('year')->get();
-        return view('penilaian', compact('assessments'));
+        $assessments = Assessment::orderBy('year')->get();
+        return view('assessment', compact('assessments'));
     }
 
     public function iga()
     {
-        $igas = \App\Models\Iga::all();
+        $igas = Iga::all();
         return view('iga', compact('igas'));
+    }
+
+    // Ambil video berdasarkan ID Dimension
+    public function dimensionVideo($id)
+    {
+        $dimension = Dimension::findOrFail($id);
+        return response()->json([
+            'video' => asset('storage/video/' . $dimension->video)
+        ]);
     }
 
     public function admin()
@@ -69,86 +78,5 @@ class MasterplanController extends Controller
             'igas' => Iga::all(),
             'assessments' => Assessment::all(),
         ]);
-    }
-
-    // Tambahan kosong untuk CRUD jika nanti ingin digunakan di admin
-    public function create() {}
-    public function store(Request $request) {}
-    public function show(Masterplan $masterplan) {}
-    public function edit(Masterplan $masterplan) {}
-    public function update(Request $request, Masterplan $masterplan) {}
-    public function destroy(Masterplan $masterplan) {}
-
-    public function implementasi()
-    {
-        // Mengarah ke file resources/views/implementasi.blade.php
-        return view('implementasi');
-    }
-
-    public function chartData(Request $request)
-    {
-        $range = $request->get('range', 'monthly');
-        $start = $request->get('start');
-        $end = $request->get('end');
-
-        $defaultEnd = Carbon::now();
-        $defaultStart = Carbon::now()->subYears(5)->startOfMonth();
-
-        try {
-            $start = $start ? Carbon::parse($start) : $defaultStart;
-            $end = $end ? Carbon::parse($end) : $defaultEnd;
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Invalid date format'], 422);
-        }
-
-        $cacheKey = "chart_data_{$range}{$start->toDateString()}{$end->toDateString()}";
-
-        $result = Cache::remember($cacheKey, 300, function () use ($range, $start, $end) {
-            $query = Sale::whereBetween('date', [$start, $end]);
-
-            if ($range === 'daily') {
-                $rows = $query->select(DB::raw('DATE(date) as label, SUM(amount) as value'))->groupBy('label')->orderBy('label')->get();
-            } elseif ($range === 'yearly') {
-                $rows = $query->select(DB::raw('YEAR(date) as label, SUM(amount) as value'))->groupBy('label')->orderBy('label')->get();
-            } else {
-                $rows = $query->select(DB::raw("DATE_FORMAT(date, '%Y-%m') as label, SUM(amount) as value"))->groupBy('label')->orderBy('label')->get();
-            }
-
-            $labels = [];
-            $values = [];
-
-            if ($range === 'daily') {
-                $cursor = $start->copy();
-                $map = $rows->pluck('value', 'label')->toArray();
-                while ($cursor->lte($end)) {
-                    $labels[] = $cursor->format('Y-m-d');
-                    $values[] = $map[$cursor->format('Y-m-d')] ?? 0;
-                    $cursor->addDay();
-                }
-            } elseif ($range === 'yearly') {
-                $cursor = $start->copy()->startOfYear();
-                $map = $rows->pluck('value', 'label')->toArray();
-                while ($cursor->lte($end)) {
-                    $labels[] = $cursor->format('Y');
-                    $values[] = $map[$cursor->format('Y')] ?? 0;
-                    $cursor->addYear();
-                }
-            } else {
-                $cursor = $start->copy()->startOfMonth();
-                $map = $rows->pluck('value', 'label')->toArray();
-                while ($cursor->lte($end)) {
-                    $labels[] = $cursor->format('Y-m');
-                    $values[] = $map[$cursor->format('Y-m')] ?? 0;
-                    $cursor->addMonth();
-                }
-            }
-
-            return [
-                'labels' => $labels,
-                'values' => $values,
-            ];
-        });
-
-        return response()->json($result);
     }
 }
