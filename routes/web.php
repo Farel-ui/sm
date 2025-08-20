@@ -9,10 +9,21 @@ use App\Http\Controllers\AdminIgaController;
 // ✅ Tampilan awal website
 Route::get('/', [MasterplanController::class, 'index'])->name('home');
 Route::get('/penilaian', [MasterplanController::class, 'penilaian'])->name('penilaian');
+Route::get('/implementasi', [MasterplanController::class, 'implementasi']);
+Route::get('/implementasi',[MasterplanController::class, 'implementasi'])->name('implementasi');
 Route::get('/iga', [MasterplanController::class, 'iga'])->name('iga');
-Route::get('/masterplan/buku', [MasterplanController::class, 'buku'])->name('masterplan.buku');
-Route::get('/masterplan/paparan', [MasterplanController::class, 'paparan'])->name('masterplan.paparan');
+Route::get('/penilaian/data-chart', [MasterplanController::class, 'chartData']);
+Route::get('/chart', [ChartController::class, 'index'])->name('chart.index');
+Route::get('/Dokumen', [MasterplanController::class, 'Dokumen'])->name('Dokumen');
+Route::get('/masterplano', function () {
+    return view('masterplano');
+})->name('masterplano');
 
+Route::get('/paparan', function () {
+    return view('paparan');
+})->name('paparan');
+
+    
 // ✅ Middleware auth: semua route admin/dashboard hanya bisa diakses setelah login
 Route::middleware(['auth'])->group(function () {
 

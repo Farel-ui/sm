@@ -1,0 +1,153 @@
+
+    body {
+      margin: 0;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background-color: #f7f7f7;
+    }
+
+    .masterplan-box p {
+        margin-top: 8px;
+        font-size: 28px;
+        padding: 0 20px;
+        line-height: 1.5;
+        font-weight: 500;
+    }
+        .masterplan-box {
+        width: 100%;
+        background: linear-gradient(to right, #0072ff, #00c6ff);
+        color: white;
+        padding: 20px 30px;
+        border-radius: 5px;
+    }
+    
+
+    .masterplan-box h2 {
+        margin: 30px 0 10px;
+        font-size: 45px;
+        font-weight: bold;
+        text-align: center;
+        margin-right: 1150px;
+    }
+
+        .tab-container {
+        width: 100%;
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .tab-container a {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 24px;
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .tab-container a.active {
+        color: #0066ff;
+        border-bottom: 3px solid #0066ff;
+    }
+
+    .tab-container a:hover {
+        color: #0066ff;
+    }
+
+    .table-container {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      max-width: 950px;
+      margin: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed; /* biar kolom rata */
+    }
+
+    thead {
+      background-color: #1666e3;
+      color: white;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #ddd;
+      font-size: 15px;
+      text-align: left;
+    }
+
+    th:first-child, td:first-child {
+      width: 60px;
+      text-align: center;
+    }
+
+    th:last-child, td:last-child {
+      width: 140px;
+      text-align: center;
+    }
+
+    tbody tr:hover {
+      background-color: #f0f4ff;
+      transition: 0.2s;
+    }
+
+    /* Search di pojok kanan */
+    .search-cell {
+      text-align: right;
+    }
+
+    .search-box {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      max-width: 200px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 8px 10px 8px 35px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      outline: none;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    .search-box i {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      color: #666;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .eye-icon {
+      font-size: 18px;
+      color: #007bff;
+      margin-left: 6px;
+      vertical-align: middle;
+      cursor: pointer;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .eye-icon:hover {
+      transform: scale(1.2);
+      color: #004bb5;
+    }
