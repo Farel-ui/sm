@@ -34,7 +34,7 @@
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6" id="iga-gallery">
       @foreach ($igas as $data)
         <div class="box {{ $data->institution }} bg-black rounded-lg overflow-hidden shadow-md transition hover:scale-105 cursor-pointer">
-          <img src="{{ $data->image }}" alt="{{ $data->title }}"
+          <img src="{{ asset('images/iga/' . $data->image) }}" alt="{{ $data->title }}"
                class="w-full h-84 object-cover"
                @click="photo = '{{ $data->image }}'; open = true">
         </div>

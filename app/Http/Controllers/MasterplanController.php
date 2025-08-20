@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use App\Models\Masterplan;
 use App\Models\Dimension;
 use App\Models\QuickWin;
@@ -15,7 +16,7 @@ class MasterplanController extends Controller
 {
     public function index()
     {
-        $masterplans = Masterplan::orderBy('period')->get();
+        $masterplans = Masterplan::orderBy('period')->paginate(7);
         $dimensions = Dimension::all();
         $quickwins = QuickWin::all();
         $booklets = Booklet::all();
@@ -50,29 +51,26 @@ class MasterplanController extends Controller
         return view('masterplans.paparan', compact('title', 'masterplans'));
     }
 
-    public function penilaian()
-{
-    $assessments = \App\Models\Assessment::orderBy('year')->get();
-    return view('penilaian', compact('assessments'));
-}
+    public function assessment()
+    {
+        $assessments = Assessment::orderBy('year')->get();
+        return view('assessment', compact('assessments'));
+    }
 
-public function iga()
-{
-    $igas = \App\Models\Iga::all();
-    return view('iga', compact('igas'));
-}
+    public function iga()
+    {
+        $igas = Iga::all();
+        return view('iga', compact('igas'));
+    }
 
-public function admin()
-{
-    return view('admin.dashboard', [
-        'masterplans' => Masterplan::all(),
-        'dimensions' => Dimension::all(),
-        'quickwins' => QuickWin::all(),
-        'booklets' => Booklet::all(),
-        'igas' => Iga::all(),
-        'assessments' => Assessment::all(),
-    ]);
-}
+    // Ambil video berdasarkan ID Dimension
+    public function dimensionVideo($id)
+    {
+        $dimension = Dimension::findOrFail($id);
+        return response()->json([
+            'video' => asset('storage/video/' . $dimension->video)
+        ]);
+    }
 
 
     // Tambahan kosong untuk CRUD jika nanti ingin digunakan di admin
@@ -160,5 +158,5 @@ public function admin()
 }
 }
 
-use Illuminate\Support\Facades\Route;
+
 

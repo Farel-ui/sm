@@ -43,19 +43,26 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    // Data dari Laravel
     const cardData = @json($quickwins);
+
+    // Base URL gambar (dari Laravel asset)
+    const quickwinBaseUrl = "{{ asset('images/quickwins') }}";
+
+    // Elemen slider
     const slider = document.getElementById('slider');
     const wrapper = document.getElementById('slider-wrapper');
 
-    const cardWidth = 384 + 32;
-    let index = 1;
+    const cardWidth = 384 + 32; // width + margin
+    let index = 1; // mulai dari kartu pertama (bukan clone)
     const total = cardData.length;
 
+    // Fungsi buat card
     const createCard = (data) => {
       const card = document.createElement('div');
       card.className = 'card rounded-xl shadow-md text-center mx-4 text-white';
       card.innerHTML = `
-        <img src="{{ asset('') }}${data.image}" alt="${data.title}" class="w-full h-64 object-cover rounded-t-xl">
+        <img src="${quickwinBaseUrl}/${data.image}" alt="${data.title}" class="w-full h-64 object-cover rounded-t-xl">
         <div class="p-4">
           <h2 class="font-bold text-lg mb-2">${data.title}</h2>
           <p class="text-sm">${data.description}</p>
@@ -64,10 +71,10 @@
       return card;
     };
 
-    // Clone for looping
-    slider.appendChild(createCard(cardData[total - 1]));
+    // Clone untuk looping
+    slider.appendChild(createCard(cardData[total - 1])); // Clone terakhir di depan
     cardData.forEach(item => slider.appendChild(createCard(item)));
-    slider.appendChild(createCard(cardData[0]));
+    slider.appendChild(createCard(cardData[0])); // Clone pertama di belakang
 
     const cards = () => Array.from(slider.children);
 
@@ -76,22 +83,30 @@
       slider.style.transition = animate ? 'transform 0.6s ease-in-out' : 'none';
       slider.style.transform = `translateX(${offset}px)`;
 
+      // Update active card
       cards().forEach((card, i) => {
         card.classList.remove('active');
         if (i === index) card.classList.add('active');
       });
     }
 
+    // Tombol next
     document.getElementById('nextBtn').addEventListener('click', () => {
-      if (index <= total) index++;
-      updateSlider();
+      if (index <= total) {
+        index++;
+        updateSlider();
+      }
     });
 
+    // Tombol prev
     document.getElementById('prevBtn').addEventListener('click', () => {
-      if (index >= 0) index--;
-      updateSlider();
+      if (index >= 0) {
+        index--;
+        updateSlider();
+      }
     });
 
+    // Loop halus
     slider.addEventListener('transitionend', () => {
       if (index === 0) {
         index = total;
@@ -102,7 +117,10 @@
       }
     });
 
+    // Responsif
     window.addEventListener('resize', () => updateSlider(false));
+
+    // Jalankan awal
     updateSlider(false);
   });
 </script>

@@ -10,7 +10,7 @@
   <div class="relative z-10 flex items-center w-full">
     <!-- Logo + Teks -->
     <a href="{{ url('/') }}" class="flex items-center space-x-5 text-blue-700">
-      <img src="/images/logo.png" alt="Logo" class="h-12 w-12"> 
+      <img src="/images/logo.png" alt="Logo" class="h-12 w-12">
       <span class="text-blue-600 text-xl font-bold leading-tight">
         KOTA<br>BOGOR
       </span>
