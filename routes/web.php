@@ -10,10 +10,8 @@ use App\Http\Controllers\MasterplanController;
 
 // ✅ Tampilan awal website
 Route::get('/', [MasterplanController::class, 'index'])->name('home');
-Route::get('/assessment', [MasterplanController::class, 'assessment'])->name('assessment');
+Route::get('/penilaian', [MasterplanController::class, 'penilaian'])->name('penilaian');
 Route::get('/iga', [MasterplanController::class, 'iga'])->name('iga');
-Route::get('/penilaian/data-chart', [MasterplanController::class, 'chartData']);
-Route::get('/chart', [ChartController::class, 'index'])->name('chart.index');
 Route::get('/masterplan/buku', [MasterplanController::class, 'buku'])->name('masterplan.buku');
 Route::get('/masterplan/paparan', [MasterplanController::class, 'paparan'])->name('masterplan.paparan');
 
