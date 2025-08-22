@@ -20,9 +20,9 @@
 <ul id="menuText" class="flex space-x-12 text-sxl font-medium relative z-10 ml-16 transition-colors duration-300 text-blue-700" x-data="{ openDropdown: false }">
   <li><a href="{{ url('/') }}">Home</a></li>
   <li><a href="{{ url('/implementasi') }}">Program Implementasi</a></li>
-  <li><a href="{{ url('/penilaian') }}">Penilaian</a></li>
+  <li><a href="{{ url('/penilaian') }}">penilaian</a></li>
   <li><a href="{{ url('/Dokumen') }}">Dokumen</a></li>
-  
+    
 
   <li><a href="https://bsw.kotabogor.go.id/">Layanan+</a></li>
 </ul>

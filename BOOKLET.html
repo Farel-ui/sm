@@ -1,0 +1,172 @@
+  <!DOCTYPE html>
+  <html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Booklet Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      input, select, textarea {
+        transition: all 0.3s ease;
+      }
+      input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 6px rgba(59,130,246,0.4);
+      }
+      button:hover { opacity: 0.9; }
+      input[type="file"] { display: none; }
+    </style>
+  </head>
+  <body class="bg-gray-100 text-gray-800 font-sans min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="flex justify-between items-center bg-gradient-to-r from-blue-600 via-blue-600 to-blue-900 text-white px-6 py-4 shadow-lg">
+    <h1 class="font-extrabold text-2xl select-none tracking-wide drop-shadow-sm">BOOKLET DASHBOARD</h1>
+    <div class="flex items-center space-x-4 select-none">
+      <span id="tanggalSekarang" class="text-sm font-semibold bg-white/20 px-4 py-1.5 rounded-full backdrop-blur shadow-md"></span>
+      <button aria-label="User profile" title="User profile" class="w-10 h-10 rounded-full flex items-center justify-center bg-white/20 hover:bg-white/30 transition shadow-md">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="white" viewBox="0 0 24 24">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 
+          1.79-4 4 1.79 4 4 4zm0 2c-2.67 
+          0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+    
+  <!-- MAIN CONTENT -->
+  <main class="flex-grow p-8 flex justify-center">
+
+    <section id="modal" class="bg-white rounded-xl shadow-xl w-full max-w-3xl" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+
+      <!-- Modal Header -->
+      <header class="flex justify-between items-center border-b border-blue-300 px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-900 rounded-t-xl">
+        <h2 id="modal-title" class="font-bold text-lg text-white select-none">Tambah Booklet Baru</h2>
+        <button id="closeBtn" aria-label="Close modal" class="text-white hover:text-red-500 transition font-bold text-2xl leading-none cursor-pointer">&times;</button>
+      </header>
+
+      <!-- Form -->
+      <form id="dokumenForm" class="px-6 pt-5 pb-6 space-y-6" novalidate>
+        
+  <!-- Judul -->
+  <div>
+    <label for="judul" class="block text-xs font-semibold mb-1 text-gray-700">JUDUL</label>
+    <input type="text" id="judul" name="judul" class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm" placeholder="Masukkan judul dokumen..." required />
+    <span class="hidden text-red-500 text-xs mt-1" id="judulError">Judul wajib diisi</span>
+  </div>
+
+  <!-- Upload Gambar + Status -->
+  <div class="grid grid-cols-2 gap-6">
+    
+    <!-- Upload Gambar -->
+    <div>
+      <label class="block mb-1 text-sm font-semibold">Unggah Gambar</label>
+      <label for="gambar" class="flex items-center justify-between border rounded-md p-2 cursor-pointer bg-gray-50 hover:bg-gray-100">
+        <span id="gambarName" class="text-gray-500">Tambahkan Foto</span>
+      </label>
+      <input type="file" id="gambar" name="gambar" accept="image/*" required />
+      <span class="hidden text-red-500 text-xs mt-1" id="gambarError">Gambar wajib diunggah</span>
+    </div>
+
+    <!-- Status -->
+    <div>
+      <span class="block text-xs font-semibold mb-1 text-gray-700">STATUS</span>
+      <div class="flex space-x-6 text-sm mt-2">
+        <label class="flex items-center space-x-2">
+          <input type="radio" name="status" value="public" required />
+          <span>PUBLIC</span>
+        </label>
+        <label class="flex items-center space-x-2">
+          <input type="radio" name="status" value="draft" required />
+          <span>DRAFT</span>
+        </label>
+      </div>
+      <span class="hidden text-red-500 text-xs mt-1" id="statusError">Pilih salah satu status</span>
+    </div>
+  </div>
+
+  <!-- Upload PDF -->
+  <div class="flex flex-col">
+    <label for="filePdf" class="mb-1 text-xs font-semibold tracking-wide select-none">Unggah PDF File</label>
+    <label class="file-upload-box rounded-md border border-gray-300 bg-gray-100 min-h-[80px] flex items-center justify-center px-3 py-5 text-gray-500 text-sm cursor-pointer hover:bg-gray-200 transition relative overflow-auto" for="filePdf">
+      <span id="pdfName" class="select-none">Klik atau tarik file PDF ke sini</span>
+    </label>
+    <input type="file" id="filePdf" name="filePdf" accept=".pdf" class="hidden" required />
+    <small class="text-gray-500 mt-1 select-none">Maksimum ukuran file 10MB</small>
+    <span class="hidden text-red-500 text-xs mt-1" id="fileError">Pilih file PDF yang valid</span>
+  </div>
+
+
+  <!-- BUTTONS -->
+  <div class="flex justify-end space-x-3 pt-2">
+    <button type="button" id="cancelBtn" class="bg-red-600 text-white rounded-md px-5 py-2 text-sm font-semibold shadow hover:bg-red-700 transition">BATAL</button>
+    <button type="submit" class="bg-blue-700 text-white rounded-md px-5 py-2 text-sm font-semibold shadow hover:bg-blue-800 transition">SIMPAN</button>
+  </div>
+
+      </form>
+    </section>
+  </main>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const tanggalEl = document.getElementById("tanggalSekarang");
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    tanggalEl.textContent = new Date().toLocaleDateString('id-ID', options);
+
+    const form = document.getElementById('dokumenForm');
+    const closeBtn = document.getElementById('closeBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const judul = document.getElementById('judul');
+    const gambar = document.getElementById('gambar');
+    const filePdf = document.getElementById('filePdf');
+    const gambarName = document.getElementById('gambarName');
+    const pdfName = document.getElementById('pdfName');
+
+    // Update nama file
+    gambar.addEventListener('change', () => {
+      gambarName.textContent = gambar.files[0]?.name || "Tambahkan Foto";
+    });
+    filePdf.addEventListener('change', () => {
+      pdfName.textContent = filePdf.files[0]?.name || "Klik atau tarik file PDF ke sini";
+    });
+
+    function showError(id, show) {
+      const el = document.getElementById(id);
+      if(el) el.classList.toggle('hidden', !show);
+    }
+    function hideErrors() {
+      ['judulError','gambarError','statusError','fileError'].forEach(id => showError(id,false));
+    }
+    function resetForm() {
+      form.reset();
+      gambarName.textContent = "Tambahkan Foto";
+      pdfName.textContent = "Klik atau tarik file PDF ke sini";
+      hideErrors();
+    }
+
+    closeBtn.addEventListener('click', resetForm);
+    cancelBtn.addEventListener('click', resetForm);
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      hideErrors();
+      let valid = true;
+
+      if(!judul.value.trim()){ showError('judulError', true); valid=false; }
+      if(!gambar.files.length){ showError('gambarError', true); valid=false; }
+      if(!form.status.value){ showError('statusError', true); valid=false; }
+      if(!filePdf.files.length || filePdf.files[0].type !== 'application/pdf'){ 
+        showError('fileError', true); valid=false; 
+      }
+
+      if(!valid) return;
+
+      alert(`Dokumen tersimpan:\nJudul: ${judul.value}\nStatus: ${form.status.value}\nFile Gambar: ${gambar.files[0].name}\nFile PDF: ${filePdf.files[0].name}`);
+      resetForm();
+    });
+  });
+  </script>
+
+  </body>
+  </html>

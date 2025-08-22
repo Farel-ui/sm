@@ -10,10 +10,14 @@ use App\Http\Controllers\MasterplanController;
 
 // ✅ Tampilan awal website
 Route::get('/', [MasterplanController::class, 'index'])->name('home');
-Route::get('/penilaian', [MasterplanController::class, 'penilaian'])->name('penilaian');
 Route::get('/iga', [MasterplanController::class, 'iga'])->name('iga');
 Route::get('/masterplan/buku', [MasterplanController::class, 'buku'])->name('masterplan.buku');
-Route::get('/masterplan/paparan', [MasterplanController::class, 'paparan'])->name('masterplan.paparan');
+Route::get('/paparan', [MasterplanController::class, 'paparan'])->name('paparan');
+Route::get('/penilaian', [MasterplanController::class, 'penilaian']);
+Route::get('/Dokumen', [MasterplanController::class, 'Dokumen'])->name('Dokumen');
+Route::get('/masterplano', [MasterplanController::class, 'masterplano'])->name('masterplano');
+
+
 
 // ✅ Middleware auth: semua route admin/dashboard hanya bisa diakses setelah login
 Route::middleware(['auth'])->group(function () {

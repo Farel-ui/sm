@@ -117,6 +117,8 @@ $judul = "Hasil Penilaian Smart City Kota Bogor";
             font-size: 0.95rem;
         }
     }
+
+    
 </style>
     </head>
 
@@ -188,48 +190,132 @@ $judul = "Hasil Penilaian Smart City Kota Bogor";
     10 PENGHARGAAN RATING TRANSFORMASI DIGITAL
 </div>
 
-<!-- Foto Penghargaan -->
-<div class="image-row">
+<!-- Wrapper untuk layout 2 kolom -->
+<div class="max-w-6xl mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+  
+<!-- Kolom Foto Penghargaan -->
+<div class="photo-box">
+  <div class="photo-list">
     <img src="{{ asset('images/penilaian1.jpeg') }}" alt="Penghargaan 1">
-    <img src="{{ asset('images/penilaian2.jpeg') }}" alt="Penghargaan 2">
+    <img src="{{ asset('images/penilaian2.jpeg') }}" alt="Penghargaan 1">
+  </div>
 </div>
 
-<!-- Daftar Penghargaan -->
-<section class="max-w-2xl mx-auto mt-10">
-  <details
-    class="group bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl shadow-lg overflow-hidden transition"
-  >
-    <summary
-      class="flex items-center justify-between px-10 py-3 cursor-pointer select-none font-semibold text-lg group-open:bg-gray-700 transition"
-    >
-      <span>Lihat Semua Penghargaan</span>
-      <svg
-        class="w-5 h-5 transform transition-transform duration-300 group-open:rotate-180"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-      >
-        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-      </svg>
-    </summary>
+<style>
+  /* Box scrollable */
+  .photo-box {
+    width: 100%;
+    height: 570px;          /* tinggi box */
+    overflow-y: auto;       /* bisa discroll */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background: #fff;
+  }
 
-    <div class="bg-white text-gray-800 px-6 py-4">
-      <ol class="list-decimal list-inside space-y-2">
-        <li>Kategori Kota Menuju Kota Cerdas <span class="font-bold text-blue-700">(Peringkat 3)</span></li>
-        <li>Kategori Kota Ekonomi Cerdas <span class="font-bold text-green-700">(Peringkat 2)</span></li>
-        <li>Kategori Kota Masyarakat Cerdas <span class="font-bold text-purple-700">(Peringkat 4)</span></li>
-        <li>Kategori Kota Lingkungan Cerdas <span class="font-bold text-green-900">(Peringkat 5)</span></li>
-        <li>Kategori Kota Mobilitas Cerdas <span class="font-bold text-indigo-700">(Peringkat 5)</span></li>
-        <li>Kategori Kota Kesehatan Cerdas <span class="font-bold text-red-700">(Peringkat 1)</span></li>
-        <li>Kategori Kota Tangguh <span class="font-bold text-yellow-700">(Peringkat 2)</span></li>
-        <li>Kategori Kota Tanggap Perubahan Iklim <span class="font-bold text-teal-700">(Peringkat 3)</span></li>
-        <li>Kategori Kota Energi Cerdas <span class="font-bold text-orange-700">(Peringkat 2)</span></li>
-        <li>Kategori Kota Kesiapan Digital Terbaik <span class="font-bold text-pink-700">(Peringkat 5)</span></li>
-      </ol>
+  /* Hilangin scrollbar */
+  .photo-box::-webkit-scrollbar {
+    display: none;
+  }
+  .photo-box {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Container gambar */
+  .photo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+  }
+  
+</style>
+
+
+<!-- Tambahin CSS ini -->
+<style>
+  /* Hilangkan scrollbar di semua browser */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE & Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+</style>
+
+
+
+
+
+  <!-- Daftar Penghargaan -->
+  <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+    <div class="bg-gradient-to-r from-gray-600 to-gray-700 text-white px-6 py-4 font-bold text-xl">
+      Daftar Penghargaan
     </div>
-  </details>
-</section>
+    <div class="p-6">
+      <ul class="space-y-3 text-lg">
+        <li class="flex justify-between border-b pb-2">
+          <span>1. Kota Menuju Kota Cerdas</span>
+          <span class="font-bold text-blue-700">(Peringkat 3)</span>
+        </li>
+        <li class="flex justify-between border-b pb-2">
+          <span>2. Kota Ekonomi Cerdas</span>
+          <span class="font-bold text-green-700">(Peringkat 2)</span>
+        </li>
+        <li class="flex justify-between border-b pb-2">
+          <span>3. Kota Masyarakat Cerdas</span>
+          <span class="font-bold text-purple-700">(Peringkat 4)</span>
+        </li>
+        <li class="flex justify-between border-b pb-2">
+          <span>4. Kota Lingkungan Cerdas</span>
+          <span class="font-bold text-green-900">(Peringkat 5)</span>
+        </li>
+        <li class="flex justify-between border-b pb-2">
+          <span>5. Kota Mobilitas Cerdas</span>
+          <span class="font-bold text-indigo-700">(Peringkat 5)</span>
+        </li>
+        <li class="flex justify-between border-b pb-2">
+          <span>6. Kota Kesehatan Cerdas</span>
+          <span class="font-bold text-red-700">(Peringkat 1)</span>
+        </li>
+        <li class="flex justify-between border-b pb-2">
+          <span>7. Kota Tangguh</span>
+          <span class="font-bold text-yellow-700">(Peringkat 2)</span>
+        </li>
+        <li class="flex justify-between border-b pb-2">
+          <span>8. Kota Tanggap Perubahan Iklim</span>
+          <span class="font-bold text-teal-700">(Peringkat 3)</span>
+        </li>
+        <li class="flex justify-between border-b pb-2">
+          <span>9. Kota Energi Cerdas</span>
+          <span class="font-bold text-orange-700">(Peringkat 2)</span>
+        </li>
+        <li class="flex justify-between">
+          <span>10. Kota Kesiapan Digital Terbaik</span>
+          <span class="font-bold text-pink-700">(Peringkat 5)</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Script Slideshow -->
+<script>
+  let slideIndex = 0;
+  const slides = document.querySelector(".slideshow");
+  const totalSlides = slides.children.length;
+
+  function showSlides() {
+    slideIndex++;
+    if (slideIndex >= totalSlides) slideIndex = 0;
+    slides.style.transform = `translateX(-${slideIndex * 100}%)`;
+  }
+
+  setInterval(showSlides, 3000); // Ganti slide tiap 3 detik
+</script>
+
+
 
     @include('components.footer')
 </div>

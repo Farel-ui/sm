@@ -44,11 +44,26 @@ class MasterplanController extends Controller
 
     }
 
+    public function penilaian()
+    {
+        $title = 'Masterplan Smart City (penilaian)';
+        $masterplans = Masterplan::where('type', 'penilaian')->orderBy('period')->get();
+        return view('penilaian', compact('masterplans', 'title'));
+
+    }
+
     public function paparan()
     {
         $title = 'Paparan Masterplan Smart City';
         $masterplans = Masterplan::where('type', 'paparan')->get();
-        return view('masterplans.paparan', compact('title', 'masterplans'));
+        return view('paparan', compact('title', 'masterplans'));
+    }
+
+        public function masterplano()
+    {
+        $title = 'Paparan Masterplan Smart City';
+        $masterplans = Masterplan::where('type', 'masterplano')->get();
+        return view('masterplano', compact('title', 'masterplans'));
     }
 
     public function assessment()
