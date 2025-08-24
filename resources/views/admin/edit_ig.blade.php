@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Iga - Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Custom scrollbar for modern browsers */
@@ -206,7 +207,7 @@
                     <div class="p-8 bg-white">
                         <form method="POST" action="{{ route('iga.update', $iga->id) }}" enctype="multipart/form-data" class="space-y-8">
                             @csrf
-                          
+
 
                             <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
                                 <!-- Title Field -->

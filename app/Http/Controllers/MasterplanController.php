@@ -29,9 +29,10 @@ class MasterplanController extends Controller
             'masterplans',
             'dimensions',
             'quickwins',
+
             'booklets',
             'igas',
-            'implementasi',
+            
             'assessments'
         ));
     }
