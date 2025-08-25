@@ -15,7 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-400 flex">
+        <div class="min-h-screen bg-blue-100 dark:bg-grey-400 flex">
 
             {{-- Sidebar di kiri --}}
             @include('layouts.navigation')

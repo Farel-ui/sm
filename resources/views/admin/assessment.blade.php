@@ -1,3 +1,4 @@
+<x-app-layout>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,7 +71,7 @@
     </style>
 </head>
 <body class="gradient-bg min-h-screen">
-    @include('layouts.navigation')
+
 
     <!-- Main Content -->
     <main class="pb-12">
@@ -246,3 +247,4 @@
     </script>
 </body>
 </html>
+</x-app-layout>

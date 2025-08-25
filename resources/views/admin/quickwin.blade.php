@@ -1,3 +1,4 @@
+<x-app-layout>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gray-50 min-h-screen">
-    @include('layouts.navigation')
+
 
     <main class="pb-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -88,3 +89,4 @@
     </main>
 </body>
 </html>
+</x-app-layout>

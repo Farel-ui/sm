@@ -1,3 +1,4 @@
+<x-app-layout>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -96,7 +97,7 @@
     </style>
 </head>
 <body class="gradient-bg min-h-screen">
-    @include('layouts.navigation')
+
     <!-- Main Content -->
     <main class="pb-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -262,11 +263,12 @@
                                             {{ $dimension->name }}
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-500">
-                                            {{ $dimension->description ?? 'N/A' }}
-                                        </div>
-                                    </td>
+                                    <td class="px-2 py-2 whitespace-nowrap max-w-xs">
+                                    <div class="text-sm text-gray-500 truncate" title="{{ $dimension->description ?? 'N/A' }}">
+        {{ $dimension->description ?? 'N/A' }}
+    </div>
+</td>
+
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
                                         <img src="{{ $dimension->image ?? '#' }}" alt="Image" class="h-12 w-12 object-cover rounded">
                                     </td>
@@ -390,3 +392,4 @@
     </script>
 </body>
 </html>
+</x-app-layout>

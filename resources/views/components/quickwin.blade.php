@@ -30,7 +30,7 @@
     min-width: 384px;
     transform: scale(0.85);
     opacity: 0.6;
-    background-color: #D6E4F0;
+    background-color: #3b3b3b;
   }
 
   .card.active {
@@ -64,8 +64,8 @@
       card.innerHTML = `
         <img src="${quickwinBaseUrl}/${data.image}" alt="${data.title}" class="w-full h-64 object-cover rounded-t-xl">
         <div class="p-4">
-          <h2 class="font-bold text-lg mb-2">${data.title}</h2>
-          <p class="text-sm">${data.description}</p>
+          <h2 class="font-bold text-2xl mb-2">${data.title}</h2>
+          <p class="text-lg">${data.description}</p>
         </div>
       `;
       return card;

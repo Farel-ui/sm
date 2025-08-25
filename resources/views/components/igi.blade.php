@@ -7,7 +7,7 @@
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6" id="iga-gallery">
       @foreach ($igas->take(3) as $data)
         <div class="box bg-black rounded-lg overflow-hidden shadow-md transition hover:scale-105 cursor-pointer">
-          <img src="{{ $data->image }}" alt="{{ $data->title }}"
+          <img src="{{ asset('images/iga/' . $data->image) }}" alt="{{ $data->title }}"
                class="w-full h-84 object-cover">
         </div>
       @endforeach
@@ -15,10 +15,10 @@
 
     <!-- Tombol Selengkapnya -->
     <div class="mt-8 text-center">
-      <a href="{{ url('/iga') }}"
-         class="inline-block bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-800 transition">
-        Lihat Selengkapnya
-      </a>
-    </div>
-  </div>
+  <a href="{{ url('/iga') }}"
+     class="inline-block bg-blue-600 text-white px-6 py-2 rounded-full
+            hover:bg-yellow-500 hover:text-white transition font-semibold">
+    Lihat Selengkapnya
+  </a>
+</div>
 </section>

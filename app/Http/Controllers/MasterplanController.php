@@ -14,37 +14,44 @@ class MasterplanController extends Controller
 {
     public function index()
     {
-        $masterplans = Masterplan::orderBy('period')->paginate(7);
-        $dimensions = Dimension::all();
-        $quickwins = QuickWin::all();
-        $booklets = Booklet::all();
-        $implementasi = Masterplan::where('type', 'implementasi')->orderBy('period')->get();
-        $penghargaan = Masterplan::where('type', 'penghargaan')->orderBy('period')->get();
-        $igas = Iga::all();
-        $assessments = Assessment::orderBy('year')->get();
+        $masterplans   = Masterplan::orderBy('period')->paginate(7);
+        $dimensions    = Dimension::all();
+        $quickwins     = QuickWin::all();
+        $booklets      = Booklet::all();
+        $implementasi  = Masterplan::where('type', 'implementasi')->orderBy('period')->get();
+        $penghargaan   = Masterplan::where('type', 'penghargaan')->orderBy('period')->get();
+        $igas          = Iga::all();
+        $assessments   = Assessment::orderBy('year')->get();
 
-        return view('welcome', compact('masterplans', 'dimensions', 'quickwins', 'booklets', 'igas', 'implementasi', 'assessments'));
+        return view('welcome', compact(
+            'masterplans',
+            'dimensions',
+            'quickwins',
+            'booklets',
+            'igas',
+            'implementasi',
+            'assessments'
+        ));
     }
 
-    public function masterplan()
-{
-    $masterplans = Masterplan::orderBy('period')->paginate(7);
-    return view('masterplan', compact('masterplans'));
-}
-
+    public function masterplano()
+    {
+        $masterplans = Masterplan::orderBy('period')->paginate(7);
+        return view('masterplano', compact('masterplans'));
+    }
 
     public function buku()
     {
-        $title = 'Masterplan Smart City (Buku)';
+        $title       = 'Masterplan Smart City (Buku)';
         $masterplans = Masterplan::where('type', 'buku')->orderBy('period')->get();
         return view('masterplans.buku', compact('title', 'masterplans'));
     }
 
     public function paparan()
     {
-        $title = 'Paparan Masterplan Smart City';
+        $title       = 'Paparan Masterplan Smart City';
         $masterplans = Masterplan::where('type', 'paparan')->get();
-        return view('masterplans.paparan', compact('title', 'masterplans'));
+        return view('paparan', compact('title', 'masterplans'));
     }
 
     public function assessment()
@@ -57,6 +64,21 @@ class MasterplanController extends Controller
     {
         $igas = Iga::all();
         return view('iga', compact('igas'));
+    }
+
+    // 🔹 Halaman Penilaian
+    public function penilaian()
+    {
+        $assessments = Assessment::orderBy('year')->get();
+        return view('penilaian', compact('assessments'));
+    }
+
+    // 🔹 Halaman Dokumen
+    public function dokumen()
+    {
+        $title       = 'Dokumen Masterplan Smart City';
+        $masterplans = Masterplan::where('type', 'dokumen')->orderBy('period')->get();
+        return view('dokumen', compact('title', 'masterplans'));
     }
 
     // Ambil video berdasarkan ID Dimension
@@ -72,10 +94,10 @@ class MasterplanController extends Controller
     {
         return view('admin.dashboard', [
             'masterplans' => Masterplan::all(),
-            'dimensions' => Dimension::all(),
-            'quickwins' => QuickWin::all(),
-            'booklets' => Booklet::all(),
-            'igas' => Iga::all(),
+            'dimensions'  => Dimension::all(),
+            'quickwins'   => QuickWin::all(),
+            'booklets'    => Booklet::all(),
+            'igas'        => Iga::all(),
             'assessments' => Assessment::all(),
         ]);
     }

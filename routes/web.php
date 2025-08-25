@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminBookletController;
 use App\Http\Controllers\AdminDimensionController;
 use App\Http\Controllers\AdminIgaController;
 use App\Http\Controllers\AdminQuickwinController;
+use App\Http\Controllers\AdminMasterplanController;
 use App\Http\Controllers\MasterplanController;
 
 
@@ -88,5 +89,9 @@ require __DIR__.'/auth.php';
 Route::get('/implementasi', function () {
     return view('implemen');
 });
+Route::get('/paparan', [MasterplanController::class, 'paparan'])->name('paparan');
+Route::get('/penilaian', [MasterplanController::class, 'penilaian']);
+Route::get('/Dokumen', [MasterplanController::class, 'Dokumen'])->name('Dokumen');
+Route::get('/masterplano', [MasterplanController::class, 'masterplano'])->name('masterplano');
 
 
