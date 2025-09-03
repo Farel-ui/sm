@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Smart City Kota Bogor</title>
-  <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+  <link rel="icon" type="image/png" href="{{ asset('images/logolo.svg') }}">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 <script src="{{ asset('js/app.js') }}"></script>
@@ -23,18 +23,20 @@
 <style>
     body {
       margin: 0;
-        font-family: 'Segoe UI', Arial, sans-serif;
-        background-color: #f7f7f7;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #f7f7f7;
     }
 
-    .masterplan-box p {
-        margin-top: 8px;
-        font-size: 20px;
-        padding: 0 20px;
-        line-height: 1.5;
-        font-weight: 500;
-    }
-        .masterplan-box {
+.masterplan-box p {
+    margin-top: 8px;
+    font-size: 20px;
+    padding: 0 20px;    /* ✅ biar sejajar sama judul */
+    line-height: 1.5;
+    font-weight: 500;
+    text-align: left;   /* ✅ pastiin rata kiri */
+}
+
+    .masterplan-box {
         width: 100%;
         background: linear-gradient(to right, #0072ff, #00c6ff);
         color: white;
@@ -42,16 +44,15 @@
         border-radius: 5px;
     }
 
+.masterplan-box h2 {
+    margin: 10px 0;
+    font-size: 48px;
+    font-weight: bold;
+    text-align: left;   /* ✅ rata kiri */
+    padding: 0 20px;    /* ✅ sama kayak <p> */
+}
 
-    .masterplan-box h2 {
-        margin: 10px 0 10px;
-        font-size: 48px;
-        font-weight: bold;
-        text-align: center;
-        margin-right: 740px;
-    }
-
-        .tab-container {
+    .tab-container {
         width: 100%;
         text-align: center;
         margin-top: 50px;
@@ -79,31 +80,29 @@
     }
 
     .table-container {
-    width: 80%;           /* 🔹 cuma setengah lebar layar */
-    max-height: 400px;    /* 🔹 biar tabel ga kepanjangan */
-    margin: 40px auto;    /* 🔹 posisikan ke tengah */
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    overflow-x : hidden;
-    overflow-y: auto;
-    border: 1px solid #ddd;
+        width: 80%;
+        max-height: 400px;
+        margin: 40px auto;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        overflow-x: hidden;
+        overflow-y: auto;
+        border: 1px solid #ddd;
     }
-
-
 
     table {
       width: 100%;
       border-collapse: collapse;
-      table-layout: fixed; /* biar kolom rata */
+      table-layout: fixed;
     }
 
     thead {
-    background-color: #1666e3;
-    color: white;
-    position: sticky;  /* 🔹 biar header nempel */
-    top: 0;            /* 🔹 posisinya di atas */
-    z-index: 10;
+        background-color: #1666e3;
+        color: white;
+        position: sticky;
+        top: 0;
+        z-index: 10;
     }
 
     th, td {
@@ -128,42 +127,41 @@
       transition: 0.2s;
     }
 
-    /* Search di pojok kanan */
     .search-cell {
       text-align: right;
     }
 
     .search-box {
+
       position: relative;
       display: inline-block;
       width: 100%;
       max-width: 350px;
     }
 
-.search-box input {
-    width: 100%;
-    padding: 8px 10px 8px 40px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    outline: none;
-    font-size: 14px;
-    box-sizing: border-box;
-    background-color: #f9f9f9; /* default abu muda */
-    transition: background-color 0.2s ease, border 0.2s ease;
-}
-.search-box input:focus {
-    background-color: #a7a7a7ff; /* biru muda pas aktif */
-    border: 2px solid #ffffffff;
-}
+    .search-box input {
+        width: 100%;
+        padding: 8px 10px 8px 40px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        outline: none;
+        font-size: 14px;
+        box-sizing: border-box;
+        background-color: #f9f9f9;
+        transition: background-color 0.2s ease, border 0.2s ease;
+    }
 
-/* styling pesan kosong */
-.no-data {
-    text-align: center;
-    font-style: italic;
-    color: #888;
-    background-color: #f7f7f7;
-}
+    .search-box input:focus {
+        background-color: #a7a7a7ff;
+        border: 2px solid #ffffffff;
+    }
 
+    .no-data {
+        text-align: center;
+        font-style: italic;
+        color: #888;
+        background-color: #f7f7f7;
+    }
 
     .search-box i {
       position: absolute;
@@ -187,34 +185,69 @@
       color: #004bb5;
     }
 
-    /* Styling default tombol lihat */
-.table-container a {
-  color: #007bff;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
+    .table-container a {
+      color: #007bff;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: transparent;
+    }
 
-/* Saat cursor hover */
-.table-container a:hover {
-  color: #ff6600;       /* ganti warna teks */
-  text-decoration: underline; /* bisa underline biar jelas */
-}
+    .table-container a:hover {
+      color: #0252a7ff;
+      text-decoration: underline;
+    }
 
-/* Kalau mau efek lebih "tombol" */
-.table-container a {
-  padding: 6px 12px;
-  border-radius: 6px;
-  background: transparent;
-}
+    /* 🔽 Tambahan Responsif */
+    @media (max-width: 1024px) {
+        .masterplan-box h2 {
+            font-size: 36px;
+            margin-right: 0; /* biar tetap center */
+        }
+        th, td {
+            font-size: 16px;
+        }
+        .tab-container a {
+            font-size: 18px;
+            padding: 8px 14px;
+        }
+        .table-container {
+            width: 95%;
+        }
+    }
 
-.table-container a:hover {
-  color: #0252a7ff;          /* teks putih */
-}
-
-
-
+    @media (max-width: 640px) {
+        .masterplan-box {
+            padding: 15px 20px;
+        }
+        .masterplan-box h2 {
+            font-size: 24px;
+            margin-right: 0;
+        }
+        .masterplan-box p {
+            font-size: 14px;
+            padding: 0 10px;
+        }
+        .tab-container a {
+            font-size: 16px;
+            padding: 6px 10px;
+        }
+        th, td {
+            font-size: 12px;
+            padding: 8px;
+        }
+        .search-box {
+            max-width: 200px;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto; /* biar bisa geser di HP */
+        }
+    }
 </style>
+
 </head>
 <body>
   <div class="masterplan-box">

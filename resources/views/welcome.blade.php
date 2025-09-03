@@ -5,52 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart City Kota Bogor</title>
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logolo.svg') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        /* Back to top */
+        #backToTop {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #2563eb;
+            color: white;
+            padding: 12px 15px;
+            border-radius: 999px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            cursor: pointer;
+            display: none;
+            transition: all 0.3s ease;
+        }
+        </style>
 
 </head>
 @include('components.navbar')
 <body>
 <section class="relative font-poppins overflow-hidden pt-24 pb-20 px-4 md:px-20">
-  <!-- 🔵 Background Gradien Biru Rounded -->
-  <div class="absolute top-0 left-0 right-0 bottom-0 w-[90%] mx-auto bg-gradient-to-br from-blue-200 to-blue-200 rounded-b-[100px] z-0"></div>
+  <!-- 🔵 Background -->
+  <div class="absolute top-0 left-0 right-0 bottom-0 w-[95%] md:w-[90%] mx-auto bg-gradient-to-br from-blue-200 to-blue-200 rounded-b-[40px] md:rounded-b-[100px] z-0"></div>
 
-  <!-- Konten Card -->
-  <div class="relative z-10 max-w-7xl mx-auto grid md:grid-cols-2 gap-5 items-center -mt-12">
+  <!-- Konten -->
+  <div class="relative z-10 max-w-7xl mx-auto grid grid-cols-2 gap-3 sm:gap-6 items-center -mt-6 md:-mt-12 px-2 sm:px-4 md:px-0">
 
-    <!-- 🔹 Kiri: Card Penjelasan -->
-    <div class="bg-blue-600 text-white p-6 rounded-[20px] shadow-md flex flex-col justify-start h-full w-full min-h-[540px]">
-
-      <h1 class="text-[32px] md:text-[64px] text-center font-bold leading-tight">
+    <!-- Kiri: Card Teks -->
+    <div class="bg-blue-600 text-white p-3 sm:p-5 md:p-6 rounded-[12px] md:rounded-[20px] shadow-md flex flex-col justify-start h-full w-full min-h-[180px] sm:min-h-[280px] md:min-h-[540px]">
+      <h1 class="text-[14px] sm:text-[22px] md:text-[64px] text-center font-bold leading-tight">
         <span class="block">SMART <span class="italic font-medium">CITY</span></span>
         <span class="block">
           <span class="italic font-medium">KOTA</span>
-          <span class=" font-bold not-italic">BOGOR</span>
+          <span class="font-bold not-italic">BOGOR</span>
         </span>
       </h1>
 
-      <p class="text-[24px] text-center mt-5 leading-relaxed">
-        Smart City Kota Bogor adalah inisiatif <br>
+      <p class="text-[11px] sm:text-[15px] md:text-[24px] text-center mt-2 sm:mt-3 md:mt-5 leading-relaxed">
+        Smart City Kota Bogor adalah inisiatif<br>
         transformasi digital yang bertujuan<br>
         meningkatkan kualitas pelayanan<br>
-        publik, efisiensi pemerintahan, dan <br>
-        kenyamanan hidup warga melalui <br>
-        pemanfaatan teknologi informasi dan<br>
-        komunikasi secara terpadu.
+        publik, efisiensi pemerintahan,<br>
+        dan kenyamanan hidup warga<br>
+        melalui pemanfaatan teknologi<br>
+        informasi dan komunikasi secara<br>
+        terpadu.
       </p>
     </div>
 
-    <!-- 🔹 Kanan: Card Gambar (samain ukuran sama kiri) -->
-   <div class="p-0 rounded-[20px] shadow-md h-full w-full min-h-[540px] flex items-center justify-center">
-  <img src="{{ asset('images/smar.jpg') }}"
-       alt="Smart City"
-       class="w-full h-full object-cover rounded-[20px]">
-</div>
+    <!-- Kanan: Card Gambar -->
+    <div class="rounded-[12px] md:rounded-[20px] shadow-md h-full w-full min-h-[180px] sm:min-h-[280px] md:min-h-[540px] flex items-center justify-center overflow-hidden">
+      <img src="{{ asset('images/smar.jpg') }}"
+           alt="Smart City"
+           class="w-full h-full object-cover rounded-[12px] md:rounded-[20px]">
+    </div>
 
   </div>
 </section>
+
 
 @include('components.dimension')
 @include('components.vimi')
@@ -115,7 +133,29 @@ function playInlineVideo() {
 
 
 @include('components.booklet')
+
+<div id="backToTop">
+        <i class="fa-solid fa-arrow-up"></i>
+    </div>
+
+
 @include('components.footer')
+
+<script>
+// Back to top
+const backToTop = document.getElementById("backToTop");
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+        backToTop.style.display = "block";
+    } else {
+        backToTop.style.display = "none";
+    }
+});
+backToTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+</script>
+
 </body>
 </html>
 </body>

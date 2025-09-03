@@ -56,7 +56,7 @@
 
     <!-- Copyright -->
     <div class="bottom-bar">
-      <p>Hak Cipta &copy; 2021 Dinas Komunikasi dan Informatika Kota Bogor.</p>
+      <p>Hak Cipta &copy; 2025 Dinas Komunikasi dan Informatika Kota Bogor.</p>
     </div>
 
   </div>
@@ -86,7 +86,7 @@
   padding: 6px ;
   object-fit: contain;
   margin-top: 30px;
-  
+
 }
 
 .footer-title-box {
@@ -179,5 +179,92 @@
   font-size: 20px;
   height: 400;
 }
+
+/* Footer Responsif */
+@media (max-width: 1024px) {
+  .footer-info {
+    gap: 80px; /* lebih rapat di tablet */
+  }
+
+  .info-title h3 {
+    font-size: 28px;
+  }
+
+  .teksteks {
+    font-size: 18px;
+  }
+
+  .info-icon {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-info {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .info-block {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .info-title {
+    justify-content: center;
+  }
+
+  .info-title h3 {
+    font-size: 24px;
+  }
+
+  .teksteks {
+    font-size: 16px;
+  }
+
+  .sosmed-list li a {
+    font-size: 32px;
+  }
+
+  .bottom-bar {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-section {
+    border-radius: 30px 30px 0 0;
+    padding: 20px;
+  }
+
+  .info-title h3 {
+    font-size: 20px;
+  }
+
+  .info-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .teksteks {
+    font-size: 14px;
+  }
+
+  .sosmed-list {
+    gap: 15px;
+  }
+
+  .sosmed-list li a {
+    font-size: 28px;
+  }
+
+  .bottom-bar {
+    font-size: 14px;
+  }
+}
+
 </style>
 </section>

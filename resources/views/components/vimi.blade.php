@@ -1,21 +1,22 @@
 <section class="visi-misi">
-    <div class="left-image">
-      <img src="images/walkotl.svg" alt="Walikota dan Wakil Walikota">
-    </div>
-    <div class="right-text">
-      <h2>VISI</h2>
-      <p>Terwujudnya Kota Bogor sebagai<br>
-         Ramah Keluarga.</p>
-      <h2>MISI</h2>
-      <ul>
-        <li>Mewujudkan Kota yang Sehat</li>
-        <li>Mewujudkan Kota yang Cerdas</li>
-        <li>Mewujudkan Kota yang Sejahtera</li>
-      </ul>
-    </div>
-    <style>
-        /* visi misi style */
+  <div class="left-image">
+    <img src="images/walkotl.svg" alt="Walikota dan Wakil Walikota">
+  </div>
+  <div class="right-text">
+    <h2>VISI</h2>
+    <p>Terwujudnya Kota Bogor sebagai<br>
+       Ramah Keluarga.</p>
+    <h2>MISI</h2>
+    <ul>
+      <li>Mewujudkan Kota yang Sehat</li>
+      <li>Mewujudkan Kota yang Cerdas</li>
+      <li>Mewujudkan Kota yang Sejahtera</li>
+    </ul>
+  </div>
+</section>
 
+<style>
+/* visi misi style */
 * {
   margin: 0;
   padding: 0;
@@ -31,7 +32,6 @@ body {
 
 .visi-misi {
   display: flex;
- 
   background-color: #D6E4F0;
   overflow: hidden;
 }
@@ -83,5 +83,48 @@ body {
 .right-text ul li::before {
   content: "- ";
 }
-    </style>
-  </section>
+
+/* --- RESPONSIVE --- */
+@media (max-width: 992px) {
+  .visi-misi {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .left-image {
+    width: 100%;
+    max-height: none;
+  }
+
+  .left-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* biar full kanan kiri */
+  }
+
+  .right-text {
+    margin-left: 0;
+    padding: 30px 20px;
+  }
+
+  .right-text h2 {
+    font-size: 40px;
+  }
+
+  .right-text p,
+  .right-text ul {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 576px) {
+  .right-text h2 {
+    font-size: 28px;
+  }
+
+  .right-text p,
+  .right-text ul {
+    font-size: 16px;
+  }
+}
+</style>

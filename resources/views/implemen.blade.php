@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart City Kota Bogor</title>
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logolo.svg') }}">
 
     <!-- Tailwind CDN + Config -->
     <script>
@@ -91,9 +91,9 @@
     @include('components.navbar')
 
     <!-- Judul -->
-    <section class="text-center py-12">
+    <section class="text-center py-12 font-size:2000    ">
         <h2 class="text-3xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-500 to-blue-700 text-transparent bg-clip-text animate_animated animate_fadeInDown">
-            IMPLEMENTASI SMART CITY <span class=" text-yellow-400">KOTA BOGOR</span>
+            PROGRAM IMPLEMENTASI SMART CITY <span class=" text-yellow-400">KOTA BOGOR</span>
         </h2>
         <p class="mt-3 text-gray-600 text-lg animate_animated animatefadeIn animate_delay-1s">
             Dokumen penilaian & pengembangan Smart City Kota Bogor
@@ -109,20 +109,24 @@
           <!-- Kolom PDF -->
           <div class="md:col-span-2">
             <!-- Header PDF -->
-            <div class="flex items-center justify-between bg-gradient-to-r from-blue-500 to-blue-800 px-6 py-4 rounded-t-xl">
-              <div class="flex items-center gap-3 text-white">
-                <i class="fa-solid fa-file-pdf text-2xl"></i>
-                <div>
-                  <h3 class="text-lg font-semibold">Implementasi Kota Bogor</h3>
-                  <p class="text-sm opacity-80">Statistik Presen Kota Bogor</p>
-                </div>
-              </div>
-              <a href=""
-                class="bg-white text-blue-500 px-4 py-2 rounded-lg shadow hover:bg-gray-100 transition flex items-center gap-2 text-sm font-medium btn-glow"
-                download>
-                <i class="fa-solid fa-download"></i> Unduh PDF
-              </a>
-            </div>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 bg-gradient-to-r from-blue-500 to-blue-800 px-4 sm:px-6 py-4 rounded-t-xl">
+  <!-- Kiri: ikon + judul -->
+  <div class="flex items-center gap-3 text-white">
+    <i class="fa-solid fa-file-pdf text-xl sm:text-2xl"></i>
+    <div>
+      <h3 class="text-base sm:text-lg font-semibold">Implementasi Kota Bogor</h3>
+      <p class="text-xs sm:text-sm opacity-80">Statistik Presen Kota Bogor</p>
+    </div>
+  </div>
+
+  <!-- Kanan: tombol unduh -->
+  <a href="{{ asset('assets/DATA PROGRAM IMPLEMENTASI.pdf') }}"
+    class="bg-white text-blue-500 px-3 sm:px-4 py-2 rounded-lg shadow hover:bg-gray-100 transition flex items-center gap-2 text-xs sm:text-sm font-medium btn-glow mt-2 sm:mt-0"
+    download>
+    <i class="fa-solid fa-download"></i> Unduh PDF
+  </a>
+</div>
+
 
             <!-- Frame PDF -->
             <div class="p-4 bg-gray-50 relative rounded-b-xl">
@@ -131,18 +135,19 @@
 
               <div class="border-2 border-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition opacity-0" id="pdfWrapper">
                 <embed
-                  src="https://pt-surabaya.go.id/wp-content/uploads/2009/02/tipilu-pn-sidoarjo.pdf"
-                  type="application/pdf"
-                  class="w-full h-[600px] md:h-[800px]"
-                  onload="hideLoader()"
-                />
-              </div>
-              <p class="text-sm text-gray-500 text-center mt-3">
-                Jika PDF tidak tampil,
-                <a href="https://pt-surabaya.go.id/wp-content/uploads/2009/02/tipilu-pn-sidoarjo.pdf" target="_blank" class="text-blue-600 hover:underline">
-                  klik di sini
-                </a> untuk membuka di tab baru.
-              </p>
+                    src="{{ asset('assets/DATA PROGRAM IMPLEMENTASI.pdf') }}"
+                    type="application/pdf"
+                    class="w-full h-[600px] md:h-[800px]"
+                    onload="hideLoader()"
+                    />
+
+                                </div>
+                    <p class="text-sm text-gray-500 text-center mt-3">
+                    Jika PDF tidak tampil,
+                    <a href="{{ asset('assets/DATA PROGRAM IMPLEMENTASI.pdf') }}" target="_blank" class="text-blue-600 hover:underline">
+                        klik di sini
+                    </a> untuk membuka di tab baru.
+                </p>
             </div>
           </div>
 
@@ -165,30 +170,30 @@
             </a>
 
             <!-- Foto 2 -->
-            <a href="https://www.kabarindoraya.com/gerakan-menuju-100-smart-city-indonesia-kota-bogor-jadi-laboratorium-kota-cerdas"
+            <a href="https://nusantaranews.co/alumni-sman-3-teladan-angkatan-1986-gelar-legal-talk-bahas-sistem-pewarisan-di-indonesia"
               target="_blank"
               class="relative block rounded-xl shadow-lg hover:shadow-xl transition overflow-hidden">
-              <img src="https://www.kabarindoraya.com/media/images/2024/11/11673497a17b1f5.jpeg?location=13&width=&height=&quality=90&fit=1"
+              <img src="https://nusantaranews.co/assets/uploads/2025/08/legal3.jpg"
                   alt="Dokumentasi 2"
                   class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105">
               <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent px-3 py-2">
                 <h4 class="text-white font-semibold text-sm">
-                  Gerakan Menuju 100 Smart City Indonesia, Kota Bogor Jadi Laboratorium Kota Cerdas
+                  Alumni SMAN 3 Teladan Angkatan 1986 Gelar Legal Talk Bahas Sistem Pewarisan di Indonesia
                 </h4>
                 <p class="text-gray-200 text-xs tanggal" data-date="2025-08-23"></p>
               </div>
             </a>
 
             <!-- Foto 3 -->
-            <a href="https://www.kabarindoraya.com/media/images/2025/05/11682dae7e8f14d.jpeg"
+            <a href="https://nusantaranews.co/presiden-prabowo-anugerahkan-tanda-kehormatan-kepada-141-tokoh/"
               target="_blank"
               class="relative block rounded-xl shadow-lg hover:shadow-xl transition overflow-hidden">
-              <img src="https://www.kabarindoraya.com/media/images/2025/05/11682dae7e8f14d.jpeg"
+              <img src="https://nusantaranews.co/assets/uploads/2025/08/presiden.jpg"
                   alt="Dokumentasi 3"
                   class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105">
               <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent px-3 py-2">
                 <h4 class="text-white font-semibold text-sm">
-                  Beri Kemudahan Untuk Masyarakat, Dedie Rachim Luncurkan “Smart One Day Service”
+                  Presiden Prabowo Anugerahkan Tanda Kehormatan Kepada 141 Tokoh
                 </h4>
                 <p class="text-gray-200 text-xs tanggal" data-date="2025-08-23"></p>
               </div>

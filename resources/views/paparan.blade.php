@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Smart City Kota Bogor</title>
-  <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+  <link rel="icon" type="image/png" href="{{ asset('images/logolo.svg') }}">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 <script src="{{ asset('js/app.js') }}"></script>
@@ -27,14 +27,16 @@
         background-color: #f7f7f7;
     }
 
-    .masterplan-box p {
-        margin-top: 8px;
-        font-size: 20px;
-        padding: 0 20px;
-        line-height: 1.5;
-        font-weight: 500;
-    }
-        .masterplan-box {
+.masterplan-box p {
+    margin-top: 8px;
+    font-size: 20px;
+    padding: 0 20px;    /* ✅ biar sejajar sama judul */
+    line-height: 1.5;
+    font-weight: 500;
+    text-align: left;   /* ✅ pastiin rata kiri */
+}
+
+    .masterplan-box {
         width: 100%;
         background: linear-gradient(to right, #0072ff, #00c6ff);
         color: white;
@@ -42,14 +44,13 @@
         border-radius: 5px;
     }
 
-
-    .masterplan-box h2 {
-        margin: 5px 0 10px;
-        font-size: 48px;
-        font-weight: bold;
-        text-align: center;
-        margin-right: 830px;
-    }
+.masterplan-box h2 {
+    margin: 10px 0;
+    font-size: 48px;
+    font-weight: bold;
+    text-align: left;   /* ✅ rata kiri */
+    padding: 0 20px;    /* ✅ sama kayak <p> */
+}
 
         .tab-container {
         width: 100%;

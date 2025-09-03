@@ -16,7 +16,7 @@ $penilaian = [
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= $judul; ?></title>
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-  <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+  <link rel="icon" type="image/png" href="{{ asset('images/logolo.svg') }}">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -65,18 +65,20 @@ $penilaian = [
   {{-- Navbar --}}
   @include('components.navbar')
 
-  <!-- Judul -->
-  <header class="bg-gray-100 border-2 border-black px-10 py-6 text-center
-                 rounded-[90px_0_90px_0] shadow-xl w-fit mx-auto my-10">
-    <h1 class="text-3xl font-bold animate_animated animate_fadeInDown">
-      HASIL PENILAIAN SMART CITY KOTA BOGOR
-    </h1>
-  </header>
+ <!-- Judul -->
+<header
+  class="bg-gray-100 border-2 border-black px-4 sm:px-8 md:px-10 py-4 sm:py-6 text-center
+         rounded-[60px_0_60px_0] md:rounded-[90px_0_90px_0] shadow-xl w-fit mx-auto my-6 sm:my-10">
+  <h1 class="text-xl sm:text-2xl md:text-3xl font-bold animate_animated animate_fadeInDown leading-snug">
+    HASIL PENILAIAN SMART CITY KOTA BOGOR
+  </h1>
+</header>
 
-  <!-- Chart -->
-  <div class="max-w-5xl h-[500px] mx-auto mb-12">
-    <canvas id="myChart"></canvas>
-  </div>
+<!-- Chart -->
+<div class="max-w-5xl w-full mx-auto mb-8 sm:mb-12">
+  <canvas id="myChart" class="w-full h-[300px] sm:h-[400px] md:h-[500px]"></canvas>
+</div>
+
 
   <!-- Penghargaan -->
   <div class="text-center bg-gray-300 text-black font-bold text-2xl py-4 mb-8">
