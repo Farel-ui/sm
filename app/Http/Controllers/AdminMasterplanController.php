@@ -13,7 +13,7 @@ class AdminMasterplanController extends Controller
      */
     public function index()
     {
-        $masterplan = Masterplan::get();
+        $masterplan = Masterplan::paginate(6);
 
         return view('Admin.Masterplan',[
             'masterplan' => $masterplan
@@ -43,15 +43,15 @@ class AdminMasterplanController extends Controller
         $filename = null;
         if ($request->hasFile('file')){
             $filename = time() . '_' . $request->file('file')->getClientOriginalName();
-            $request->file('file')->move(public_path('storage/masterplans'), $filename);
+            $request->file('file')->move(public_path('storage/masterplans/'), $filename);
         }
         $masterplan = Masterplan::create([
             'title' => $request->title,
             'period' => $request->period,
             'file'=> $filename,
         ]);
-        
-        return redirect()->route('masterplan')->with('succes', 'Dokumen Berhasil Ditambahkeun');
+
+        return redirect()->route('admin.masterplan')->with('succes', 'Dokumen Berhasil Ditambahkeun');
     }
 
 
@@ -108,7 +108,7 @@ class AdminMasterplanController extends Controller
         'file' => $filename,
     ]);
 
-    return redirect()->route('masterplan')->with('success', 'Dokumen berhasil diperbarui.');
+    return redirect()->route('admin.masterplan')->with('success', 'Dokumen berhasil diperbarui.');
 }
 
     /**
@@ -128,6 +128,6 @@ class AdminMasterplanController extends Controller
     // Hapus data dari database
     $masterplan->delete();
 
-    return redirect()->route('masterplan')->with('success', 'Dokumen berhasil dihapus.');
+    return redirect()->route('admin.masterplan')->with('success', 'Dokumen berhasil dihapus.');
 }
 }

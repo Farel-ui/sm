@@ -13,7 +13,7 @@ class AdminBookletController extends Controller
      */
     public function index()
     {
-        $booklet = Booklet::get(); // Change to Booklet model
+        $booklet = Booklet::paginate(6); // Change to Booklet model
 
         return view('Admin.Booklet', [
             'booklet' => $booklet // Change variable name

@@ -13,7 +13,7 @@ class AdminIgaController extends Controller
      */
     public function index()
     {
-        $iga = Iga::get();
+        $iga = Iga::paginate(6);
 
         return view('Admin.Iga', [
             'iga' => $iga

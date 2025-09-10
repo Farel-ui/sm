@@ -41,7 +41,7 @@
         padding: 20px 30px;
         border-radius: 5px;
     }
-    
+
 
     .masterplan-box h2 {
         margin: 10px 0 10px;
@@ -77,7 +77,7 @@
     .tab-container a:hover {
         color: #0066ff;
     }
-    
+
     .table-container {
     width: 80%;           /* 🔹 cuma setengah lebar layar */
     max-height: 400px;    /* 🔹 biar tabel ga kepanjangan */
@@ -161,7 +161,7 @@
     text-align: center;
     font-style: italic;
     color: #888;
-    background-color: #f7f7f7; 
+    background-color: #f7f7f7;
 }
 
 
@@ -245,57 +245,21 @@
       </tr>
     </thead>
     <tbody>
-      <tbody>
-  <tr>
-    <td style="text-align:center;">2017</td>
-    <td>Analisis Strategi Smart City Kota Bogor Tahun 2017</td>
-    <td>
-      <a href="https://smartcity.kotabogor.go.id/assets/BOOKLET/buku-1.-analisis-strategis-smart-city-kota-bogor.pdf" target="_blank">Lihat</a>
-      <i class="fas fa-eye eye-icon"></i>
-    </td>
-  </tr>
-  <tr>
-    <td style="text-align:center;">2017</td>
-    <td>Newsletter Executive Summary Smart City Kota Bogor</td>
-    <td>
-      <a href="https://smartcity.kotabogor.go.id/assets/BOOKLET/buku-2.-masterplan-smart-city-kota-bogor.pdf" target="_blank">Lihat</a>
-      <i class="fas fa-eye eye-icon"></i>
-    </td>
-  </tr>
-  <tr>
-    <td style="text-align:center;">2023</td>
-    <td>Analisis Strategi Smart City Kota Bogor</td>
-    <td>
-      <a href="https://smartcity.kotabogor.go.id/assets/BOOKLET/newsletter-executive-summary-smart-city-kota-bogor.pdf" target="_blank">Lihat</a>
-      <i class="fas fa-eye eye-icon"></i>
-    </td>
-  </tr>
-    <tr>
-    <td style="text-align:center;">2023</td>
-    <td>Rencana Induk Smart City Kota Bogor Tahun</td>
-    <td>
-      <a href="https://smartcity.kotabogor.go.id/assets/BOOKLET/buku-3.smart-city-kota-bogor.pdf" target="_blank">Lihat</a>
-      <i class="fas fa-eye eye-icon"></i>
-    </td>
-  </tr>
-  <tr>
-    <td style="text-align:center;">2023</td>
-    <td>Executive Summary Rencana Induk Smart City Kota Bogor</td>
-    <td>
-      <a href="https://smartcity.kotabogor.go.id/assets/BOOKLET/buku-4.smart-city-kota-bogor.pdf" target="_blank">Lihat</a>
-      <i class="fas fa-eye eye-icon"></i>
-    </td>
-  </tr>
-  <td style="text-align:center;">2023</td>
-    <td>Dokumen Quickwins Kota Bogor R5</td>
-    <td>
-      <a href="https://smartcity.kotabogor.go.id/assets/BOOKLET/dokumenQuickwins.pdf" target="_blank">Lihat</a>
-      <i class="fas fa-eye eye-icon"></i>
-    </td>
-  </tr>
+      {{-- ✅ Loop data masterplan --}}
+      @foreach ($masterplans->where('type', 'buku')->sortBy('period') as $item)
+        <tr>
+          <td style="text-align:center;">{{ $item->period }}</td>
+          <td>{{ $item->title }}</td>
+          <td>
+            <a href="{{ asset('storage/masterplans/' . $item->file) }}" target="_blank">Lihat</a>
+            <i class="fas fa-eye eye-icon"></i>
+          </td>
+        </tr>
+      @endforeach
     </tbody>
   </table>
 </div>
+
 
 
   <script>

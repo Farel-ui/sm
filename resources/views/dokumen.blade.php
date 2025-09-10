@@ -41,7 +41,7 @@
         padding: 20px 30px;
         border-radius: 5px;
     }
-    
+
 
     .masterplan-box h2 {
         margin: 10px 0 10px;
@@ -77,7 +77,7 @@
     .tab-container a:hover {
         color: #0066ff;
     }
-    
+
     .table-container {
     width: 80%;           /* 🔹 cuma setengah lebar layar */
     max-height: 400px;    /* 🔹 biar tabel ga kepanjangan */
@@ -161,7 +161,7 @@
     text-align: center;
     font-style: italic;
     color: #888;
-    background-color: #f7f7f7; 
+    background-color: #f7f7f7;
 }
 
 

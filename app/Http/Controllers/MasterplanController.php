@@ -10,6 +10,7 @@ use App\Models\QuickWin;
 use App\Models\Booklet;
 use App\Models\Iga;
 use App\Models\Assessment;
+use App\Models\implementasi;
 
 
 class MasterplanController extends Controller
@@ -20,7 +21,7 @@ class MasterplanController extends Controller
         $dimensions = Dimension::all();
         $quickwins = QuickWin::all();
         $booklets = Booklet::all();
-        $implementasi = Masterplan::where('type', 'implementasi')->orderBy('period')->get();
+        $implementasi = implementasi::all();
         $penghargaan = Masterplan::where('type', 'penghargaan')->orderBy('period')->get();
         $igas = Iga::all();
         $assessments = Assessment::orderBy('year')->get();
@@ -29,7 +30,7 @@ class MasterplanController extends Controller
             'masterplans',
             'dimensions',
             'quickwins',
-
+            'implementasi',
             'booklets',
             'igas',
             
@@ -45,6 +46,11 @@ class MasterplanController extends Controller
 
     }
 
+    public function admin()
+{
+    return view('admin.dashboard');
+}
+
     public function penilaian()
     {
         $title = 'Masterplan Smart City (penilaian)';
@@ -53,19 +59,28 @@ class MasterplanController extends Controller
 
     }
 
+public function implementasi()
+{
+    $implementasi = Implementasi::all();
+    return view('implementasi', compact('implementasi'));
+}
+
+
     public function paparan()
     {
         $title = 'Paparan Masterplan Smart City';
-        $masterplans = Masterplan::where('type', 'paparan')->get();
+        $masterplans = Masterplan::where('type', 'paparan')->orderBy('period')->get();
         return view('paparan', compact('title', 'masterplans'));
     }
 
         public function masterplano()
-    {
-        $title = 'Paparan Masterplan Smart City';
-        $masterplans = Masterplan::where('type', 'masterplano')->get();
-        return view('masterplano', compact('title', 'masterplans'));
-    }
+{
+    $title = 'Masterplan Smart City';
+    $masterplans = Masterplan::where('type', 'buku')->orderBy('period')->get();
+    return view('masterplano', compact('title', 'masterplans'));
+}
+
+
 
     public function assessment()
     {
@@ -97,11 +112,7 @@ class MasterplanController extends Controller
     public function update(Request $request, Masterplan $masterplan) {}
     public function destroy(Masterplan $masterplan) {}
 
-    public function implementasi()
-    {
-        // Mengarah ke file resources/views/implementasi.blade.php
-        return view('implementasi');
-    }
+
 
     public function chartData(Request $request)
 {

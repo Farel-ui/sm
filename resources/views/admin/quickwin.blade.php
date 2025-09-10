@@ -1,75 +1,113 @@
+<x-app-layout>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dasbor - QuickWin</title>
+    <title>Dashboard - QuickWin</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    <link rel="icon" href="{{ asset('images/logo.svg') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f8fafc; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 0.5s ease-out; }
+        .table-row { animation: fadeIn 0.3s ease-out; }
+
+        /* Gradient */
+        .gradient-bg { background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); }
+
+        /* Card hover */
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); }
+
+        /* Buttons */
+        .action-btn { padding: 8px; border-radius: 8px; transition: all 0.2s ease; }
+        .action-btn:hover { transform: scale(1.1); }
+
+        /* Header Table */
+        .table-header { background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); }
+
+        /* Gradient button */
+        .btn-gradient {
+            background: linear-gradient(to right, #3b82f6, #1e40af);
+            color: white; font-weight: 600;
+            border-radius: 0.5rem; padding: 0.625rem 1.5rem;
+            display: inline-flex; align-items: center;
+        }
+        .btn-gradient:hover { background: linear-gradient(to right, #1e40af, #1e3a8a); }
+        .btn-gradient i { margin-right: 0.5rem; }
+    </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-    @include('layouts.navigation')
+<body class="gradient-bg min-h-screen">
 
     <main class="pb-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             <!-- Header -->
-            <div class="mt-6">
-                <div class="bg-gradient-to-r from-green-50 to-green-100 border border-green-200 rounded-xl p-6">
-                    <h1 class="text-2xl font-bold text-gray-800 mb-2 flex items-center">
-                        <div class="bg-green-500 p-2 rounded-lg mr-3">
+            <div class="mt-6 fade-in">
+                <div class="bg-blue-500 border border-blue-100 rounded-xl p-4">
+                    <h1 class="text-xl font-bold text-white mb-2 flex items-center">
+                        <div class="bg-blue-600 p-2 rounded-lg mr-3">
                             <i class="fas fa-bolt text-white"></i>
                         </div>
                         QuickWin Dashboard
                     </h1>
-                    <p class="text-gray-600">Kelola dan pantau semua QuickWin dengan mudah</p>
                 </div>
             </div>
 
             <!-- Card List -->
-            <div class="mt-6 bg-white shadow-sm rounded-xl border border-gray-100 overflow-hidden">
-                <div class="px-6 py-5 border-b border-gray-100 flex justify-between items-center">
-                    <h3 class="text-xl font-semibold text-gray-800 flex items-center">
-                        <i class="fas fa-list mr-2 text-green-500"></i> Daftar QuickWin
+            <div class="mt-6 bg-white shadow-sm rounded-xl border border-blue-100 overflow-hidden card-hover fade-in">
+                <!-- Card Header -->
+                <div class="px-6 py-5 table-header flex justify-between items-center">
+                    <h3 class="text-lg font-semibold text-blue-500 flex items-center">
+                        <i class="fas fa-list mr-2 text-blue-400"></i> Daftar QuickWin
                     </h3>
-                    <a href="{{ route('quickwin.create') }}"
-                       class="px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 shadow">
-                        <i class="fas fa-plus mr-2"></i> Tambah Baru
+                    <a href="{{ route('quickwin.create') }}" class="btn-gradient">
+                        <i class="fas fa-plus"></i> Tambah Baru
                     </a>
                 </div>
 
+                <!-- Table -->
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
+                    <table class="min-w-full divide-y divide-blue-500">
+                        <thead class="table-header">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">No</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Image</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Title</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Description</th>
-                                <th class="px-6 py-3 text-center text-xs font-semibold text-gray-600 uppercase">Actions</th>
+                                <th class="px-6 py-3 text-left text-xs font-bold text-blue-500 uppercase tracking-wider">No</th>
+                                <th class="px-6 py-3 text-left text-xs font-bold text-blue-500 uppercase tracking-wider">Image</th>
+                                <th class="px-6 py-3 text-left text-xs font-bold text-blue-500 uppercase tracking-wider">Title</th>
+                                <th class="px-6 py-3 text-left text-xs font-bold text-blue-500 uppercase tracking-wider">Description</th>
+                                <th class="px-6 py-3 text-center text-xs font-bold text-blue-500 uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody class="bg-white divide-y divide-blue-500">
                             @forelse ($quickwins as $index => $qw)
-                                <tr>
-                                    <td class="px-6 py-4 text-sm text-gray-500">{{ $index + 1 }}</td>
+                                <tr class="table-row hover:bg-blue-50 transition-all duration-200">
+                                    <td class="px-6 py-4 text-sm text-blue-500">{{ $index + 1 }}</td>
                                     <td class="px-6 py-4">
-                                        <img src="{{ asset('storage/quickwins/' . $qw->image) }}" alt="{{ $qw->title }}"
-                                             class="h-16 w-16 rounded-lg object-cover border">
+                                        <img src="{{ asset('images/quickwins/' . $qw->image) }}" alt="{{ $qw->title }}"
+                                             class="h-16 w-16 rounded-lg object-cover border border-blue-200">
                                     </td>
-                                    <td class="px-6 py-4 text-sm font-semibold text-gray-900">{{ $qw->title }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-600">{{ $qw->description }}</td>
+                                    <td class="px-6 py-4 text-sm font-semibold text-blue-500">{{ $qw->title }}</td>
+                                    <td class="px-6 py-4 text-sm text-blue-400">{{ $qw->description }}</td>
                                     <td class="px-6 py-4 text-center">
-                                        <a href="{{ route('quickwin.edit', $qw->id) }}"
-                                           class="text-yellow-600 hover:text-yellow-800 mx-2">
+                                        <a href="{{ route('quickwin.edit', $qw->id) }}" class="action-btn bg-blue-500 text-white hover:text-yellow-500" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <form action="{{ route('quickwin.destroy', $qw->id) }}" method="POST" class="inline"
                                               onsubmit="return confirm('Yakin ingin menghapus QuickWin ini?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-800 mx-2">
+                                            <button type="submit" class="action-btn bg-blue-500 text-white hover:text-yellow-500" title="Delete">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </form>
@@ -77,15 +115,75 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-6 py-12 text-center text-gray-500">Belum ada QuickWin</td>
+                                    <td colspan="5" class="px-6 py-12 text-center">
+                                        <div class="flex flex-col items-center justify-center">
+                                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                                                <i class="fas fa-folder-open text-blue-300 text-2xl"></i>
+                                            </div>
+                                            <h3 class="text-lg font-medium text-blue-500 mb-2">Belum ada QuickWin</h3>
+                                            <p class="text-blue-500 mb-4">Mulai dengan menambahkan QuickWin pertama Anda</p>
+                                            <a href="{{ route('quickwin.create') }}" class="btn-gradient">
+                                                <i class="fas fa-plus"></i> Tambah QuickWin
+                                            </a>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
-            </div>
 
+                <!-- Pagination (sama gaya dengan Masterplan) -->
+                @if ($quickwins->hasPages())
+                    <div class="px-6 py-4 border-t border-blue-100 bg-blue-50">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1 flex justify-between sm:hidden">
+                                @if ($quickwins->onFirstPage())
+                                    <span class="px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-gray-400 bg-gray-100 cursor-not-allowed">Previous</span>
+                                @else
+                                    <a href="{{ $quickwins->previousPageUrl() }}" class="relative inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-500 bg-white hover:bg-blue-50">Previous</a>
+                                @endif
+                                @if ($quickwins->hasMorePages())
+                                    <a href="{{ $quickwins->nextPageUrl() }}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-500 bg-white hover:bg-blue-50">Next</a>
+                                @else
+                                    <span class="ml-3 px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-gray-400 bg-gray-100 cursor-not-allowed">Next</span>
+                                @endif
+                            </div>
+                            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                                <p class="text-sm text-blue-500 flex items-center">
+                                    <i class="fas fa-info-circle mr-2 text-blue-300"></i>
+                                    Menampilkan <span class="font-medium mx-1">{{ $quickwins->firstItem() }}</span>
+                                    - <span class="font-medium mx-1">{{ $quickwins->lastItem() }}</span>
+                                    dari <span class="font-medium mx-1">{{ $quickwins->total() }}</span> hasil
+                                </p>
+                                <nav class="relative z-0 inline-flex rounded-lg shadow-sm -space-x-px" aria-label="Pagination">
+                                    @if ($quickwins->onFirstPage())
+                                        <span class="relative inline-flex items-center px-3 py-2 rounded-l-lg border border-blue-300 bg-gray-100 text-sm font-medium text-gray-400 cursor-not-allowed"><i class="fas fa-chevron-left"></i></span>
+                                    @else
+                                        <a href="{{ $quickwins->previousPageUrl() }}" class="relative inline-flex items-center px-3 py-2 rounded-l-lg border border-blue-300 bg-white text-sm font-medium text-blue-500 hover:bg-blue-50"><i class="fas fa-chevron-left"></i></a>
+                                    @endif
+
+                                    @for ($i = 1; $i <= $quickwins->lastPage(); $i++)
+                                        @if ($i == $quickwins->currentPage())
+                                            <span aria-current="page" class="z-10 bg-blue-100 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">{{ $i }}</span>
+                                        @else
+                                            <a href="{{ $quickwins->url($i) }}" class="bg-white border-blue-300 text-blue-500 hover:bg-blue-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">{{ $i }}</a>
+                                        @endif
+                                    @endfor
+
+                                    @if ($quickwins->hasMorePages())
+                                        <a href="{{ $quickwins->nextPageUrl() }}" class="relative inline-flex items-center px-3 py-2 rounded-r-lg border border-blue-300 bg-white text-sm font-medium text-blue-500 hover:bg-blue-50"><i class="fas fa-chevron-right"></i></a>
+                                    @else
+                                        <span class="relative inline-flex items-center px-3 py-2 rounded-r-lg border border-blue-300 bg-gray-100 text-sm font-medium text-gray-400 cursor-not-allowed"><i class="fas fa-chevron-right"></i></span>
+                                    @endif
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
         </div>
     </main>
 </body>
 </html>
+</x-app-layout>

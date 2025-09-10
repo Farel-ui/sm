@@ -41,7 +41,7 @@
         padding: 20px 30px;
         border-radius: 5px;
     }
-    
+
 
     .masterplan-box h2 {
         margin: 5px 0 10px;
@@ -77,7 +77,7 @@
     .tab-container a:hover {
         color: #0066ff;
     }
-    
+
     .table-container {
     width: 80%;           /* 🔹 cuma setengah lebar layar */
     max-height: 400px;    /* 🔹 biar tabel ga kepanjangan */
@@ -161,7 +161,7 @@
     text-align: center;
     font-style: italic;
     color: #888;
-    background-color: #f7f7f7; 
+    background-color: #f7f7f7;
 }
 
 
@@ -214,7 +214,7 @@
 
 </style>
 </head>
-<body>  
+<body>
   <div class="masterplan-box">
     <h2>PAPARAN</h2>
     <p>
@@ -232,7 +232,7 @@
   <table id="dataTable">
     <thead>
       <tr>
-        <th style="width: 150px; text-align:center;">TAHUN</th>
+        <th style="width: 150px; text-align:center;">Period</th>
         <th style="width: auto;">JUDUL</th>
         <th class="search-cell" style="width: 200px;">
           <div class="search-box">
@@ -243,68 +243,18 @@
       </tr>
     </thead>
     <tbody>
-  <tr>
-    <td style="text-align:center;">2018</td>
-    <td>Capaian Program Smart City Kota Bogor V1</td>
-    <td>
-      <a href="https://smartcity.kotabogor.go.id/assets/BOOKLET/Capaian_Program_Smart_City_Kota_Bogor-V1-2018.pdf" target="_blank">Lihat</a>
-      <i class="fas fa-eye eye-icon"></i>
-    </td>
-  </tr>
-  <tr>
-    <td style="text-align:center;">2018</td>
-    <td>Capaian Program Smart CityKota Bogor V2</td>
-    <td>
-      <a href="https://smartcity.kotabogor.go.id/assets/BOOKLET/Capaian_Program_Smart_CityKota_Bogor-V2-2018.pdf" target="_blank">Lihat</a>
-      <i class="fas fa-eye eye-icon"></i>
-    </td>
-  </tr>
-  <tr>
-    <td style="text-align:center;">2019</td>
-    <td>Smartcity 2019 Tahap 2</td>
-    <td>
-      <a href="https://smartcity.kotabogor.go.id/assets/BOOKLET/Smartcity_2019_Tahap%202.pdf" target="_blank">Lihat</a>
-      <i class="fas fa-eye eye-icon"></i>
-    </td>
-  </tr>
-    <tr>
-    <td style="text-align:center;">2020</td>
-    <td>Ekspose Smart City</td>
-    <td>
-      <a href="https://smartcity.kotabogor.go.id/assets/BOOKLET/Ekspose_Smart_City-2020.pdf" target="_blank">Lihat</a>
-      <i class="fas fa-eye eye-icon"></i>
-    </td>
-  </tr>
-  <tr>
-    <td style="text-align:center;">2021</td>
-    <td>SMART CITY</td>
-    <td>
-      <a href="https://smartcity.kotabogor.go.id/assets/BOOKLET/SMARTCITY-PPT.pdf" target="_blank">Lihat</a>
-      <i class="fas fa-eye eye-icon"></i>
-    </td>
-  </tr>
-  <td style="text-align:center;">2021</td>
-    <td>POINTER EVALUASI MENUJU 100 SMARTCITY INDONESIA</td>
-    <td>
-      <a href="https://smartcity.kotabogor.go.id/assets/file/pointer.pdf" target="_blank">Lihat</a>
-      <i class="fas fa-eye eye-icon"></i>
-    </td>
-  </tr>
-  <td style="text-align:center;">2022</td>
-    <td>Laporan kick off Smart City</td>
-    <td>
-      <a href="https://smartcity.kotabogor.go.id/assets/file/kickoff.pdf" target="_blank">Lihat</a>
-      <i class="fas fa-eye eye-icon"></i>
-    </td>
-  </tr>
-  <td style="text-align:center;">2021</td>
-    <td>Presentasi Narsum ITE Hybrid</td>
-    <td>
-      <a href="https://smartcity.kotabogor.go.id/assets/file/PresentasiNarsum.pdf" target="_blank">Lihat</a>
-      <i class="fas fa-eye eye-icon"></i>
-    </td>
-  </tr>
-</tbody>
+      {{-- ✅ Loop data masterplan --}}
+      @foreach ($masterplans->where('type', 'paparan')->sortBy('period') as $item)
+        <tr>
+          <td style="text-align:center;">{{ $item->period }}</td>
+          <td>{{ $item->title }}</td>
+          <td>
+            <a href="{{ asset('storage/masterplans/' . $item->file) }}" target="_blank">Lihat</a>
+            <i class="fas fa-eye eye-icon"></i>
+          </td>
+        </tr>
+      @endforeach
+    </tbody>
   </table>
 </div>
 

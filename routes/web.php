@@ -1,17 +1,18 @@
 <?php
 
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\AdminAssessmentController;
 use App\Http\Controllers\AdminBookletController;
 use App\Http\Controllers\AdminDimensionController;
 use App\Http\Controllers\AdminIgaController;
-use App\Http\Controllers\AdminMasterplanController;
 use App\Http\Controllers\AdminQuickwinController;
+use App\Http\Controllers\AdminMasterplanController;
+use App\Http\Controllers\AdminImplementasiController;
 use App\Http\Controllers\MasterplanController;
-
+use App\Http\Controllers\ProfileController;
 
 
 // ✅ Tampilan awal website
-
 Route::get('/', [MasterplanController::class, 'index'])->name('home');
 Route::get('/assessment', [MasterplanController::class, 'assessment'])->name('assessment');
 Route::get('/iga', [MasterplanController::class, 'iga'])->name('iga');
@@ -19,36 +20,32 @@ Route::get('/penilaian/data-chart', [MasterplanController::class, 'chartData']);
 Route::get('/chart', [ChartController::class, 'index'])->name('chart.index');
 Route::get('/masterplan/buku', [MasterplanController::class, 'buku'])->name('masterplan.buku');
 Route::get('/masterplan/paparan', [MasterplanController::class, 'paparan'])->name('masterplan.paparan');
-Route::get('/penilaian', [MasterplanController::class, 'penilaian'])->name('penilaian');
-Route::get('/implementasi',[MasterplanController::class, 'implementasi'])->name('implementasi');
-Route::get('/penilaian/data-chart', [MasterplanController::class, 'chartData']);
-Route::get('/chart', [ChartController::class, 'index'])->name('chart.index');
-Route::get('/dokumen', function () {
-    return view('dokumen');
-})->name('dokumen');
-Route::get('/masterplano', function () {
-    return view('masterplano');
-})->name('masterplano');
-Route::get('/paparan', function () {
-    return view('paparan');
-})->name('paparan');
+Route::get('/implementasi', [MasterplanController::class, 'implementasi'])->name('implementasi');
+Route::get('/paparan', [MasterplanController::class, 'paparan'])->name('paparan');
+Route::get('/penilaian', [MasterplanController::class, 'penilaian']);
+Route::get('/Dokumen', [MasterplanController::class, 'Dokumen'])->name('Dokumen');
+Route::get('/masterplano', [MasterplanController::class, 'masterplano'])->name('masterplano');
 
 
 // ✅ Middleware auth: semua route admin/dashboard hanya bisa diakses setelah login
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/dokumen', function () {
+    return view('dokumen');
+})->name('dokumen');
 
     // ✅ Halaman dashboard admin
     Route::get('/dashboard', [MasterplanController::class, 'admin'])->name('dashboard');
 
 
     // ✅ CRUD Masterplan
-    Route::get('/admin/masterplan/', [AdminMasterplanController::class, 'index'])->name('masterplan');
+    Route::get('/admin/masterplan', [AdminMasterplanController::class, 'index'])->name('admin.masterplan');
     Route::get('/admin/masterplan/create', [AdminMasterplanController::class, 'create'])->name('masterplan.create');
     Route::post('/admin/masterplan/store', [AdminMasterplanController::class, 'store'])->name('masterplan.store');
     Route::get('/admin/masterplan/{id}/edit', [AdminMasterplanController::class, 'edit'])->name('masterplan.edit');
     Route::post('/admin/masterplan/update/{id}', [AdminMasterplanController::class, 'update'])->name('masterplan.update');
-    Route::post('/admin/masterplan/{id}', [AdminMasterplanController::class, 'destroy'])->name('masterplan.destroy');
-    Route::get('/masterplan', [MasterplanController::class, 'masterplan'])->name('masterplan.frontend');
+    Route::get('/admin/masterplan/{id}', [AdminMasterplanController::class, 'destroy'])->name('masterplan.destroy');
+    Route::get('/masterplan', [MasterplanController::class, 'masterplan'])->name('masterplan');
 
     // ✅ CRUD Iga
     Route::get('/admin/iga/', [AdminIgaController::class, 'index'])->name('iga');
@@ -91,6 +88,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/dimension/update/{id}', [AdminDimensionController::class, 'update'])->name('dimension.update');
     Route::post('/admin/dimension/{id}', [AdminDimensionController::class, 'destroy'])->name('dimension.destroy');
 
+    // ✅ CRUD Implementasi (Admin)
+    Route::get('/admin/implementasi', [AdminImplementasiController::class, 'index'])->name('admin.implementasi');
+    Route::get('/implementasi/create', [AdminImplementasiController::class, 'create'])->name('implementasi.create');
+    Route::post('/implementasi/store', [AdminImplementasiController::class, 'store'])->name('implementasi.store');
+    Route::get('/implementasi/{id}/edit', [AdminImplementasiController::class, 'edit'])->name('implementasi.edit');
+    Route::put('/implementasi/{id}', [AdminImplementasiController::class, 'update'])->name('implementasi.update');
+    Route::delete('/implementasi/{id}', [AdminImplementasiController::class, 'destroy'])->name('implementasi.destroy');
+
+
     // ✅ Breeze profile routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -103,6 +109,4 @@ Route::middleware(['auth'])->group(function () {
 require __DIR__.'/auth.php';
 
 
-Route::get('/implementasi', function () {
-    return view('implemen');
-});
+

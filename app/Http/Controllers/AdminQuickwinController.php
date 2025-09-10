@@ -13,7 +13,7 @@ class AdminQuickwinController extends Controller
      */
     public function index()
     {
-        $quickwins = Quickwin::all();
+        $quickwins = Quickwin::paginate(6);
 
         return view('Admin.Quickwin',[
             'quickwins' => $quickwins

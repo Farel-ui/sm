@@ -1,12 +1,13 @@
+<x-app-layout>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dashboard - Dimension</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="{{ asset('images/logo.svg') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         /* Custom scrollbar for modern browsers */
         ::-webkit-scrollbar {
@@ -50,33 +51,9 @@
 
         .card-hover:hover {
             transform: translateY(-2px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        /* Button animations */
-        .btn-animate {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .btn-animate::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn-animate:hover::before {
-            left: 100%;
-        }
-
-        .btn-animate:hover {
-            transform: translateY(-1px);
+            box-shadow:
+                0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
         /* Action buttons */
@@ -97,109 +74,34 @@
     </style>
 </head>
 <body class="gradient-bg min-h-screen">
-    @include('layouts.navigation')
     <!-- Main Content -->
     <main class="pb-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Welcome Section -->
-            <div class="mt-6 fade-in">
-                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-xl p-6">
-                    <h1 class="text-2xl font-bold text-gray-800 mb-2 flex items-center">
+            <div class="mt-5 fade-in">
+                <div class="bg-blue-500 border border-blue-100 rounded-xl p-2">
+                    <h1 class="text-xl font-bold text-white mb-2 flex items-center">
                         <div class="bg-blue-500 p-2 rounded-lg mr-3">
                             <i class="fas fa-project-diagram text-white"></i>
                         </div>
                         Dimension Dashboard
                     </h1>
-                    <p class="text-gray-600">Kelola dan pantau semua dimensi Anda dengan mudah</p>
-                </div>
-            </div>
-
-            <!-- Stats Cards -->
-            <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 fade-in">
-                <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 card-hover">
-                    <div class="p-6">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0">
-                                <div class="bg-blue-100 p-3 rounded-lg">
-                                    <i class="fas fa-file-alt text-blue-600 text-lg"></i>
-                                </div>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-500">Total Dimensions</p>
-                                <p class="text-2xl font-bold text-gray-900">{{ isset($dimensions) ? $dimensions->count() : 0 }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 card-hover">
-                    <div class="p-6">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0">
-                                <div class="bg-green-100 p-3 rounded-lg">
-                                    <i class="fas fa-check-circle text-green-600 text-lg"></i>
-                                </div>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-500">Active</p>
-                                <p class="text-2xl font-bold text-gray-900">{{ isset($dimensions) ? $dimensions->where('active', true)->count() : 0 }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 card-hover">
-                    <div class="p-6">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0">
-                                <div class="bg-yellow-100 p-3 rounded-lg">
-                                    <i class="fas fa-file-image text-yellow-600 text-lg"></i>
-                                </div>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-500">With Images</p>
-                                <p class="text-2xl font-bold text-gray-900">{{ isset($dimensions) ? $dimensions->where('image', '!=', null)->count() : 0 }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 card-hover">
-                    <div class="p-6">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0">
-                                <div class="bg-purple-100 p-3 rounded-lg">
-                                    <i class="fas fa-video text-purple-600 text-lg"></i>
-                                </div>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-500">With Videos</p>
-                                <p class="text-2xl font-bold text-gray-900">{{ isset($dimensions) ? $dimensions->where('video', '!=', null)->count() : 0 }}</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
             <!-- Card Container -->
-            <div class="bg-white overflow-hidden shadow-sm rounded-xl mt-6 card-hover fade-in border border-gray-100">
+            <div class="bg-white overflow-hidden shadow-sm rounded-xl mt-6 card-hover fade-in border border-blue-100">
                 <!-- Card Header -->
-                <div class="px-6 py-5 border-b border-gray-100 table-header">
+                <div class="px-6 py-5 table-header">
                     <div class="flex items-center justify-between">
-                        <h3 class="text-xl font-semibold text-gray-800 flex items-center">
-                            <div class="bg-indigo-500 p-2 rounded-lg mr-3">
-                                <i class="fas fa-list text-white text-sm"></i>
-                            </div>
-                            Daftar Dimension
+                        <h3 class="text-lg font-semibold text-blue-500 flex items-center">
+                            Data Dimension Smart City
                         </h3>
                         <div class="flex items-center space-x-3">
-                            <div class="relative">
-                                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                                <input type="text" placeholder="Cari dimension..." id="searchInput"
-                                       class="pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all">
-                            </div>
+                            <input type="text" id="searchInput" placeholder="Cari dimension..."
+                                   class="pl-4 pr-4 py-2.5 text-sm border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-blue-500 transition-all" />
                             <a href="{{ route('dimension.create') }}"
-                               class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all btn-animate shadow-lg">
+                               class="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-blue-700 text-white text-sm font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
                                 <i class="fas fa-plus mr-2"></i> Tambah Baru
                             </a>
                         </div>
@@ -208,83 +110,65 @@
 
                 <!-- Table Container -->
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
+                    <table class="min-w-full divide-y divide-blue-500">
                         <thead class="table-header">
                             <tr>
-                                <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-hashtag mr-2 text-gray-400"></i>
-                                        No.
-                                    </div>
+                                <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-500 uppercase tracking-wider">
+                                    No.
                                 </th>
-                                <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-heading mr-2 text-gray-400"></i>
-                                        Name
-                                    </div>
+                                <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-500 uppercase tracking-wider">
+                                    Name
                                 </th>
-                                <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-file-alt mr-2 text-gray-400"></i>
-                                        Description
-                                    </div>
+                                <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-500 uppercase tracking-wider">
+                                    Description
                                 </th>
-                                <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    <div class="flex items-center justify-center">
-                                        <i class="fas fa-image mr-2 text-gray-400"></i>
-                                        Image
-                                    </div>
+                                <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-blue-500 uppercase tracking-wider">
+                                    Image
                                 </th>
-                                <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    <div class="flex items-center justify-center">
-                                        <i class="fas fa-video mr-2 text-gray-400"></i>
-                                        Video
-                                    </div>
+                                <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-blue-500 uppercase tracking-wider">
+                                    Video
                                 </th>
-                                <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    <div class="flex items-center justify-center">
-                                        <i class="fas fa-cogs mr-2 text-gray-400"></i>
-                                        Actions
-                                    </div>
+                                <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-blue-500 uppercase tracking-wider">
+                                    Actions
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody class="bg-white divide-y divide-blue-500">
                             @if(isset($dimensions) && $dimensions->count() > 0)
                                 @foreach ($dimensions as $index => $dimension)
                                 <tr class="table-row hover:bg-blue-50 transition-all duration-200 searchable-row">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <span class="bg-gray-100 px-3 py-1 rounded-full text-xs font-medium">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-500">
+                                        <span class="px-3 py-1 rounded-full text-sm font-medium">
                                             {{ $index + 1 }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-semibold text-gray-900 searchable-title">
+                                        <div class="text-sm font-semibold text-blue-500 searchable-title">
                                             {{ $dimension->name }}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-500">
+                                        <div class="text-sm text-blue-500">
                                             {{ $dimension->description ?? 'N/A' }}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
-                                        <img src="{{ $dimension->image ?? '#' }}" alt="Image" class="h-12 w-12 object-cover rounded">
+                                        <img src="{{ asset('images/dimension/' . $dimension->image) }}" alt="Image" class="h-12 w-12 object-cover rounded" />
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
                                         <video width="120" controls>
-                                            <source src="{{ $dimension->video ?? '#' }}" type="video/mp4">
+                                            <source src="{{ asset('video/' . $dimension->video  )  }}" type="video/mp4" />
                                             Your browser does not support the video tag.
                                         </video>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
                                         <div class="flex justify-center space-x-2">
-                                            <button class="action-btn bg-blue-50 text-blue-600 hover:bg-blue-100 hover:text-blue-700"
+                                            <button class="action-btn bg-blue-500 text-white hover:text-yellow-500"
                                                     title="View Details">
                                                 <i class="fas fa-eye"></i>
                                             </button>
                                             <a href="{{ route('dimension.edit', $dimension->id ?? '#') }}"
-                                               class="action-btn bg-yellow-50 text-yellow-600 hover:bg-yellow-100 hover:text-yellow-700"
+                                               class="action-btn bg-blue-500 text-white hover:text-yellow-500"
                                                title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
@@ -294,7 +178,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                        class="action-btn bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700"
+                                                        class="action-btn bg-blue-500 text-white hover:text-yellow-500"
                                                         title="Delete">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
@@ -307,11 +191,11 @@
                                 <tr>
                                     <td colspan="6" class="px-6 py-12 text-center">
                                         <div class="flex flex-col items-center justify-center">
-                                            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                                                <i class="fas fa-folder-open text-gray-400 text-2xl"></i>
+                                            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-4">
+                                                <i class="fas fa-folder-open text-blue-500 text-2xl"></i>
                                             </div>
-                                            <h3 class="text-lg font-medium text-gray-900 mb-2">Belum ada dimension</h3>
-                                            <p class="text-gray-500 mb-4">Mulai dengan menambahkan dimension pertama Anda</p>
+                                            <h3 class="text-lg font-medium text-blue-500 mb-2">Belum ada dimension</h3>
+                                            <p class="text-blue-500 mb-4">Mulai dengan menambahkan dimension pertama Anda</p>
                                             <a href="{{ route('dimension.create') }}"
                                                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700">
                                                 <i class="fas fa-plus mr-2"></i>
@@ -338,9 +222,9 @@
                         </div>
                         <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                             <div>
-                                <p class="text-sm text-gray-700 flex items-center">
-                                    <i class="fas fa-info-circle mr-2 text-gray-400"></i>
-                                    Menampilkan <span class="font-medium mx-1">{{ isset($dimensions) ? $dimensions->count() : 0 }}</span> dari <span class="font-medium mx-1">{{ isset($dimensions) ? $dimensions->count() : 0 }}</span> hasil
+                                <p class="text-lg text-blue-500 flex items-center">
+                                    <i class="fas fa-info-circle mr-2 text-blue-500"></i>
+                                    Total Data Dimension <span class="font-medium mx-5">{{ isset($dimensions) ? $dimensions->count() : 0 }}</span>
                                 </p>
                             </div>
                             <div>
@@ -351,10 +235,10 @@
                                     <button aria-current="page" class="z-10 bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
                                         1
                                     </button>
-                                    <button class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    <button class="bg-white border-gray-300 text-blue-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
                                         2
                                     </button>
-                                    <button class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    <button class="bg-white border-gray-300 text-blue-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
                                         3
                                     </button>
                                     <button class="relative inline-flex items-center px-3 py-2 rounded-r-lg border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
@@ -391,3 +275,4 @@
     </script>
 </body>
 </html>
+</x-app-layout>
