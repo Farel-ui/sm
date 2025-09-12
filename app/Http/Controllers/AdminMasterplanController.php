@@ -15,7 +15,7 @@ class AdminMasterplanController extends Controller
     {
         $masterplan = Masterplan::paginate(6);
 
-        return view('Admin.Masterplan',[
+        return view('admin.masterplan', [
             'masterplan' => $masterplan
         ]);
     }
@@ -33,34 +33,29 @@ class AdminMasterplanController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(
-            [
-                'title' => 'required',
-                'period' => 'required',
-                'file' => 'mimes:pdf|max:20480'
-            ],
-        );
+        $request->validate([
+            'title'  => 'required|string|max:255',
+            'period' => 'required|string|max:50',
+            'type'   => 'required|in:buku,paparan',
+            'status' => 'required|in:draft,public',
+            'file'   => 'nullable|mimes:pdf|max:20480',
+        ]);
+
         $filename = null;
-        if ($request->hasFile('file')){
+        if ($request->hasFile('file')) {
             $filename = time() . '_' . $request->file('file')->getClientOriginalName();
             $request->file('file')->move(public_path('storage/masterplans/'), $filename);
         }
-        $masterplan = Masterplan::create([
-            'title' => $request->title,
+
+        Masterplan::create([
+            'title'  => $request->title,
             'period' => $request->period,
-            'file'=> $filename,
+            'type'   => $request->type,
+            'status' => $request->status,
+            'file'   => $filename,
         ]);
 
-        return redirect()->route('admin.masterplan')->with('succes', 'Dokumen Berhasil Ditambahkeun');
-    }
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        return redirect()->route('admin.masterplan')->with('success', 'Dokumen berhasil ditambahkan.');
     }
 
     /**
@@ -68,7 +63,7 @@ class AdminMasterplanController extends Controller
      */
     public function edit(string $id)
     {
-        $masterplan = Masterplan::findOrfail($id);
+        $masterplan = Masterplan::findOrFail($id);
         return view('admin.edit_mp', [
             'masterplan' => $masterplan
         ]);
@@ -78,56 +73,55 @@ class AdminMasterplanController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-{
-    $request->validate([
-        'title' => 'required',
-        'period' => 'required',
-        'file' => 'nullable|mimes:pdf|max:20480', // optional
-    ]);
+    {
+        $request->validate([
+            'title'  => 'required|string|max:255',
+            'period' => 'required|string|max:50',
+            'type'   => 'required|in:buku,paparan',
+            'status' => 'required|in:draft,public',
+            'file'   => 'nullable|mimes:pdf|max:10240',
+        ]);
 
-    $masterplan = Masterplan::findOrFail($id);
-    $filename = $masterplan->file; // default: file lama
+        $masterplan = Masterplan::findOrFail($id);
+        $filename = $masterplan->file;
 
-    // Jika user upload file baru
-    if ($request->hasFile('file')) {
-        // Hapus file lama
-        $oldPath = public_path('storage/masterplans/' . basename($masterplan->file));
-        if (File::exists($oldPath)) {
-            File::delete($oldPath);
+        if ($request->hasFile('file')) {
+            $oldPath = public_path('storage/masterplans/' . basename($masterplan->file));
+            if (File::exists($oldPath)) {
+                File::delete($oldPath);
+            }
+
+            $filename = time() . '_' . $request->file('file')->getClientOriginalName();
+            $request->file('file')->move(public_path('storage/masterplans'), $filename);
         }
 
-        // Upload file baru
-        $filename = time() . '_' . $request->file('file')->getClientOriginalName();
-        $request->file('file')->move(public_path('storage/masterplans'), $filename);
+        $masterplan->update([
+            'title'  => $request->title,
+            'period' => $request->period,
+            'type'   => $request->type,
+            'status' => $request->status,
+            'file'   => $filename,
+        ]);
+
+        return redirect()->route('admin.masterplan')->with('success', 'Dokumen berhasil diperbarui.');
     }
-
-    // Update database
-    $masterplan->update([
-        'title' => $request->title,
-        'period' => $request->period,
-        'file' => $filename,
-    ]);
-
-    return redirect()->route('admin.masterplan')->with('success', 'Dokumen berhasil diperbarui.');
-}
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
-{
-    $masterplan = Masterplan::findOrFail($id);
+    {
+        $masterplan = Masterplan::findOrFail($id);
 
-    // Hapus file fisik dari folder jika ada
-    $filepath = public_path('storage/masterplans/' . basename($masterplan->file));
+        $filepath = public_path('storage/masterplans/' . basename($masterplan->file));
 
-    if (File::exists($filepath)) {
-        File::delete($filepath);
+        if (File::exists($filepath)) {
+            File::delete($filepath);
+        }
+
+        $masterplan->delete();
+
+        return redirect()->route('admin.masterplan')->with('success', 'Dokumen berhasil dihapus.');
     }
-
-    // Hapus data dari database
-    $masterplan->delete();
-
-    return redirect()->route('admin.masterplan')->with('success', 'Dokumen berhasil dihapus.');
 }
-}
+

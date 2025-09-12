@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('masterplans', function (Blueprint $table) {
-            //
+            if (!Schema::hasColumn('masterplans', 'type')) {
+                $table->enum('type', ['buku', 'paparan'])->after('period');
+            }
+            if (!Schema::hasColumn('masterplans', 'status')) {
+                $table->enum('status', ['publish', 'draft'])->after('type');
+            }
         });
     }
 
@@ -22,7 +27,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('masterplans', function (Blueprint $table) {
-            //
+            $table->dropColumn(['type', 'status']);
         });
     }
 };

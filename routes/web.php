@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminMasterplanController;
 use App\Http\Controllers\AdminImplementasiController;
 use App\Http\Controllers\MasterplanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 
 
 // ✅ Tampilan awal website
@@ -26,7 +27,11 @@ Route::get('/penilaian', [MasterplanController::class, 'penilaian']);
 Route::get('/Dokumen', [MasterplanController::class, 'Dokumen'])->name('Dokumen');
 Route::get('/masterplano', [MasterplanController::class, 'masterplano'])->name('masterplano');
 
-
+   // ✅ Halaman dashboard admin
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/stats', [DashboardController::class, 'stats'])->name('dashboard.stats');
+});
 // ✅ Middleware auth: semua route admin/dashboard hanya bisa diakses setelah login
 Route::middleware(['auth'])->group(function () {
 
@@ -34,8 +39,6 @@ Route::middleware(['auth'])->group(function () {
     return view('dokumen');
 })->name('dokumen');
 
-    // ✅ Halaman dashboard admin
-    Route::get('/dashboard', [MasterplanController::class, 'admin'])->name('dashboard');
 
 
     // ✅ CRUD Masterplan
@@ -44,8 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/masterplan/store', [AdminMasterplanController::class, 'store'])->name('masterplan.store');
     Route::get('/admin/masterplan/{id}/edit', [AdminMasterplanController::class, 'edit'])->name('masterplan.edit');
     Route::post('/admin/masterplan/update/{id}', [AdminMasterplanController::class, 'update'])->name('masterplan.update');
-    Route::get('/admin/masterplan/{id}', [AdminMasterplanController::class, 'destroy'])->name('masterplan.destroy');
-    Route::get('/masterplan', [MasterplanController::class, 'masterplan'])->name('masterplan');
+    Route::delete('/admin/masterplan/{id}', [AdminMasterplanController::class, 'destroy'])->name('masterplan.destroy');
 
     // ✅ CRUD Iga
     Route::get('/admin/iga/', [AdminIgaController::class, 'index'])->name('iga');

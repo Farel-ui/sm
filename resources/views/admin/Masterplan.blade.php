@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Dashboard - Masterplan</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" href="{{ asset('images/logo.svg') }}" />
+  <title>Dashboard - Masterplan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/png" href="{{ asset('images/logo.svg') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         /* Custom scrollbar for modern browsers */
@@ -152,6 +152,18 @@
                                 <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-blue-500 uppercase tracking-wider">
                                     <div class="flex items-center justify-center">
                                         <i class="text-blue-400"></i>
+                                        Type
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-blue-500 uppercase tracking-wider">
+                                    <div class="flex items-center justify-center">
+                                        <i class="text-blue-400"></i>
+                                        Status
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-blue-500 uppercase tracking-wider">
+                                    <div class="flex items-center justify-center">
+                                        <i class="text-blue-400"></i>
                                         Terakhir Diubah
                                     </div>
                                 </th>
@@ -167,41 +179,41 @@
                             @if(isset($masterplan) && $masterplan->count() > 0)
                                 @foreach ($masterplan as $index => $mp)
                                 <tr class="table-row hover:bg-blue-50 transition-all duration-200 searchable-row">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-500">
-                                        <span class="px-3 py-1 rounded-full text-sm font-semibold">
-                                            {{ $index + 1 }}
+                                    <!-- No -->
+                                    <td class="px-6 py-4 text-sm text-blue-500">{{ $index + $masterplan->firstItem() }}</td>
+
+                                    <!-- Judul -->
+                                    <td class="px-6 py-4">
+                                        <div class="text-sm font-semibold text-blue-600 searchable-title">{{ $mp->title }}</div>
+                                        <div class="text-xs text-blue-400"><i class="fas fa-tag mr-1"></i>Masterplan Document</div>
+                                    </td>
+
+                                    <!-- Periode -->
+                                    <td class="px-6 py-4 text-sm text-blue-700">
+                                        <i class="fas fa-calendar-alt mr-1"></i> {{ $mp->period }}
+                                    </td>
+
+                                    <!-- Type -->
+                                    <td class="px-6 py-4 text-center">
+                                        <span class="px-3 py-1 rounded-full text-xs font-medium {{ $mp->type == 'buku' ? 'bg-green-100 text-green-800' : 'bg-purple-100 text-purple-800' }}">
+                                            {{ ucfirst($mp->type) }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0 h-12 w-12 flex items-center justify-center">
-                                                <i class="fas fa-file-alt text-blue-600 text-lg"></i>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-semibold text-blue-500 searchable-title">
-                                                    {{ $mp->title }}
-                                                </div>
-                                                <div class="text-xs text-blue-400">
-                                                    <i class="fas fa-tag mr-1"></i>Masterplan Document
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-blue-800">
-                                            <i class="fas fa-calendar-alt mr-1"></i>
-                                            {{ $mp->period ?? 'N/A' }}
+
+                                    <!-- Status -->
+                                    <td class="px-6 py-4 text-center">
+                                        <span class="px-3 py-1 rounded-full text-xs font-medium {{ $mp->status == 'publish' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800' }}">
+                                            {{ ucfirst($mp->status) }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-500 text-center">
-                                        <div class="flex items-center justify-center">
-                                            <i class="fas fa-history mr-2 text-blue-300"></i>
-                                            <span>{{ isset($mp->updated_at) ? date('d M Y', strtotime($mp->updated_at)) : 'N/A' }}</span>
-                                        </div>
-                                        <div class="text-xs text-blue-300 mt-1 text-center">
-                                            {{ isset($mp->updated_at) ? date('H:i', strtotime($mp->updated_at)) : '' }}
-                                        </div>
+
+                                    <!-- Terakhir Diubah -->
+                                    <td class="px-6 py-4 text-sm text-blue-500 text-center">
+                                        <div><i class="fas fa-history mr-1 text-blue-300"></i>{{ $mp->updated_at->format('d M Y') }}</div>
+                                        <div class="text-xs text-blue-300">{{ $mp->updated_at->format('H:i') }}</div>
                                     </td>
+
+                                    <!-- Aksi -->
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
                                         <div class="flex justify-center space-x-2">
                                             <button class="action-btn bg-blue-500 text-white hover:text-yellow-500"
@@ -213,7 +225,7 @@
                                                title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('masterplan.destroy', $mp->id ?? '#') }}" method="DELETE"
+                                            <form action="{{ route('masterplan.destroy', $mp->id ?? '#') }}" method="POST"
                                                   onsubmit="return confirm('Yakin ingin menghapus masterplan ini?')"
                                                   class="inline">
                                                 @csrf
