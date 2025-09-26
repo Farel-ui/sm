@@ -73,14 +73,13 @@
 
     /* Chart container */
     .chart-container {
-        position: center;
-        height: 500px;
+        position: relative;
+        height: 300px;
         width: 100%;
     }
 </style>
 
 <body class="bg-blue-100 min-h-screen p-3">
-    <main class="pb-12">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Top Header -->
     <div class="bg-blue-600 text-white flex justify-end items-center px-4 py-2 rounded-lg shadow-sm mb-3">
@@ -99,7 +98,7 @@
     </div>
 
     <!-- Main Content Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-2">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-3">
         <!-- Chart Section -->
         <div class="lg:col-span-3">
             <div class="bg-white rounded-lg shadow-sm p-4 card-hover">
@@ -134,9 +133,8 @@
                 </div>
             </div>
         </div>
-        </div>
     </div>
-    </main>
+    </div>
 
     <!-- Chart Script -->
     <script>

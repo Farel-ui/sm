@@ -115,11 +115,11 @@
                         </h3>
                         <div class="flex items-center space-x-3">
                             <div class="relative">
-                                <i class="fas fa-search absolute rounded-xl left-3 top-1/2 transform -translate-y-1/2 text-blue-300"></i>
-                                <input type="text" placeholder="Cari masterplan..." id="searchInput"
-                                       class="pl-10 pr-4 py-2.5 text-sm border border-blue-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-blue-500 transition-all" />
+                                <i class="fas fa-search absolute rounded-xl left-3 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
+                                <input type="text" placeholder="Pencarian" id="searchInput"
+                                       class="pl-10 pr-8 py-2.5 text-blue-600  text-sm border border-blue-600 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-blue-500 transition-all" />
                             </div>
-                            <a href="{{ route('masterplan.create') }}" class="btn-gradient  rounded-2xl">
+                            <a href="{{ route('masterplan.create') }}" class="btn-gradient  rounded-4xl">
                                 <i class="fas fa-plus rounded-2xl"></i> Tambah Baru
                             </a>
                         </div>
@@ -164,12 +164,6 @@
                                 <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-blue-500 uppercase tracking-wider">
                                     <div class="flex items-center justify-center">
                                         <i class="text-blue-400"></i>
-                                        Terakhir Diubah
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-blue-500 uppercase tracking-wider">
-                                    <div class="flex items-center justify-center">
-                                        <i class="text-blue-400"></i>
                                         Aksi
                                     </div>
                                 </th>
@@ -206,13 +200,6 @@
                                             {{ ucfirst($mp->status) }}
                                         </span>
                                     </td>
-
-                                    <!-- Terakhir Diubah -->
-                                    <td class="px-6 py-4 text-sm text-blue-500 text-center">
-                                        <div><i class="fas fa-history mr-1 text-blue-300"></i>{{ $mp->updated_at->format('d M Y') }}</div>
-                                        <div class="text-xs text-blue-300">{{ $mp->updated_at->format('H:i') }}</div>
-                                    </td>
-
                                     <!-- Aksi -->
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
                                         <div class="flex justify-center space-x-2">
@@ -220,22 +207,24 @@
                                                     title="View Details">
                                                 <i class="fas fa-eye"></i>
                                             </button>
-                                            <a href="{{ route('masterplan.edit', $mp->id ?? '#') }}"
+                                            <a href="{{ route('masterplan.edit', $mp->id) }}?page={{ request('page', $masterplan->currentPage()) }}"
                                                class="action-btn bg-blue-500 text-white hover:text-yellow-500"
                                                title="Edit">
-                                                <i class="fas fa-edit"></i>
+                                               <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('masterplan.destroy', $mp->id ?? '#') }}" method="POST"
-                                                  onsubmit="return confirm('Yakin ingin menghapus masterplan ini?')"
-                                                  class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                        class="action-btn bg-blue-500 text-white hover:text-yellow-500"
-                                                        title="Delete">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
+
+                                            <form action="{{ route('masterplan.destroy', [$mp->id, 'page' => $masterplan->currentPage()]) }}" method="POST"
+                                              onsubmit="return confirm('Yakin ingin menghapus masterplan ini?')"
+                                              class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                    class="action-btn bg-blue-500 text-white hover:text-yellow-500"
+                                                    title="Delete">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+
                                         </div>
                                     </td>
                                 </tr>
@@ -263,8 +252,8 @@
                 </div>
 
                <!-- Pagination -->
-<div class="px-6 py-4 border-t border-blue-100 bg-blue-50">
-    <div class="flex items-center justify-between">
+        <div class="px-6 py-4 border-t border-blue-100 bg-blue-50">
+            <div class="flex items-center justify-between">
         <!-- Mobile -->
         <div class="flex-1 flex justify-between sm:hidden">
             @if ($masterplan->onFirstPage())

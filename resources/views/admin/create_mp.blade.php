@@ -54,22 +54,22 @@
       <!-- Type & Status -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Type -->
-<select name="type" required class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
-  <option value="buku">BUKU</option>
-  <option value="paparan">PAPARAN</option>
-</select>
-
-<!-- Status -->
-<div class="flex items-center space-x-6 mt-2">
-  <label class="inline-flex items-center">
-    <input type="radio" name="status" value="public" class="text-blue-600">
-    <span class="ml-2">PUBLIC</span>
-  </label>
-  <label class="inline-flex items-center">
-    <input type="radio" name="status" value="draft" class="text-blue-600">
-    <span class="ml-2">DRAFT</span>
-  </label>
-</div>
+        <select name="type" required class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
+          <option value="buku">BUKU</option>
+          <option value="paparan">PAPARAN</option>
+        </select>
+        
+        <!-- Status -->
+        <div class="flex items-center space-x-6 mt-2">
+          <label class="inline-flex items-center">
+            <input type="radio" name="status" value="public" class="text-blue-600">
+            <span class="ml-2">PUBLIC</span>
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="status" value="draft" class="text-blue-600">
+            <span class="ml-2">DRAFT</span>
+          </label>
+        </div>
 
       </div>
 

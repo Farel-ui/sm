@@ -102,9 +102,11 @@ class AdminMasterplanController extends Controller
             'status' => $request->status,
             'file'   => $filename,
         ]);
+ $page = $request->input('page', 1);
 
-        return redirect()->route('admin.masterplan')->with('success', 'Dokumen berhasil diperbarui.');
-    }
+    return redirect()->route('admin.masterplan', ['page' => $page])
+                     ->with('success', 'Dokumen berhasil diperbarui.');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -120,8 +122,10 @@ class AdminMasterplanController extends Controller
         }
 
         $masterplan->delete();
+ $page = $request->input('page', 1);
 
-        return redirect()->route('admin.masterplan')->with('success', 'Dokumen berhasil dihapus.');
+    return redirect()->route('admin.masterplan', ['page' => $page])
+                     ->with('success', 'Dokumen berhasil dihapus.');
     }
 }
 

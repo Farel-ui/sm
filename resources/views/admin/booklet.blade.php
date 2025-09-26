@@ -128,6 +128,12 @@
                                 <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-500 uppercase tracking-wider">
                                     File
                                 </th>
+                                <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-blue-500 uppercase tracking-wider">
+                                    <div class="flex items-center justify-center">
+                                        <i class="text-blue-400"></i>
+                                        Status
+                                    </div>
+                                </th>
                                 <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-500 uppercase tracking-wider">
                                     Gambar
                                 </th>
@@ -154,6 +160,12 @@
                                         <div class="text-sm text-blue-500">
                                             {{ $bk->file ?? 'N/A' }}
                                         </div>
+                                    </td>
+                                    <!-- Status -->
+                                    <td class="px-6 py-4 text-center">
+                                        <span class="px-3 py-1 rounded-full text-xs font-medium {{ $bk->status == 'publish' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800' }}">
+                                            {{ ucfirst($bk->status) }}
+                                        </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <img src="{{ asset('images/booklet/' . $bk->image) }}" alt="Gambar" class="h-12 w-12 rounded-lg" />

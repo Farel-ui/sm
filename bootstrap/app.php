@@ -11,7 +11,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // ✅ ini bikin VisitorMiddleware jalan di SEMUA request
+        $middleware->append(\App\Http\Middleware\VisitorMiddleware::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

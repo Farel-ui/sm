@@ -214,45 +214,87 @@
                 </div>
 
                 <!-- Pagination -->
-                <div class="px-6 py-4 border-t border-gray-100 bg-gray-50">
-                    <div class="flex items-center justify-between">
-                        <div class="flex-1 flex justify-between sm:hidden">
-                            <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                Previous
-                            </button>
-                            <button class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                Next
-                            </button>
-                        </div>
-                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                            <div>
-                                <p class="text-lg text-blue-500 flex items-center">
-                                    <i class="fas fa-info-circle mr-2 text-blue-500"></i>
-                                    Total Data Penilaian <span class="font-medium mx-2">{{ isset($assessment) ? $assessment->count() : 0 }}</span>
-                                </p>
-                            </div>
-                            <div>
-                                <nav class="relative z-0 inline-flex rounded-lg shadow-sm -space-x-px" aria-label="Pagination">
-                                    <button class="relative inline-flex items-center px-3 py-2 rounded-l-lg border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </button>
-                                    <button aria-current="page" class="z-10 bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                                        1
-                                    </button>
-                                    <button class="bg-white border-gray-300 text-blue-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                                        2
-                                    </button>
-                                    <button class="bg-white border-gray-300 text-blue-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                                        3
-                                    </button>
-                                    <button class="relative inline-flex items-center px-3 py-2 rounded-r-lg border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                        <i class="fas fa-chevron-right"></i>
-                                    </button>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                       <!-- Pagination -->
+        <div class="px-6 py-4 border-t border-blue-100 bg-blue-50">
+            <div class="flex items-center justify-between">
+        <!-- Mobile -->
+        <div class="flex-1 flex justify-between sm:hidden">
+            @if ($masterplan->onFirstPage())
+                <span class="px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-gray-400 bg-gray-100 cursor-not-allowed">
+                    Previous
+                </span>
+            @else
+                <a href="{{ $masterplan->previousPageUrl() }}"
+                   class="relative inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-500 bg-white hover:bg-blue-50">
+                    Previous
+                </a>
+            @endif
+
+            @if ($masterplan->hasMorePages())
+                <a href="{{ $masterplan->nextPageUrl() }}"
+                   class="ml-3 relative inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-500 bg-white hover:bg-blue-50">
+                    Next
+                </a>
+            @else
+                <span class="ml-3 px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-gray-400 bg-gray-100 cursor-not-allowed">
+                    Next
+                </span>
+            @endif
+        </div>
+
+        <!-- Desktop -->
+        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+            <div>
+                <p class="text-sm text-blue-500 flex items-center">
+                    <i class="fas fa-info-circle mr-2 text-blue-300"></i>
+                    Menampilkan <span class="font-medium mx-1">{{ $masterplan->firstItem() }}</span>
+                    - <span class="font-medium mx-1">{{ $masterplan->lastItem() }}</span>
+                    dari <span class="font-medium mx-1">{{ $masterplan->total() }}</span> hasil
+                </p>
+            </div>
+            <div>
+                <nav class="relative z-0 inline-flex rounded-lg shadow-sm -space-x-px" aria-label="Pagination">
+                    {{-- Tombol Previous --}}
+                    @if ($masterplan->onFirstPage())
+                        <span class="relative inline-flex items-center px-3 py-2 rounded-l-lg border border-blue-300 bg-gray-100 text-sm font-medium text-gray-400 cursor-not-allowed">
+                            <i class="fas fa-chevron-left"></i>
+                        </span>
+                    @else
+                        <a href="{{ $masterplan->previousPageUrl() }}"
+                           class="relative inline-flex items-center px-3 py-2 rounded-l-lg border border-blue-300 bg-white text-sm font-medium text-blue-500 hover:bg-blue-50">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    @endif
+
+                    {{-- Nomor Halaman --}}
+                    @for ($i = 1; $i <= $masterplan->lastPage(); $i++)
+                        @if ($i == $masterplan->currentPage())
+                            <span aria-current="page"
+                                class="z-10 bg-blue-100 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                {{ $i }}
+                            </span>
+                        @else
+                            <a href="{{ $masterplan->url($i) }}"
+                               class="bg-white border-blue-300 text-blue-500 hover:bg-blue-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                {{ $i }}
+                            </a>
+                        @endif
+                    @endfor
+
+                    {{-- Tombol Next --}}
+                    @if ($masterplan->hasMorePages())
+                        <a href="{{ $masterplan->nextPageUrl() }}"
+                           class="relative inline-flex items-center px-3 py-2 rounded-r-lg border border-blue-300 bg-white text-sm font-medium text-blue-500 hover:bg-blue-50">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    @else
+                        <span class="relative inline-flex items-center px-3 py-2 rounded-r-lg border border-blue-300 bg-gray-100 text-sm font-medium text-gray-400 cursor-not-allowed">
+                            <i class="fas fa-chevron-right"></i>
+                        </span>
+                    @endif
+                </nav>
+            </div>
+        </div>
             </div>
         </div>
     </main>

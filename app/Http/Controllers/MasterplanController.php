@@ -33,7 +33,6 @@ class MasterplanController extends Controller
             'implementasi',
             'booklets',
             'igas',
-            
             'assessments'
         ));
     }
@@ -69,18 +68,22 @@ public function implementasi()
     public function paparan()
     {
         $title = 'Paparan Masterplan Smart City';
-        $masterplans = Masterplan::where('type', 'paparan')->orderBy('period')->get();
+        $masterplans = Masterplan::where('type', 'paparan')
+        ->where('status', 'public')
+        ->orderBy('period')
+        ->get();
         return view('paparan', compact('title', 'masterplans'));
     }
 
         public function masterplano()
-{
-    $title = 'Masterplan Smart City';
-    $masterplans = Masterplan::where('type', 'buku')->orderBy('period')->get();
-    return view('masterplano', compact('title', 'masterplans'));
-}
-
-
+    {
+        $title = 'Masterplan Smart City';
+        $masterplans = Masterplan::where('status', 'public')
+        ->where('type', 'buku')
+        ->orderBy('period')
+        ->get();
+        return view('masterplano', compact('title', 'masterplans'));
+    }
 
     public function assessment()
     {
@@ -90,7 +93,7 @@ public function implementasi()
 
     public function iga()
     {
-        $igas = Iga::all();
+        $igas = Iga::where('status', 'public')->get();
         return view('iga', compact('igas'));
     }
 

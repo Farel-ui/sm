@@ -25,9 +25,8 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
 
-
-        // ✅ Tambahkan visitor tracking
-        \App\Http\Middleware\VisitorMiddleware::class,
+            // 🔥 taruh di sini
+            \App\Http\Middleware\VisitorMiddleware::class,
         ],
 
         'api' => [

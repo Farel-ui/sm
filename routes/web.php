@@ -1,16 +1,18 @@
 <?php
 
-use App\Http\Controllers\ChartController;
 use App\Http\Controllers\AdminAssessmentController;
 use App\Http\Controllers\AdminBookletController;
 use App\Http\Controllers\AdminDimensionController;
 use App\Http\Controllers\AdminIgaController;
-use App\Http\Controllers\AdminQuickwinController;
-use App\Http\Controllers\AdminMasterplanController;
 use App\Http\Controllers\AdminImplementasiController;
+use App\Http\Controllers\AdminMasterplanController;
+use App\Http\Controllers\AdminQuickwinController;
+use App\Http\Controllers\ChartController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MasterplanController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\VisitorController;
+
 
 
 // ✅ Tampilan awal website
@@ -46,7 +48,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/masterplan/create', [AdminMasterplanController::class, 'create'])->name('masterplan.create');
     Route::post('/admin/masterplan/store', [AdminMasterplanController::class, 'store'])->name('masterplan.store');
     Route::get('/admin/masterplan/{id}/edit', [AdminMasterplanController::class, 'edit'])->name('masterplan.edit');
-    Route::post('/admin/masterplan/update/{id}', [AdminMasterplanController::class, 'update'])->name('masterplan.update');
+    Route::put('/admin/masterplan/{id}', [AdminMasterplanController::class, 'update'])->name('masterplan.update');
     Route::delete('/admin/masterplan/{id}', [AdminMasterplanController::class, 'destroy'])->name('masterplan.destroy');
 
     // ✅ CRUD Iga
