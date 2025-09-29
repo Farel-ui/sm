@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" href="{{ asset('images/logo.svg') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-blue-50 min-h-screen font-sans">
+<body class="bg-blue-100 min-h-screen font-sans">
     <!-- Header -->
     <header class="bg-white shadow-sm border-b border-gray-100">
         <div class="max-w-8xl mx-5 px-2 py-6 flex justify-between items-center">
@@ -22,7 +22,7 @@
         </div>
     </header>
   <section class="flex justify-center items-center px-3 md:px-9 py-6">
-    <div class="w-full max-w-[90%] h-[80vh] bg-white rounded-lg shadow-lg flex flex-col">
+    <div class="w-full max-w-[75%] h-[80vh] bg-white rounded-lg shadow-lg flex flex-col">
 
   <!-- Card Header -->
   <div class="bg-blue-600 text-white px-6 py-4 rounded-t-lg flex justify-between items-center">
@@ -38,46 +38,60 @@
     <div class="flex-1 overflow-y-auto px-6 py-10 space-y-6">
 
       <!-- Judul & Tahun -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
         <div>
-          <label class="block text-lg font-medium mb-1">JUDUL</label>
+          <label class="block text-lg font-medium px-1 mb-2">JUDUL</label>
           <input id="title" type="text" name="title" placeholder="MASUKAN JUDUL"
-                 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
+                 class="w-full border border-black rounded-xl px-3 py-3 focus:outline-none focus:ring focus:border-blue-400">
         </div>
         <div>
-          <label class="block text-lg font-medium mb-1">TAHUN</label>
+          <label class="block text-lg font-medium px-1 mb-2">TAHUN</label>
           <input id="period" type="text" name="period" placeholder="MASUKAN TAHUN"
-                 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
+                 class="w-full border border-black rounded-xl px-3 py-3 focus:outline-none focus:ring focus:border-blue-400">
         </div>
       </div>
 
       <!-- Type & Status -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Type -->
-        <select name="type" required class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
-          <option value="buku">BUKU</option>
-          <option value="paparan">PAPARAN</option>
-        </select>
-        
-        <!-- Status -->
-        <div class="flex items-center space-x-6 mt-2">
-          <label class="inline-flex items-center">
-            <input type="radio" name="status" value="public" class="text-blue-600">
-            <span class="ml-2">PUBLIC</span>
-          </label>
-          <label class="inline-flex items-center">
-            <input type="radio" name="status" value="draft" class="text-blue-600">
-            <span class="ml-2">DRAFT</span>
-          </label>
-        </div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+  <!-- Type -->
+  <div>
+    <label class="block text-lg font-medium px-1 mb-1">KATEGORI</label>
+    <select name="type" required
+            class="w-full border border-black rounded-xl px-3 py-3 focus:outline-none focus:ring focus:border-blue-400">
+      <option value="buku">BUKU</option>
+      <option value="paparan">PAPARAN</option>
+    </select>
+  </div>
 
-      </div>
+  <!-- Status -->
+  <div>
+    <label class="block text-lg font-medium px-1 mb-1">STATUS</label>
+    <div class="flex items-center space-x-6 mt-2">
+      <label class="inline-flex items-center">
+        <input type="radio" name="status" value="public" class="text-blue-600">
+        <span class="ml-2">PUBLIC</span>
+      </label>
+      <label class="inline-flex items-center">
+        <input type="radio" name="status" value="draft" class="text-blue-600">
+        <span class="ml-2">DRAFT</span>
+      </label>
+    </div>
+  </div>
+</div>
+
 
       <!-- Upload PDF -->
       <div>
         <label class="block font-medium mb-2 text-lg">UNGGAH PDF FILE</label>
         <input id="file" type="file" name="file" accept="application/pdf"
-               class="w-full border rounded px-4 py-3 text-base h-14 focus:outline-none focus:ring focus:border-blue-400 cursor-pointer" />
+               class="w-full max-w-[100%] h-[20vh] border border-black rounded-xl px-4 py-3 text-base h-14 focus:outline-none focus:ring focus:border-blue-400 cursor-pointer" />
+               <div id="uploadArea" class="cursor-pointer">
+                            <i class="fas fa-cloud-upload-alt text-gray-400 text-2xl mb-2"></i>
+                            <p class="text-gray-500 text-sm">Klik untuk mengunggah file</p>
+                        </div>
+                        <div id="filePreview" class="hidden mt-3">
+                            <p class="text-sm text-green-600"></p>
+                        </div>
       </div>
 
     </div>

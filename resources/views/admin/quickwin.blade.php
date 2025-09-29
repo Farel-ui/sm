@@ -51,10 +51,10 @@
 <body class="gradient-bg min-h-screen">
 
     <main class="pb-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
             <!-- Header -->
-            <div class="mt-6 fade-in">
+            <div class="mt-5 fade-in">
                 <div class="bg-blue-500 border border-blue-100 rounded-xl p-4">
                     <h1 class="text-xl font-bold text-white mb-2 flex items-center">
                         <div class="bg-blue-600 p-2 rounded-lg mr-3">

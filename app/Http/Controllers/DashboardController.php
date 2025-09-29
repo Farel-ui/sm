@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Assessment;
+use App\Models\Penilaian;
 use App\Models\Visitor;
 use Carbon\Carbon;
 
@@ -11,7 +11,7 @@ class DashboardController extends Controller
     public function index()
     {
         // data penilaian
-        $assessments = Assessment::orderBy('year')->get();
+        $penilaian = Penilaian::orderBy('year')->get();
 
         // data pengunjung
         $today = Visitor::whereDate('created_at', Carbon::today())->count();
@@ -20,7 +20,7 @@ class DashboardController extends Controller
         $total = Visitor::count();
 
         return view('admin.dashboard', [
-            'assessments' => $assessments,
+            'penilaian' => $penilaian,
             'stats' => [
                 'today' => $today,
                 'month' => $month,

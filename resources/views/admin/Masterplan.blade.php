@@ -90,7 +90,7 @@
         }
     </style>
 </head>
-<body class="gradient-bg min-h-screen">
+<body class="bg-blue-50 min-h-screen font-sans">
     <main class="pb-12">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Welcome Section -->

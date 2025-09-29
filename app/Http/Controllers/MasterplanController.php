@@ -9,7 +9,7 @@ use App\Models\Dimension;
 use App\Models\QuickWin;
 use App\Models\Booklet;
 use App\Models\Iga;
-use App\Models\Assessment;
+use App\Models\Penilaian;
 use App\Models\implementasi;
 
 
@@ -24,7 +24,7 @@ class MasterplanController extends Controller
         $implementasi = implementasi::all();
         $penghargaan = Masterplan::where('type', 'penghargaan')->orderBy('period')->get();
         $igas = Iga::all();
-        $assessments = Assessment::orderBy('year')->get();
+        $penilaian = Penilaian::orderBy('year')->get();
 
         return view('welcome', compact(
             'masterplans',
@@ -33,7 +33,7 @@ class MasterplanController extends Controller
             'implementasi',
             'booklets',
             'igas',
-            'assessments'
+            'penilaian'
         ));
     }
 
@@ -50,13 +50,6 @@ class MasterplanController extends Controller
     return view('admin.dashboard');
 }
 
-    public function penilaian()
-    {
-        $title = 'Masterplan Smart City (penilaian)';
-        $masterplans = Masterplan::where('type', 'penilaian')->orderBy('period')->get();
-        return view('penilaian', compact('masterplans', 'title'));
-
-    }
 
 public function implementasi()
 {
@@ -85,10 +78,10 @@ public function implementasi()
         return view('masterplano', compact('title', 'masterplans'));
     }
 
-    public function assessment()
+    public function penilaian()
     {
-        $assessments = Assessment::orderBy('year')->get();
-        return view('assessment', compact('assessments'));
+        $penilaian = Penilaian::orderBy('year')->get();
+        return view('penilaian', compact('penilaian'));
     }
 
     public function iga()

@@ -160,7 +160,7 @@
 
                     <!-- Form Container -->
                     <div class="p-8 bg-white">
-                        <form method="POST" action="{{ route('assessment.store') }}" enctype="multipart/form-data" class="space-y-8">
+                        <form method="POST" action="{{ route('penilaian.store') }}" enctype="multipart/form-data" class="space-y-8">
                             @csrf
                             <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
                                 <!-- Color Field -->

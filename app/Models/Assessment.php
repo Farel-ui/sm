@@ -9,6 +9,7 @@ class Assessment extends Model
 {
     use HasFactory;
 
+    protected $table="assessment";
     // Define the fillable properties
     protected $fillable = [
         'color',

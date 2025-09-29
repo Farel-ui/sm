@@ -47,11 +47,11 @@
                 <span x-show="sidebarOpen" class="ml-4 font-medium">{{ __('IGA') }}</span>
             </x-nav-link>
 
-            <!-- Assessment/Penilaian -->
-            <x-nav-link :href="route('assessment')" :active="request()->routeIs('assessment*')"
-                       class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('assessment*') ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600' }}">
-                <div class="{{ request()->routeIs('assessment*') ? 'bg-white bg-opacity-20' : 'bg-blue-100' }} p-2 rounded-lg group-hover:bg-blue-200 transition-colors">
-                    <i class="{{ request()->routeIs('assessment*') ? 'text-white' : 'text-blue-600' }} fas fa-th-large text-sm"></i>
+            <!-- Penilaian -->
+            <x-nav-link :href="route('penilaian')" :active="request()->routeIs('penilaian*')"
+                       class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('penilaian*') ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600' }}">
+                <div class="{{ request()->routeIs('penilaian*') ? 'bg-white bg-opacity-20' : 'bg-blue-100' }} p-2 rounded-lg group-hover:bg-blue-200 transition-colors">
+                    <i class="{{ request()->routeIs('penilaian*') ? 'text-white' : 'text-blue-600' }} fas fa-th-large text-sm"></i>
                 </div>
                 <span x-show="sidebarOpen" class="ml-4 font-medium">{{ __('PENILAIAN') }}</span>
             </x-nav-link>

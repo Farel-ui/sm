@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Assessment</title>
+    <title>Dashboard - penilaian</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="{{ asset('images/logo.svg') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -96,7 +96,7 @@
                             Data Penilaian Smart City
                         </h3>
                         <div class="flex items-center space-x-3">
-                            <a href="{{ route('assessment.create') }}"
+                            <a href="{{ route('penilaian.create') }}"
                                class="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-blue-700 text-white text-sm font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all btn-animate shadow-lg">
                                 <i class="fas fa-plus mr-2"></i> Tambah Baru
                             </a>
@@ -142,8 +142,8 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-blue-500">
-                            @if(isset($assessments) && $assessments->count() > 0)
-                                @foreach ($assessments as $index => $assessment)
+                            @if(isset($penilaians) && $penilaians->count() > 0)
+                            @foreach ($penilaians as $index => $item)
                                 <tr class="table-row hover:bg-blue-50 transition-all duration-200 searchable-row">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-500">
                                         <span class=" px-3 py-1 rounded-full text-sm font-medium">
@@ -152,17 +152,17 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm font-semibold text-blue-500">
-                                            {{ $assessment->color }}
+                                            {{ $item->color }}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-lg text-blue-500">
-                                            {{ $assessment->score }}
+                                            {{ $item->score }}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-lg text-blue-500">
-                                            {{ $assessment->year }}
+                                            {{ $item->year }}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
@@ -171,12 +171,12 @@
                                                     title="View Details">
                                                 <i class="fas fa-eye"></i>
                                             </button>
-                                            <a href="{{ route('assessment.edit', $assessment->id ?? '#') }}"
+                                            <a href="{{ route('penilaian.edit', $penilaian->id ?? '#') }}"
                                                class="action-btn bg-blue-500 text-white hover:text-yellow-500"
                                                title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('assessment.destroy', $assessment->id ?? '#') }}" method="POST"
+                                            <form action="{{ route('penilaian.destroy', $penilaian->id ?? '#') }}" method="POST"
                                                   onsubmit="return confirm('Yakin ingin menghapus penilaian ini?')"
                                                   class="inline">
                                                 @csrf
@@ -200,7 +200,7 @@
                                             </div>
                                             <h3 class="text-lg font-medium text-blue-500 mb-2">Belum ada penilaian</h3>
                                             <p class="text-blue-500 mb-4">Mulai dengan menambahkan penilaian pertama Anda</p>
-                                            <a href="{{ route('assessment.create') }}"
+                                            <a href="{{ route('penilaian.create') }}"
                                                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700">
                                                 <i class="fas fa-plus mr-2"></i>
                                                 Tambah Penilaian
@@ -213,25 +213,24 @@
                     </table>
                 </div>
 
-                <!-- Pagination -->
                        <!-- Pagination -->
         <div class="px-6 py-4 border-t border-blue-100 bg-blue-50">
             <div class="flex items-center justify-between">
         <!-- Mobile -->
         <div class="flex-1 flex justify-between sm:hidden">
-            @if ($masterplan->onFirstPage())
+            @if ($penilaians->onFirstPage())
                 <span class="px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-gray-400 bg-gray-100 cursor-not-allowed">
                     Previous
                 </span>
             @else
-                <a href="{{ $masterplan->previousPageUrl() }}"
+                <a href="{{ $penilaians->previousPageUrl() }}"
                    class="relative inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-500 bg-white hover:bg-blue-50">
                     Previous
                 </a>
             @endif
 
-            @if ($masterplan->hasMorePages())
-                <a href="{{ $masterplan->nextPageUrl() }}"
+            @if ($penilaians->hasMorePages())
+                <a href="{{ $penilaians->nextPageUrl() }}"
                    class="ml-3 relative inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-500 bg-white hover:bg-blue-50">
                     Next
                 </a>
@@ -247,34 +246,34 @@
             <div>
                 <p class="text-sm text-blue-500 flex items-center">
                     <i class="fas fa-info-circle mr-2 text-blue-300"></i>
-                    Menampilkan <span class="font-medium mx-1">{{ $masterplan->firstItem() }}</span>
-                    - <span class="font-medium mx-1">{{ $masterplan->lastItem() }}</span>
-                    dari <span class="font-medium mx-1">{{ $masterplan->total() }}</span> hasil
+                    Menampilkan <span class="font-medium mx-1">{{ $penilaians->firstItem() }}</span>
+                    - <span class="font-medium mx-1">{{ $penilaians->lastItem() }}</span>
+                    dari <span class="font-medium mx-1">{{ $penilaians->total() }}</span> hasil
                 </p>
             </div>
             <div>
                 <nav class="relative z-0 inline-flex rounded-lg shadow-sm -space-x-px" aria-label="Pagination">
                     {{-- Tombol Previous --}}
-                    @if ($masterplan->onFirstPage())
+                    @if ($penilaians->onFirstPage())
                         <span class="relative inline-flex items-center px-3 py-2 rounded-l-lg border border-blue-300 bg-gray-100 text-sm font-medium text-gray-400 cursor-not-allowed">
                             <i class="fas fa-chevron-left"></i>
                         </span>
                     @else
-                        <a href="{{ $masterplan->previousPageUrl() }}"
+                        <a href="{{ $penilaians->previousPageUrl() }}"
                            class="relative inline-flex items-center px-3 py-2 rounded-l-lg border border-blue-300 bg-white text-sm font-medium text-blue-500 hover:bg-blue-50">
                             <i class="fas fa-chevron-left"></i>
                         </a>
                     @endif
 
                     {{-- Nomor Halaman --}}
-                    @for ($i = 1; $i <= $masterplan->lastPage(); $i++)
-                        @if ($i == $masterplan->currentPage())
+                    @for ($i = 1; $i <= $penilaians->lastPage(); $i++)
+                        @if ($i == $penilaians->currentPage())
                             <span aria-current="page"
                                 class="z-10 bg-blue-100 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
                                 {{ $i }}
                             </span>
                         @else
-                            <a href="{{ $masterplan->url($i) }}"
+                            <a href="{{ $penilaians->url($i) }}"
                                class="bg-white border-blue-300 text-blue-500 hover:bg-blue-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
                                 {{ $i }}
                             </a>
@@ -282,8 +281,8 @@
                     @endfor
 
                     {{-- Tombol Next --}}
-                    @if ($masterplan->hasMorePages())
-                        <a href="{{ $masterplan->nextPageUrl() }}"
+                    @if ($penilaians->hasMorePages())
+                        <a href="{{ $penilaians->nextPageUrl() }}"
                            class="relative inline-flex items-center px-3 py-2 rounded-r-lg border border-blue-300 bg-white text-sm font-medium text-blue-500 hover:bg-blue-50">
                             <i class="fas fa-chevron-right"></i>
                         </a>

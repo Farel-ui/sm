@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AdminAssessmentController;
+use App\Http\Controllers\AdminPenilaianController;
 use App\Http\Controllers\AdminBookletController;
 use App\Http\Controllers\AdminDimensionController;
 use App\Http\Controllers\AdminIgaController;
@@ -17,15 +17,13 @@ use App\Http\Controllers\VisitorController;
 
 // ✅ Tampilan awal website
 Route::get('/', [MasterplanController::class, 'index'])->name('home');
-Route::get('/assessment', [MasterplanController::class, 'assessment'])->name('assessment');
+Route::get('/penilaian', [MasterplanController::class, 'penilaian'])->name('penilaian');
 Route::get('/iga', [MasterplanController::class, 'iga'])->name('iga');
-Route::get('/penilaian/data-chart', [MasterplanController::class, 'chartData']);
 Route::get('/chart', [ChartController::class, 'index'])->name('chart.index');
 Route::get('/masterplan/buku', [MasterplanController::class, 'buku'])->name('masterplan.buku');
 Route::get('/masterplan/paparan', [MasterplanController::class, 'paparan'])->name('masterplan.paparan');
 Route::get('/implementasi', [MasterplanController::class, 'implementasi'])->name('implementasi');
 Route::get('/paparan', [MasterplanController::class, 'paparan'])->name('paparan');
-Route::get('/penilaian', [MasterplanController::class, 'penilaian']);
 Route::get('/Dokumen', [MasterplanController::class, 'Dokumen'])->name('Dokumen');
 Route::get('/masterplano', [MasterplanController::class, 'masterplano'])->name('masterplano');
 
@@ -48,7 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/masterplan/create', [AdminMasterplanController::class, 'create'])->name('masterplan.create');
     Route::post('/admin/masterplan/store', [AdminMasterplanController::class, 'store'])->name('masterplan.store');
     Route::get('/admin/masterplan/{id}/edit', [AdminMasterplanController::class, 'edit'])->name('masterplan.edit');
-    Route::put('/admin/masterplan/{id}', [AdminMasterplanController::class, 'update'])->name('masterplan.update');
+    Route::put('/admin/masterplan/update/{id}', [AdminMasterplanController::class, 'update'])->name('masterplan.update');
     Route::delete('/admin/masterplan/{id}', [AdminMasterplanController::class, 'destroy'])->name('masterplan.destroy');
 
     // ✅ CRUD Iga
@@ -59,13 +57,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/iga/update/{id}', [AdminIgaController::class, 'update'])->name('iga.update');
     Route::post('/admin/iga/{id}', [AdminIgaController::class, 'destroy'])->name('iga.destroy');
 
-    // ✅ CRUD Assessment
-    Route::get('/admin/assessment/', [AdminAssessmentController::class, 'index'])->name('assessment');
-    Route::get('/admin/assessment/create', [AdminAssessmentController::class, 'create'])->name('assessment.create');
-    Route::post('/admin/assessment/store', [AdminAssessmentController::class, 'store'])->name('assessment.store');
-    Route::get('/admin/assessment/{id}/edit', [AdminAssessmentController::class, 'edit'])->name('assessment.edit');
-    Route::put('/admin/assessment/update/{id}', [AdminAssessmentController::class, 'update'])->name('assessment.update'); // Change to PUT
-    Route::delete('/admin/assessment/{id}', [AdminAssessmentController::class, 'destroy'])->name('assessment.destroy'); // Change to DELETE
+    // ✅ CRUD penilaian
+    Route::get('/admin/penilaian/', [AdminPenilaianController::class, 'index'])->name('penilaian');
+    Route::get('/admin/penilaian/create', [AdminPenilaianController::class, 'create'])->name('penilaian.create');
+    Route::post('/admin/penilaian/store', [AdminPenilaianController::class, 'store'])->name('penilaian.store');
+    Route::get('/admin/penilaian/{id}/edit', [AdminPenilaianController::class, 'edit'])->name('penilaian.edit');
+    Route::put('/admin/penilaian/update/{id}', [AdminPenilaianController::class, 'update'])->name('penilaian.update');
+    Route::delete('/admin/penilaian/{id}', [AdminPenilaianController::class, 'destroy'])->name('penilaian.destroy');
 
 
     // ✅ CRUD Booklet

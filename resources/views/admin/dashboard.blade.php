@@ -104,7 +104,7 @@
             <div class="bg-white rounded-lg shadow-sm p-4 card-hover">
                 <h2 class="text-base font-bold text-gray-800 mb-3">Diagram Penilaian Smart City Kota Bogor</h2>
                 <div class="chart-container">
-                    <canvas id="assessmentChart"></canvas>
+                    <canvas id="penilaianChart"></canvas>
                 </div>
             </div>
         </div>
@@ -138,15 +138,15 @@
 
     <!-- Chart Script -->
     <script>
-        const ctx = document.getElementById('assessmentChart').getContext('2d');
+        const ctx = document.getElementById('penilaianChart').getContext('2d');
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: {!! json_encode($assessments->pluck('year')) !!},
+                labels: {!! json_encode($penilaian->pluck('year')) !!},
                 datasets: [{
                     label: 'Nilai',
-                    data: {!! json_encode($assessments->pluck('score')) !!},
-                    backgroundColor: {!! json_encode($assessments->pluck('color')) !!},
+                    data: {!! json_encode($penilaian->pluck('score')) !!},
+                    backgroundColor: {!! json_encode($penilaian->pluck('color')) !!},
                     borderRadius: 2,
                     maxBarThickness: 35,
                     borderSkipped: false
