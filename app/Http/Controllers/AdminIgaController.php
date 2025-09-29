@@ -51,7 +51,7 @@ class AdminIgaController extends Controller
             'image' => $filename,
         ]);
 
-        return redirect()->route('iga')->with('success', 'Dokumen Berhasil Ditambahkeun');
+        return redirect()->route('admin.iga')->with('success', 'Dokumen Berhasil Ditambahkeun');
     }
 
     /**

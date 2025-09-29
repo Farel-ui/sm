@@ -39,10 +39,10 @@
                 <span x-show="sidebarOpen" class="ml-4 font-medium">{{ __('MASTERPLAN') }}</span>
             </x-nav-link>
             <!-- IGA -->
-            <x-nav-link :href="route('iga')" :active="request()->routeIs('iga*')"
-                       class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('iga*') ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600' }}">
-                <div class="{{ request()->routeIs('iga*') ? 'bg-white bg-opacity-20' : 'bg-blue-100' }} p-2 rounded-lg group-hover:bg-blue-200 transition-colors">
-                    <i class="{{ request()->routeIs('iga*') ? 'text-white' : 'text-blue-600' }} fas fa-lightbulb text-sm"></i>
+            <x-nav-link :href="route('admin.iga')" :active="request()->routeIs('admin.iga*')"
+                       class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.iga*') ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600' }}">
+                <div class="{{ request()->routeIs('admin.iga*') ? 'bg-white bg-opacity-20' : 'bg-blue-100' }} p-2 rounded-lg group-hover:bg-blue-200 transition-colors">
+                    <i class="{{ request()->routeIs('admin.iga*') ? 'text-white' : 'text-blue-600' }} fas fa-lightbulb text-sm"></i>
                 </div>
                 <span x-show="sidebarOpen" class="ml-4 font-medium">{{ __('IGA') }}</span>
             </x-nav-link>
@@ -57,10 +57,10 @@
             </x-nav-link>
 
             <!-- Booklet -->
-            <x-nav-link :href="route('booklet')" :active="request()->routeIs('booklet*')"
-                       class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('booklet*') ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600' }}">
-                <div class="{{ request()->routeIs('booklet*') ? 'bg-white bg-opacity-20' : 'bg-blue-100' }} p-2 rounded-lg group-hover:bg-blue-200 transition-colors">
-                    <i class="{{ request()->routeIs('booklet*') ? 'text-white' : 'text-blue-600' }} fas fa-bullseye text-sm"></i>
+            <x-nav-link :href="route('admin.booklet')" :active="request()->routeIs('booklet*')"
+                       class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 group {{ request()->routeIs('admin.booklet*') ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600' }}">
+                <div class="{{ request()->routeIs('admin.booklet*') ? 'bg-white bg-opacity-20' : 'bg-blue-100' }} p-2 rounded-lg group-hover:bg-blue-200 transition-colors">
+                    <i class="{{ request()->routeIs('admin.booklet*') ? 'text-white' : 'text-blue-600' }} fas fa-bullseye text-sm"></i>
                 </div>
                 <span x-show="sidebarOpen" class="ml-4 font-medium">{{ __('BOOKLET') }}</span>
             </x-nav-link>
@@ -84,11 +84,11 @@
             </x-nav-link>
 
             <!-- Implementasi -->
-<x-nav-link :href="route('admin.implementasi')" 
+<x-nav-link :href="route('admin.implementasi')"
     :active="request()->routeIs('admin.implementasi*')"
     class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 group
            {{ request()->routeIs('admin.implementasi*') ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600' }}">
-    <div class="{{ request()->routeIs('admin.implementasi*') ? 'bg-white bg-opacity-20' : 'bg-blue-100' }} 
+    <div class="{{ request()->routeIs('admin.implementasi*') ? 'bg-white bg-opacity-20' : 'bg-blue-100' }}
                 p-2 rounded-lg group-hover:bg-blue-200 transition-colors">
         <i class="{{ request()->routeIs('admin.implementasi*') ? 'text-white' : 'text-blue-600' }} fas fa-cogs text-sm"></i>
     </div>

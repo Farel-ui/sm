@@ -50,7 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/admin/masterplan/{id}', [AdminMasterplanController::class, 'destroy'])->name('masterplan.destroy');
 
     // ✅ CRUD Iga
-    Route::get('/admin/iga/', [AdminIgaController::class, 'index'])->name('iga');
+    Route::get('/admin/iga/', [AdminIgaController::class, 'index'])->name('admin.iga');
     Route::get('/admin/iga/create', [AdminIgaController::class, 'create'])->name('iga.create');
     Route::post('/admin/iga/store', [AdminIgaController::class, 'store'])->name('iga.store');
     Route::get('/admin/iga/{id}/edit', [AdminIgaController::class, 'edit'])->name('iga.edit');
@@ -67,7 +67,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     // ✅ CRUD Booklet
-    Route::get('/admin/booklet/', [AdminBookletController::class, 'index'])->name('booklet');
+    Route::get('/admin/booklet/', [AdminBookletController::class, 'index'])->name('admin.booklet');
     Route::get('/admin/booklet/create', [AdminBookletController::class, 'create'])->name('booklet.create');
     Route::post('/admin/booklet/store', [AdminBookletController::class, 'store'])->name('booklet.store');
     Route::get('/admin/booklet/{id}/edit', [AdminBookletController::class, 'edit'])->name('booklet.edit');
