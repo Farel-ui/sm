@@ -98,6 +98,8 @@
                             Data Iga Smart City
                         </h3>
                         <div class="flex items-center space-x-3">
+                            <input type="text" id="searchInput" placeholder="Cari iga..."
+                                   class="pl-4 pr-4 py-2.5 text-sm border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-blue-500 transition-all" />
                             <a href="{{ route('iga.create') }}"
                                class="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-blue-700 text-white text-sm font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
                                 <i class="fas fa-plus mr-2"></i> Tambah Baru
@@ -138,13 +140,9 @@
                             @if(isset($iga) && $iga->count() > 0)
                                 @foreach ($iga as $index => $ig)
                                 <tr class="table-row hover:bg-blue-50 transition-all duration-200 searchable-row">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-500">
-                                        <span class="px-3 py-1 rounded-full text-sm font-medium">
-                                            {{ $index + 1 }}
-                                        </span>
-                                    </td>
+                                     <td class="px-6 py-4 text-sm text-blue-500">{{ $index + $iga->firstItem() }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-semibold text-blue-500">
+                                        <div class="text-sm font-semibold text-blue-500 searchable-title">
                                             {{ $ig->title }}
                                         </div>
                                     </td>
@@ -165,16 +163,16 @@
                                         @else
                                             <span class="inline-flex items-center px-3 py-2 bg-blue-50 text-blue-500 rounded-lg">
                                                 <i class="fas fa-image-slash mr-2"></i>
-                                                No image
+                                                Tidak ada gambar
                                             </span>
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
                                         <div class="flex justify-center space-x-2">
-                                            <button class="action-btn bg-blue-500 text-white hover:text-yellow-500"
-                                                    title="View Details">
+                                            <a href="{{ asset('images/iga/' . $ig->image) }}" target="_blank"
+                                               class="action-btn bg-blue-500 text-white hover:text-yellow-400" title="Lihat">
                                                 <i class="fas fa-eye"></i>
-                                            </button>
+                                            </a>
                                             <a href="{{ route('iga.edit', $ig->id ?? '#') }}"
                                                class="action-btn bg-blue-500 text-white hover:text-yellow-500"
                                                title="Edit">
@@ -309,7 +307,7 @@
                 const searchTerm = e.target.value.toLowerCase();
 
                 searchableRows.forEach(row => {
-                    const title = row.querySelector('.text-sm.font-semibold').textContent.toLowerCase();
+                    const title = row.querySelector('.searchable-title').textContent.toLowerCase();
                     if (title.includes(searchTerm)) {
                         row.style.display = '';
                     } else {

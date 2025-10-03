@@ -7,6 +7,12 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="icon" type="image/png" href="{{ asset('images/logo.svg') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .drag-over {
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+    }
+  </style>
 </head>
 <body class="bg-blue-100 min-h-screen font-sans">
   <!-- Header -->
@@ -81,13 +87,13 @@
           </div>
 
            <!-- Upload PDF -->
-                 <div>
+                <div>
                     <label class="block text-sm font-medium mb-2">UNGGAH FILE</label>
-                    <div class="w -full max-w-[100%] h-[25vh] border-2 border-dashed border-gray-300 rounded-lg p-8 text-center justify-center flex flex-col items-center justify-center">
+                    <div id="uploadContainer" class="w-full max-w-[100%] h-[25vh] border-2 border-dashed border-gray-300 rounded-lg p-8 text-center flex flex-col items-center justify-center transition-colors cursor-pointer">
                         <input id="file" type="file" name="file" accept="application/pdf" class="hidden">
-                        <div id="uploadArea" class="cursor-pointer flex flex-col items-center justify-center">
+                        <div id="uploadArea" class="flex flex-col items-center justify-center w-full h-full">
                             <i class="fas fa-cloud-upload-alt text-center text-gray-400 text-3xl mb-2"></i>
-                            <p class="text-gray-500 text-lg">Klik untuk mengunggah file</p>
+                            <p class="text-gray-500 text-lg">Klik atau seret file di sini</p>
                         </div>
                         <div id="filePreview" class="hidden mt-3">
                             <p class="text-sm text-green-600"></p>
@@ -97,7 +103,7 @@
         </div>
 
         <!-- Footer Tombol -->
-        <div class="px-6 py-4 border-t flex justify-end space-x-4">
+        <div class="px-6 py-4 border-tv    flex justify-end space-x-4">
           <a href="{{ route('admin.masterplan') }}"
              class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded">BATAL</a>
           <button type="submit"
@@ -136,28 +142,57 @@
 
                     tanggalEl.textContent = `${tgl} ${bln} ${thn}`;
 
+      // Drag and drop events
+      uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.parentElement.classList.add('drag-over');
+      });
+
+      uploadArea.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        uploadArea.parentElement.classList.remove('drag-over');
+      });
+
+      uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.parentElement.classList.remove('drag-over');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          handleFile(files[0]);
+        }
+      });
+
       // Preview & validasi file PDF
       fileInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (file) {
-          if (file.type !== 'application/pdf') {
-            alert('File harus berupa PDF.');
-            e.target.value = '';
-            return;
-          }
-          if (file.size > 10 * 1024 * 1024) {
-            alert('Ukuran file maksimal 10MB.');
-            e.target.value = '';
-            return;
-          }
-          filePreview.classList.remove('hidden');
-          filePreview.querySelector('p').textContent = `File dipilih: ${file.name}`;
-          uploadArea.classList.add('hidden');
+          handleFile(file);
         } else {
           filePreview.classList.add('hidden');
           uploadArea.classList.remove('hidden');
         }
       });
+
+      function handleFile(file) {
+        if (file.type !== 'application/pdf') {
+          alert('File harus berupa PDF.');
+          fileInput.value = '';
+          return;
+        }
+        if (file.size > 10 * 1024 * 1024) {
+          alert('Ukuran file maksimal 10MB.');
+          fileInput.value = '';
+          return;
+        }
+        // Create a DataTransfer to set the file
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        fileInput.files = dt.files;
+
+        filePreview.classList.remove('hidden');
+        filePreview.querySelector('p').textContent = `File dipilih: ${file.name}`;
+        uploadArea.classList.add('hidden');
+      }
 
       // Validasi form saat submit
       form.addEventListener('submit', (e) => {

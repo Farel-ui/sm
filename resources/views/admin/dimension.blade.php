@@ -117,62 +117,58 @@
                                     No.
                                 </th>
                                 <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-500 uppercase tracking-wider">
-                                    Name
+                                    Judul
                                 </th>
                                 <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-500 uppercase tracking-wider">
-                                    Description
+                                    Deskripsi
                                 </th>
                                 <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-blue-500 uppercase tracking-wider">
-                                    Image
+                                    Gambar
                                 </th>
                                 <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-blue-500 uppercase tracking-wider">
                                     Video
                                 </th>
                                 <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-blue-500 uppercase tracking-wider">
-                                    Actions
+                                    Aksi
                                 </th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-blue-500">
                             @if(isset($dimensions) && $dimensions->count() > 0)
-                                @foreach ($dimensions as $index => $dimension)
+                                @foreach ($dimensions as $index => $dm)
                                 <tr class="table-row hover:bg-blue-50 transition-all duration-200 searchable-row">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-500">
-                                        <span class="px-3 py-1 rounded-full text-sm font-medium">
-                                            {{ $index + 1 }}
-                                        </span>
-                                    </td>
+                                    <td class="px-6 py-4 text-sm text-blue-500">{{ $dimensions->firstItem() + $index }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm font-semibold text-blue-500 searchable-title">
-                                            {{ $dimension->name }}
+                                            {{ $dm->name }}
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-blue-500">
-                                            {{ $dimension->description ?? 'N/A' }}
+                                    <td class="px-6 py-4">
+                                        <div class="text-sm text-blue-500 break-words">
+                                            {{ $dm->description ?? 'N/A' }}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
-                                        <img src="{{ asset('images/dimension/' . $dimension->image) }}" alt="Image" class="h-12 w-12 object-cover rounded" />
+                                        <img src="{{ asset('images/dimension/' . $dm->image) }}" alt="Image" class="h-12 w-12 object-cover rounded" />
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
                                         <video width="120" controls>
-                                            <source src="{{ asset('video/' . $dimension->video  )  }}" type="video/mp4" />
+                                            <source src="{{ asset('storage/dimension/' . $dm->video  )  }}" type="video/mp4" />
                                             Your browser does not support the video tag.
                                         </video>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
                                         <div class="flex justify-center space-x-2">
-                                            <button class="action-btn bg-blue-500 text-white hover:text-yellow-500"
-                                                    title="View Details">
+                                            <a href="{{ asset('storage/dimension/' . $dm->video) }}" target="_blank"
+                                               class="action-btn bg-blue-500 text-white hover:text-yellow-400" title="Lihat">
                                                 <i class="fas fa-eye"></i>
-                                            </button>
-                                            <a href="{{ route('dimension.edit', $dimension->id ?? '#') }}"
+                                            </a>
+                                            <a href="{{ route('dimension.edit', $dm->id ?? '#') }}"
                                                class="action-btn bg-blue-500 text-white hover:text-yellow-500"
                                                title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('dimension.destroy', $dimension->id ?? '#') }}" method="POST"
+                                            <form action="{{ route('dimension.destroy', $dm->id ?? '#') }}" method="POST"
                                                   onsubmit="return confirm('Yakin ingin menghapus dimension ini?')"
                                                   class="inline">
                                                 @csrf
@@ -210,45 +206,85 @@
                 </div>
 
                 <!-- Pagination -->
-                <div class="px-6 py-4 border-t border-gray-100 bg-gray-50">
-                    <div class="flex items-center justify-between">
-                        <div class="flex-1 flex justify-between sm:hidden">
-                            <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                Previous
-                            </button>
-                            <button class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                Next
-                            </button>
-                        </div>
-                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                            <div>
-                                <p class="text-lg text-blue-500 flex items-center">
-                                    <i class="fas fa-info-circle mr-2 text-blue-500"></i>
-                                    Total Data Dimension <span class="font-medium mx-5">{{ isset($dimensions) ? $dimensions->count() : 0 }}</span>
-                                </p>
-                            </div>
-                            <div>
-                                <nav class="relative z-0 inline-flex rounded-lg shadow-sm -space-x-px" aria-label="Pagination">
-                                    <button class="relative inline-flex items-center px-3 py-2 rounded-l-lg border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </button>
-                                    <button aria-current="page" class="z-10 bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                                        1
-                                    </button>
-                                    <button class="bg-white border-gray-300 text-blue-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                                        2
-                                    </button>
-                                    <button class="bg-white border-gray-300 text-blue-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                                        3
-                                    </button>
-                                    <button class="relative inline-flex items-center px-3 py-2 rounded-r-lg border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                        <i class="fas fa-chevron-right"></i>
-                                    </button>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="px-6 py-4 border-t border-blue-100 bg-blue-50">
+            <div class="flex items-center justify-between">
+        <!-- Mobile -->
+        <div class="flex-1 flex justify-between sm:hidden">
+            @if ($dimensions->onFirstPage())
+                <span class="px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-gray-400 bg-gray-100 cursor-not-allowed">
+                    Previous
+                </span>
+            @else
+                <a href="{{ $dimensions->previousPageUrl() }}"
+                   class="relative inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-500 bg-white hover:bg-blue-50">
+                    Previous
+                </a>
+            @endif
+
+            @if ($dimensions->hasMorePages())
+                <a href="{{ $dimensions->nextPageUrl() }}"
+                   class="ml-3 relative inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-500 bg-white hover:bg-blue-50">
+                    Next
+                </a>
+            @else
+                <span class="ml-3 px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-gray-400 bg-gray-100 cursor-not-allowed">
+                    Next
+                </span>
+            @endif
+        </div>
+
+        <!-- Desktop -->
+        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+            <div>
+                <p class="text-sm text-blue-500 flex items-center">
+                    <i class="fas fa-info-circle mr-2 text-blue-300"></i>
+                    Menampilkan <span class="font-medium mx-1">{{ $dimensions->firstItem() }}</span>
+                    - <span class="font-medium mx-1">{{ $dimensions->lastItem() }}</span>
+                    dari <span class="font-medium mx-1">{{ $dimensions->total() }}</span> hasil
+                </p>
+            </div>
+            <div>
+                <nav class="relative z-0 inline-flex rounded-lg shadow-sm -space-x-px" aria-label="Pagination">
+                    {{-- Tombol Previous --}}
+                    @if ($dimensions->onFirstPage())
+                        <span class="relative inline-flex items-center px-3 py-2 rounded-l-lg border border-blue-300 bg-gray-100 text-sm font-medium text-gray-400 cursor-not-allowed">
+                            <i class="fas fa-chevron-left"></i>
+                        </span>
+                    @else
+                        <a href="{{ $dimensions->previousPageUrl() }}"
+                           class="relative inline-flex items-center px-3 py-2 rounded-l-lg border border-blue-300 bg-white text-sm font-medium text-blue-500 hover:bg-blue-50">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    @endif
+
+                    {{-- Nomor Halaman --}}
+                    @for ($i = 1; $i <= $dimensions->lastPage(); $i++)
+                        @if ($i == $dimensions->currentPage())
+                            <span aria-current="page"
+                                class="z-10 bg-blue-100 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                {{ $i }}
+                            </span>
+                        @else
+                            <a href="{{ $dimensions->url($i) }}"
+                               class="bg-white border-blue-300 text-blue-500 hover:bg-blue-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                {{ $i }}
+                            </a>
+                        @endif
+                    @endfor
+
+                    {{-- Tombol Next --}}
+                    @if ($dimensions->hasMorePages())
+                        <a href="{{ $dimensions->nextPageUrl() }}"
+                           class="relative inline-flex items-center px-3 py-2 rounded-r-lg border border-blue-300 bg-white text-sm font-medium text-blue-500 hover:bg-blue-50">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    @else
+                        <span class="relative inline-flex items-center px-3 py-2 rounded-r-lg border border-blue-300 bg-gray-100 text-sm font-medium text-gray-400 cursor-not-allowed">
+                            <i class="fas fa-chevron-right"></i>
+                        </span>
+                    @endif
+                </nav>
+            </div>
             </div>
         </div>
     </main>

@@ -49,7 +49,7 @@ class AdminImplementasiController extends Controller
             'file' => $filename,
         ]);
 
-        return redirect()->route('implementasi')->with('success', 'Dokumen berhasil ditambahkan.');
+        return redirect()->route('admin.implementasi')->with('success', 'Dokumen berhasil ditambahkan.');
     }
 
     /**
@@ -91,7 +91,7 @@ class AdminImplementasiController extends Controller
             'file' => $filename,
         ]);
 
-        return redirect()->route('implementasi')->with('success', 'Dokumen berhasil diperbarui.');
+        return redirect()->route('admin.implementasi')->with('success', 'Dokumen berhasil diperbarui.');
     }
 
     /**
@@ -108,6 +108,6 @@ class AdminImplementasiController extends Controller
 
         $implementasi->delete();
 
-        return redirect()->route('implementasi')->with('success', 'Dokumen berhasil dihapus.');
+        return redirect()->route('admin.implementasi')->with('success', 'Dokumen berhasil dihapus.');
     }
 }

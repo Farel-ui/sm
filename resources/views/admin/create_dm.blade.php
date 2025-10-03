@@ -1,189 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Dimension - Dashboard</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tambah Data Dimensi</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Custom scrollbar for modern browsers */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f8fafc;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-
-        /* Subtle animation for elements */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        /* Gradient background */
-        .gradient-bg {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-        }
-
-        /* Card hover effects */
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-
-        .card-hover:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        /* Button animations */
-        .btn-animate {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .btn-animate::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn-animate:hover::before {
-            left: 100%;
-        }
-
-        .btn-animate:hover {
-            transform: translateY(-1px);
-        }
-    </style>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.svg') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
-<body class="gradient-bg min-h-screen">
-    @include('layouts.navigation')
-    <!-- Main Content -->
-    <main class="pb-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Welcome Section -->
-            <div class="mt-6 fade-in">
-                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-xl p-6">
-                    <h1 class="text-2xl font-bold text-gray-800 mb-2 flex items-center">
-                        <div class="bg-blue-500 p-2 rounded-lg mr-3">
-                            <i class="fas fa-plus text-white"></i>
-                        </div>
-                        Create New Dimension
-                    </h1>
-                    <p class="text-gray-600">Add a new dimension to your collection.</p>
-                </div>
-            </div>
+<body class="bg-blue-100 min-h-screen font-sans">
 
-            <!-- Form Container -->
-            <div class="bg-white overflow-hidden shadow-sm rounded-xl mt-6 card-hover fade-in border border-gray-100">
-                <div class="px-6 py-5 border-b border-gray-100">
-                    <h3 class="text-xl font-semibold text-gray-800">Dimension Details</h3>
-                </div>
-
-                <div class="p-8 bg-white">
-                    <form method="POST" action="{{ route('dimension.store') }}" enctype="multipart/form-data" class="space-y-8">
-                        @csrf
-
-                        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-                            <!-- Name Field -->
-                            <div class="space-y-2">
-                                <label for="name" class="block text-sm font-semibold text-gray-700 flex items-center">
-                                    <i class="fas fa-heading text-blue-500 mr-2"></i>
-                                    Name
-                                    <span class="text-red-500 ml-1">*</span>
-                                </label>
-                                <input type="text" id="name" name="name"
-                                       class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 input-focus transition-all bg-white text-gray-800 placeholder-gray-400"
-                                       placeholder="Enter dimension name" required>
-                                @error('name')
-                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <!-- Description Field -->
-                            <div class="space-y-2">
-                                <label for="description" class="block text-sm font-semibold text-gray-700 flex items-center">
-                                    <i class="fas fa-file-alt text-green-500 mr-2"></i>
-                                    Description
-                                </label>
-                                <textarea id="description" name="description" rows="4"
-                                          class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 input-focus transition-all bg-white text-gray-800 placeholder-gray-400"
-                                          placeholder="Enter dimension description"></textarea>
-                                @error('description')
-                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <!-- Image Field -->
-                            <div class="space-y-2">
-                                <label for="image" class="block text-sm font-semibold text-gray-700 flex items-center">
-                                    <i class="fas fa-image text-red-500 mr-2"></i>
-                                    Image
-                                </label>
-                                <input type="file" id="image" name="image"
-                                       class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 input-focus transition-all bg-white text-gray-800 placeholder-gray-400"
-                                       accept="image/*">
-                                @error('image')
-                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <!-- Video Field -->
-                            <div class="space-y-2">
-                                <label for="video" class="block text-sm font-semibold text-gray-700 flex items-center">
-                                    <i class="fas fa-video text-purple-500 mr-2"></i>
-                                    Video
-                                </label>
-                                <input type="file" id="video" name="video"
-                                       class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 input-focus transition-all bg-white text-gray-800 placeholder-gray-400"
-                                       accept="video/*">
-                                @error('video')
-                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <!-- Submit Button -->
-                            <div class="lg:col-span-2 pt-4">
-                                <button type="submit"
-                                        class="inline-flex items-center px-8 py-3 border border-transparent text-sm font-semibold rounded-lg text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 btn-animate shadow-lg">
-                                    <i class="fas fa-save mr-2"></i>
-                                    Save Dimension
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+  <!-- Header -->
+  <header class="bg-white shadow-sm border-b border-gray-100">
+    <div class="max-w-8xl mx-5 px-2 py-6 flex justify-between items-center">
+      <h2 class="text-xl font-bold text-blue-700">DIMENSI SMART CITY</h2>
+      <div class="flex items-center space-x-4">
+        <span id="tanggalSekarang" class="text-blue-600 font-semibold"></span>
+        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+          <i class="fas fa-user text-blue-600"></i>
         </div>
-    </main>
+      </div>
+    </div>
+  </header>
 
-    <script>
-        // Set current date
+  <!-- Form Box -->
+  <section class="flex justify-center items-center px-3 md:px-9 py-10">
+    <div class="w-full max-w-[75%] bg-white rounded-lg shadow-lg">
+      <!-- Header -->
+      <div class="bg-blue-600 text-white px-6 py-4 rounded-t-lg flex justify-between items-center">
+        <h2 class="text-lg font-bold uppercase">TAMBAHKAN DATA DIMENSI</h2>
+        <a href="{{ route('admin.dimension') }}" class="text-white hover:text-gray-200 text-xl">&times;</a>
+      </div>
+
+      <!-- Form -->
+      <form action="{{ route('dimension.store') }}" method="POST" enctype="multipart/form-data" class="px-6 py-6 space-y-6">
+        @csrf
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Nama Dimensi -->
+          <div>
+            <label for="name" class="block text-sm font-semibold mb-2 uppercase">NAMA DIMENSI</label>
+            <input type="text" id="name" name="name" placeholder="MASUKAN NAMA DIMENSI" required
+                   class="w-full border border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+            @error('name')
+              <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+            @enderror
+          </div>
+
+          <!-- Deskripsi -->
+          <div>
+            <label for="description" class="block text-sm font-semibold mb-2 uppercase">DESKRIPSI</label>
+            <textarea id="description" name="description" rows="4" placeholder="Masukan deskripsi"
+                      class="w-full border border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"></textarea>
+            @error('description')
+              <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+            @enderror
+          </div>
+        </div>
+
+        <!-- Unggah Gambar -->
+        <div>
+          <label for="image" class="block text-sm font-semibold mb-2 uppercase">UNGGAH GAMBAR</label>
+          <div id="uploadContainer" class="w-full border border-gray-400 border-dashed rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer">
+            <input type="file" id="image" name="image" accept="image/*" required class="hidden" />
+            <div id="uploadArea" class="flex flex-col items-center justify-center w-full h-full py-6">
+              <i class="fas fa-cloud-upload-alt text-gray-400 text-3xl mb-2"></i>
+              <p class="text-gray-500 text-lg">Klik atau seret file gambar di sini</p>
+            </div>
+            <div id="filePreview" class="hidden mt-3">
+              <p class="text-sm text-green-600"></p>
+            </div>
+          </div>
+          @error('image')
+            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+          @enderror
+        </div>
+
+        <!-- Unggah Video -->
+        <div>
+          <label for="video" class="block text-sm font-semibold mb-2 uppercase">UNGGAH VIDEO</label>
+          <input type="file" id="video" name="video" accept="video/*"
+                 class="w-full border border-gray-400 border-dashed rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          @error('video')
+            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+          @enderror
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-end space-x-4 pt-4">
+          <a href="{{ route('admin.dimension') }}"
+             class="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white px-6 py-2 rounded font-semibold">
+            BATAL
+          </a>
+          <button type="submit"
+                  class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2 rounded font-semibold">
+            SIMPAN
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+      <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const now = new Date();
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', options);
+          // Set current date in header
+          const tanggalEl = document.getElementById('tanggalSekarang');
+          const namaBulan = [
+            'JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI',
+            'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'
+          ];
+          const today = new Date();
+          const tgl = today.getDate();
+          const bln = namaBulan[today.getMonth()];
+          const thn = today.getFullYear();
+          tanggalEl.textContent = `${tgl} ${bln} ${thn}`;
+
+          // Form validation
+          const form = document.querySelector('form');
+          const nameInput = form.querySelector('input[name="name"]');
+          const imageInput = form.querySelector('input[name="image"]');
+          const descInput = form.querySelector('textarea[name="description"]');
+          const uploadContainer = document.getElementById('uploadContainer');
+          const uploadArea = document.getElementById('uploadArea');
+          const filePreview = document.getElementById('filePreview');
+
+          uploadContainer.addEventListener('click', () => imageInput.click());
+
+          // Drag and drop events
+          uploadContainer.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadContainer.classList.add('drag-over');
+          });
+
+          uploadContainer.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadContainer.classList.remove('drag-over');
+          });
+
+          uploadContainer.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadContainer.classList.remove('drag-over');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+              handleFile(files[0]);
+            }
+          });
+
+          imageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+              handleFile(file);
+            } else {
+              uploadArea.classList.remove('hidden');
+              filePreview.classList.add('hidden');
+            }
+          });
+
+          function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+              alert('File yang diunggah harus berupa gambar (jpg, png, dll).');
+              imageInput.value = '';
+              return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+              alert('Ukuran gambar maksimal 5MB.');
+              imageInput.value = '';
+              return;
+            }
+
+            // Create a DataTransfer to set the file
+            const dt = new DataTransfer();
+            dt.items.add(file);
+            imageInput.files = dt.files;
+
+            uploadArea.classList.add('hidden');
+            filePreview.classList.remove('hidden');
+            filePreview.querySelector('p').textContent = `File dipilih: ${file.name}`;
+          }
+
+          form.addEventListener('submit', (e) => {
+            let isValid = true;
+
+            // Reset error styles
+            [nameInput, imageInput, descInput].forEach(input => {
+              input.classList.remove('border-red-500', 'ring-red-500');
+            });
+
+            // Validate name
+            if (!nameInput.value.trim()) {
+              nameInput.classList.add('border-red-500', 'ring-red-500');
+              isValid = false;
+            }
+
+            // Validate image
+            const file = imageInput.files[0];
+            if (!file) {
+              imageInput.classList.add('border-red-500', 'ring-red-500');
+              isValid = false;
+            }
+
+            // Validate description
+            if (!descInput.value.trim()) {
+              descInput.classList.add('border-red-500', 'ring-red-500');
+              isValid = false;
+            }
+
+            if (!isValid) {
+              e.preventDefault();
+              alert('Harap isi semua field yang wajib diisi dengan benar.');
+            }
+          });
         });
-    </script>
+      </script>
+
 </body>
 </html>

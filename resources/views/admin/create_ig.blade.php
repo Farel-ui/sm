@@ -84,9 +84,9 @@
                 <!-- Upload PDF -->
                  <div>
                     <label class="block text-sm font-medium mb-2">UNGGAH FILE</label>
-                    <div class="w -full max-w-[100%] h-[25vh] border-2 border-dashed border-gray-300 rounded-lg p-8 text-center justify-center flex flex-col items-center justify-center">
+                 <div id="uploadContainer" class="w-full max-w-[100%] h-[25vh] border-2 border-dashed border-gray-300 rounded-lg p-8 text-center flex flex-col items-center justify-center transition-colors cursor-pointer">
                         <input id="image" type="file" name="image" accept="image/*" class="hidden">
-                        <div id="uploadArea" class="cursor-pointer flex flex-col items-center justify-center">
+                        <div id="uploadArea" class="flex flex-col items-center justify-center w-full h-full">
                             <i class="fas fa-cloud-upload-alt text-center text-gray-400 text-3xl mb-2"></i>
                             <p class="text-gray-500 text-lg">Klik untuk mengunggah file</p>
                         </div>
@@ -123,38 +123,64 @@
             const batalBtn = document.getElementById('batalBtn');
 
             // Upload area click handler
-            uploadArea.addEventListener('click', function() {
-                imageInput.click();
+            const uploadContainer = document.getElementById('uploadContainer');
+            uploadContainer.addEventListener('click', () => imageInput.click());
+
+            // Drag and drop events
+            uploadContainer.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadContainer.classList.add('drag-over');
+            });
+
+            uploadContainer.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                uploadContainer.classList.remove('drag-over');
+            });
+
+            uploadContainer.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadContainer.classList.remove('drag-over');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFile(files[0]);
+                }
             });
 
             // File input change handler
             imageInput.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (file) {
-                    // Validate file type
-                    if (!file.type.startsWith('image/')) {
-                        alert('File harus berupa gambar (JPG, PNG, dll).');
-                        e.target.value = '';
-                        return;
-                    }
-
-                    // Validate file size (max 5MB)
-                    if (file.size > 5 * 1024 * 1024) {
-                        alert('Ukuran file maksimal 5MB.');
-                        e.target.value = '';
-                        return;
-                    }
-
-                    // Show file preview
-                    uploadArea.classList.add('hidden');
-                    filePreview.classList.remove('hidden');
-                    filePreview.querySelector('p').textContent = `File dipilih: ${file.name}`;
+                    handleFile(file);
                 } else {
                     // Reset to upload area
                     uploadArea.classList.remove('hidden');
                     filePreview.classList.add('hidden');
                 }
             });
+
+            function handleFile(file) {
+                if (!file.type.startsWith('image/')) {
+                    alert('File harus berupa gambar (JPG, PNG, dll).');
+                    imageInput.value = '';
+                    return;
+                }
+
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('Ukuran file maksimal 5MB.');
+                    imageInput.value = '';
+                    return;
+                }
+
+                // Create a DataTransfer to set the file
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                imageInput.files = dt.files;
+
+                // Show file preview
+                uploadArea.classList.add('hidden');
+                filePreview.classList.remove('hidden');
+                filePreview.querySelector('p').textContent = `File dipilih: ${file.name}`;
+            }
 
                 const tanggalEl = document.getElementById('tanggalSekarang');
 
@@ -169,7 +195,7 @@
                     const thn = today.getFullYear();
 
                     tanggalEl.textContent = `${tgl} ${bln} ${thn}`;
-                    
+
             // Form validation and submission
             form.addEventListener('submit', function(e) {
                 e.preventDefault();

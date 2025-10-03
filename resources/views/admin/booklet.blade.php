@@ -95,10 +95,7 @@
                 <div class="px-6 py-5 table-header">
                     <div class="flex items-center justify-between">
                         <h3 class="text-lg font-semibold text-blue-500 flex items-center">
-                            <div class="bg-blue-500 p-2 rounded-lg mr-3">
-                                <i class="fas fa-list text-white text-sm"></i>
-                            </div>
-                            Daftar Booklet
+                            Daftar Booklet Smart City
                         </h3>
                         <div class="flex items-center space-x-3">
                             <div class="relative">
@@ -146,10 +143,7 @@
                             @if(isset($booklet) && $booklet->count() > 0)
                                 @foreach ($booklet as $index => $bk)
                                 <tr class="table-row hover:bg-blue-50 transition-all duration-200 searchable-row">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-500">
-                                        <span class="text-sm font-medium">
-                                            {{ $index + 1 }}
-                                        </span>
+                                     <td class="px-6 py-4 text-sm text-blue-500">{{ $index + $booklet->firstItem() }}</td>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm font-semibold text-blue-500 searchable-title">
@@ -326,6 +320,9 @@
             });
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    @include('components.delete-confirmation-modal')
 </body>
 </html>
 </x-app-layout>

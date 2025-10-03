@@ -1,20 +1,9 @@
-<?php
-$judul = "Hasil Penilaian Smart City Kota Bogor";
-// contoh data dari DB (Controller)
-$penilaian = [
-  ["tahun" => 2020, "nilai" => 3.12],
-  ["tahun" => 2021, "nilai" => 3.33],
-  ["tahun" => 2022, "nilai" => 3.46],
-  ["tahun" => 2023, "nilai" => 3.35],
-  ["tahun" => 2024, "nilai" => 3.57],
-];
-?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= $judul; ?></title>
+  <title>Hasil Penilaian Smart City Kota Bogor</title>
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
   <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -28,36 +17,16 @@ $penilaian = [
     body { font-family: 'Poppins', sans-serif; transition: background 0.3s, color 0.3s; }
     body.dark { background: #1f2937; color: #f9fafb; }
     .award-list li:hover { transform: scale(1.02); transition: 0.3s; color: #1d4ed8; }
-
-    /* Lightbox */
     #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 999; }
     #lightbox img { max-width: 90%; max-height: 90%; border-radius: 10px; }
-
-    /* Back to top button */
     #backToTop {
-      display: none;
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: #4e73df;
-      color: white;
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 20px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: 0.3s;
-      z-index: 9999;
+      display: none; position: fixed; bottom: 30px; right: 30px; background: #4e73df;
+      color: white; width: 45px; height: 45px; border-radius: 50%; display: flex;
+      justify-content: center; align-items: center; font-size: 20px; cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3); transition: 0.3s; z-index: 9999;
     }
-    #backToTop:hover {
-      background: #2e59d9;
-      transform: scale(1.1);
-    }
+    #backToTop:hover { background: #2e59d9; transform: scale(1.1); }
   </style>
 </head>
 <body class="bg-gray-50">
@@ -66,7 +35,7 @@ $penilaian = [
   @include('components.navbar')
 
   <!-- Judul -->
-  <header class="bg-gray-100 border-2 border-black px-10 py-6 text-center 
+  <header class="bg-gray-100 border-2 border-black px-10 py-6 text-center
                  rounded-[90px_0_90px_0] shadow-xl w-fit mx-auto my-10">
     <h1 class="text-3xl font-bold animate__animated animate__fadeInDown">
       HASIL PENILAIAN SMART CITY KOTA BOGOR
@@ -78,41 +47,30 @@ $penilaian = [
     <canvas id="myChart"></canvas>
   </div>
 
-  <!-- Penghargaan -->
+  <!-- Penghargaan (TIDAK DIUBAH) -->
   <div class="text-center bg-gray-300 text-black font-bold text-2xl py-4 mb-8">
     10 PENGHARGAAN RATING TRANSFORMASI DIGITAL
   </div>
 
-  <!-- Wrapper Grid -->
   <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-1 items-start">
-
-    <!-- FOTO (Kiri) -->
+    <!-- FOTO -->
     <div class="h-[500px] rounded-xl bg-white shadow-md p-4 photo-box">
-      <!-- Swiper Container -->
       <div class="swiper mySwiper h-full">
         <div class="swiper-wrapper">
           <div class="swiper-slide flex justify-center items-center">
-            <img src="{{ asset('images/penilaian1.jpeg') }}" 
-                 class="w-full h-full object-contain rounded-lg cursor-pointer transition bg-gray" 
-                 alt="Penghargaan 1">
+            <img src="{{ asset('images/penilaian1.jpeg') }}" class="w-full h-full object-contain rounded-lg cursor-pointer transition bg-gray" alt="Penghargaan 1">
           </div>
           <div class="swiper-slide flex justify-center items-center">
-            <img src="{{ asset('images/penilaian2.jpeg') }}" 
-                 class="w-full h-full object-contain rounded-lg cursor-pointer transition bg-gray" 
-                 alt="Penghargaan 2">
+            <img src="{{ asset('images/penilaian2.jpeg') }}" class="w-full h-full object-contain rounded-lg cursor-pointer transition bg-gray" alt="Penghargaan 2">
           </div>
         </div>
-
-        <!-- Tombol Panah -->
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
-
-        <!-- Pagination Bulat -->
         <div class="swiper-pagination"></div>
       </div>
     </div>
 
-    <!-- TEKS (Kanan) -->
+    <!-- TEKS -->
     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
       <div class="bg-gradient-to-r from-gray-600 to-gray-700 text-white px-6 py-4 font-bold text-xl">
         Daftar Penghargaan
@@ -132,60 +90,54 @@ $penilaian = [
         </ul>
       </div>
     </div>
-
   </div>
 
-  <!-- Lightbox -->
   <div id="lightbox"><img src="" alt=""></div>
-
-  <!-- Back to top -->
-  <div id="backToTop">
-    <i class="fa-solid fa-arrow-up"></i>
-  </div>
+  <div id="backToTop"><i class="fa-solid fa-arrow-up"></i></div>
 
   {{-- Footer --}}
   @include('components.footer')
 
   <!-- Script Chart -->
   <script>
-  const labels = @json(array_column($penilaian, 'tahun'));
-  const dataValues = @json(array_column($penilaian, 'nilai'));
+    const labels = @json($penilaian->pluck('year'));
+    const dataValues = @json($penilaian->pluck('score'));
 
-  const ctx = document.getElementById('myChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [{
-        label: 'Jumlah Penilaian',
-        data: dataValues,
-        backgroundColor: '#4e73df'
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        datalabels: {
-          color: '#333',
-          anchor: 'end',
-          align: 'top',
-          font: { size: 40, weight: 'bold' }
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Jumlah Penilaian',
+          data: dataValues,
+          backgroundColor: '#4e73df'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          datalabels: {
+            color: '#333',
+            anchor: 'end',
+            align: 'top',
+            font: { size: 40, weight: 'bold' }
+          }
+        },
+        animation: {
+          duration: 1000,
+          easing: 'easeOutBounce',
+          delay: ctx => ctx.dataIndex * 300
+        },
+        scales: {
+          y: { beginAtZero: true, max: 5, ticks: { stepSize: 1 } }
         }
       },
-      animation: {
-        duration: 1000,
-        easing: 'easeOutBounce',
-        delay: ctx => ctx.dataIndex * 300
-      },
-      scales: {
-        y: { beginAtZero: true, max: 5, ticks: { stepSize: 1 } }
-      }
-    },
-    plugins: [ChartDataLabels]
-  });
+      plugins: [ChartDataLabels]
+    });
 
-  // Lightbox
+    // Lightbox
   const imgs = document.querySelectorAll(".photo-box img");
   const lightbox = document.getElementById("lightbox");
   const lightImg = lightbox.querySelector("img");
@@ -221,7 +173,7 @@ $penilaian = [
       });
   }, { threshold: 0.2 });
 
-  document.querySelectorAll("section, .bg-white").forEach(el => observer.observe(el));  
+  document.querySelectorAll("section, .bg-white").forEach(el => observer.observe(el));
 
   // Swiper init + autoplay
   var swiper = new Swiper(".mySwiper", {
@@ -241,6 +193,7 @@ $penilaian = [
     },
     speed: 1000 // transisi geser 1 detik biar smooth
   });
+    // Lightbox & Back to top & Swiper tetap sama
   </script>
 
 </body>

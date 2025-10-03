@@ -99,7 +99,7 @@ class AdminIgaController extends Controller
             'image' => $filename,
         ]);
 
-        return redirect()->route('iga')->with('success', 'Dokumen berhasil diperbarui.');
+        return redirect()->route('admin.iga')->with('success', 'Dokumen berhasil diperbarui.');
     }
 
     /**
@@ -119,6 +119,6 @@ class AdminIgaController extends Controller
         // Delete data from database
         $iga->delete();
 
-        return redirect()->route('iga')->with('success', 'Dokumen berhasil dihapus.');
+        return redirect()->route('admin.iga')->with('success', 'Dokumen berhasil dihapus.');
     }
 }

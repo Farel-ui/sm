@@ -72,9 +72,13 @@
                     <h3 class="text-lg font-semibold text-blue-500 flex items-center">
                         <i class="fas fa-list mr-2 text-blue-400"></i> Daftar QuickWin
                     </h3>
-                    <a href="{{ route('quickwin.create') }}" class="btn-gradient">
-                        <i class="fas fa-plus"></i> Tambah Baru
-                    </a>
+                    <div class="flex items-center space-x-3">
+                        <input type="text" id="searchInput" placeholder="Cari quickwin..."
+                               class="pl-4 pr-4 py-2.5 text-sm border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-blue-500 transition-all" />
+                        <a href="{{ route('quickwin.create') }}" class="btn-gradient">
+                            <i class="fas fa-plus"></i> Tambah Baru
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Table -->
@@ -86,31 +90,54 @@
                                 <th class="px-6 py-3 text-left text-xs font-bold text-blue-500 uppercase tracking-wider">Image</th>
                                 <th class="px-6 py-3 text-left text-xs font-bold text-blue-500 uppercase tracking-wider">Title</th>
                                 <th class="px-6 py-3 text-left text-xs font-bold text-blue-500 uppercase tracking-wider">Description</th>
+                                <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-blue-500 uppercase tracking-wider">
+                                    <div class="flex items-center justify-center">
+                                        <i class="text-blue-400"></i>
+                                        Status
+                                    </div>
+                                </th>
                                 <th class="px-6 py-3 text-center text-xs font-bold text-blue-500 uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-blue-500">
                             @forelse ($quickwins as $index => $qw)
-                                <tr class="table-row hover:bg-blue-50 transition-all duration-200">
-                                    <td class="px-6 py-4 text-sm text-blue-500">{{ $index + 1 }}</td>
+                                <tr class="table-row hover:bg-blue-50 transition-all duration-200 searchable-row">
+                                    <td class="px-6 py-4 text-sm text-blue-500">{{ $index + $quickwins->firstItem() }}</td>
                                     <td class="px-6 py-4">
                                         <img src="{{ asset('images/quickwins/' . $qw->image) }}" alt="{{ $qw->title }}"
                                              class="h-16 w-16 rounded-lg object-cover border border-blue-200">
                                     </td>
-                                    <td class="px-6 py-4 text-sm font-semibold text-blue-500">{{ $qw->title }}</td>
+                                    <td class="px-6 py-4 text-sm font-semibold text-blue-500 searchable-title">{{ $qw->title }}</td>
                                     <td class="px-6 py-4 text-sm text-blue-400">{{ $qw->description }}</td>
+                                     <!-- Status -->
                                     <td class="px-6 py-4 text-center">
-                                        <a href="{{ route('quickwin.edit', $qw->id) }}" class="action-btn bg-blue-500 text-white hover:text-yellow-500" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <form action="{{ route('quickwin.destroy', $qw->id) }}" method="POST" class="inline"
-                                              onsubmit="return confirm('Yakin ingin menghapus QuickWin ini?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="action-btn bg-blue-500 text-white hover:text-yellow-500" title="Delete">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </form>
+                                        <span class="px-3 py-1 rounded-full text-xs font-medium {{ $qw->status == 'publish' ?
+                                         'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800' }}">
+                                            {{ ucfirst($qw->status) }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <div class="flex justify-center space-x-2">
+                                            <a href="{{ asset('images/quickwins/' . $qw->image  ) }}" target="_blank"
+                                               class="action-btn bg-blue-500 text-white hover:text-yellow-400" title="Lihat">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="{{ route('quickwin.edit', $qw->id ?? '#') }}"
+                                               class="action-btn bg-blue-500 text-white hover:text-yellow-500"
+                                               title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <form action="{{ route('quickwin.destroy', $qw->id ?? '#') }}" method="POST"
+                                                  onsubmit="return confirm('Yakin ingin menghapus iga ini?')"
+                                                  class="inline">
+                                                @csrf
+                                                <button type="submit"
+                                                        class="action-btn bg-blue-500 text-white hover:text-yellow-500"
+                                                        title="Delete">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @empty
@@ -141,12 +168,15 @@
                                 @if ($quickwins->onFirstPage())
                                     <span class="px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-gray-400 bg-gray-100 cursor-not-allowed">Previous</span>
                                 @else
-                                    <a href="{{ $quickwins->previousPageUrl() }}" class="relative inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-500 bg-white hover:bg-blue-50">Previous</a>
+                                    <a href="{{ $quickwins->previousPageUrl() }}"
+                                        class="relative inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-500 bg-white hover:bg-blue-50">Previous</a>
                                 @endif
                                 @if ($quickwins->hasMorePages())
-                                    <a href="{{ $quickwins->nextPageUrl() }}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-500 bg-white hover:bg-blue-50">Next</a>
+                                    <a href="{{ $quickwins->nextPageUrl() }}"
+                                        class="ml-3 relative inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-500 bg-white hover:bg-blue-50">Next</a>
                                 @else
-                                    <span class="ml-3 px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-gray-400 bg-gray-100 cursor-not-allowed">Next</span>
+                                    <span
+                                    class="ml-3 px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-gray-400 bg-gray-100 cursor-not-allowed">Next</span>
                                 @endif
                             </div>
                             <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
@@ -158,23 +188,30 @@
                                 </p>
                                 <nav class="relative z-0 inline-flex rounded-lg shadow-sm -space-x-px" aria-label="Pagination">
                                     @if ($quickwins->onFirstPage())
-                                        <span class="relative inline-flex items-center px-3 py-2 rounded-l-lg border border-blue-300 bg-gray-100 text-sm font-medium text-gray-400 cursor-not-allowed"><i class="fas fa-chevron-left"></i></span>
+                                        <span class="relative inline-flex items-center px-3 py-2 rounded-l-lg border border-blue-300 bg-gray-100 text-sm font-medium text-gray-400 cursor-not-allowed">
+                                            <i class="fas fa-chevron-left"></i></span>
                                     @else
-                                        <a href="{{ $quickwins->previousPageUrl() }}" class="relative inline-flex items-center px-3 py-2 rounded-l-lg border border-blue-300 bg-white text-sm font-medium text-blue-500 hover:bg-blue-50"><i class="fas fa-chevron-left"></i></a>
+                                        <a href="{{ $quickwins->previousPageUrl() }}"
+                                            class="relative inline-flex items-center px-3 py-2 rounded-l-lg border border-blue-300 bg-white text-sm font-medium text-blue-500 hover:bg-blue-50">
+                                            <i class="fas fa-chevron-left"></i></a>
                                     @endif
 
                                     @for ($i = 1; $i <= $quickwins->lastPage(); $i++)
                                         @if ($i == $quickwins->currentPage())
-                                            <span aria-current="page" class="z-10 bg-blue-100 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">{{ $i }}</span>
+                                            <span aria-current="page"
+                                            class="z-10 bg-blue-100 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">{{ $i }}</span>
                                         @else
-                                            <a href="{{ $quickwins->url($i) }}" class="bg-white border-blue-300 text-blue-500 hover:bg-blue-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">{{ $i }}</a>
+                                            <a href="{{ $quickwins->url($i) }}"
+                                                class="bg-white border-blue-300 text-blue-500 hover:bg-blue-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">{{ $i }}</a>
                                         @endif
                                     @endfor
 
                                     @if ($quickwins->hasMorePages())
-                                        <a href="{{ $quickwins->nextPageUrl() }}" class="relative inline-flex items-center px-3 py-2 rounded-r-lg border border-blue-300 bg-white text-sm font-medium text-blue-500 hover:bg-blue-50"><i class="fas fa-chevron-right"></i></a>
+                                        <a href="{{ $quickwins->nextPageUrl() }}"
+                                            class="relative inline-flex items-center px-3 py-2 rounded-r-lg border border-blue-300 bg-white text-sm font-medium text-blue-500 hover:bg-blue-50"><i class="fas fa-chevron-right"></i></a>
                                     @else
-                                        <span class="relative inline-flex items-center px-3 py-2 rounded-r-lg border border-blue-300 bg-gray-100 text-sm font-medium text-gray-400 cursor-not-allowed"><i class="fas fa-chevron-right"></i></span>
+                                        <span
+                                        class="relative inline-flex items-center px-3 py-2 rounded-r-lg border border-blue-300 bg-gray-100 text-sm font-medium text-gray-400 cursor-not-allowed"><i class="fas fa-chevron-right"></i></span>
                                     @endif
                                 </nav>
                             </div>
@@ -184,6 +221,27 @@
             </div>
         </div>
     </main>
+
+    <script>
+        // Search functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            const searchableRows = document.querySelectorAll('.searchable-row');
+
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+
+                searchableRows.forEach(row => {
+                    const title = row.querySelector('.searchable-title').textContent.toLowerCase();
+                    if (title.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
 </x-app-layout>

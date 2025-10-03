@@ -9,7 +9,7 @@
           <img src="{{ asset('images/dimension/' . $dimension->image) }}" alt="{{ $dimension->name }}" class="w-[111px] h-[73px] mb-4">
           <h3 class="text-xl font-semibold mb-2">{{ $dimension->name }}</h3>
           <p class="text-sm mb-4">{!! $dimension->description !!}</p>
-          <button onclick="showVideo('{{ asset('storage/video/' . $dimension->video) }}')" class="bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-yellow-400 hover:text-white transition text-sm font-bold">
+          <button onclick="showVideo('{{ asset('storage/dimension/' . $dimension->video) }}')" class="bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-yellow-400 hover:text-white transition text-sm font-bold">
             Selengkapnya
           </button>
         </div>

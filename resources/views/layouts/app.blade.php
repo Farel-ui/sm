@@ -2,6 +2,8 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
+        <title>Smart City Kota Bogor</title>
+        <link rel="icon" type="image/png" href="{{ asset('images/logo.svg') }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -15,7 +17,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-white">
+        <div class="min-h-screen bg-blue-100">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -29,12 +31,10 @@
 
             <!-- Page Content -->
             <main>
-    <div class="bg-blue-50 rounded-xl shadow-md p-4 mx-4 my-6">
+    <div class="p-4 mx-4 my-6">
         {{ $slot }}
     </div>
 </main>
-
-
         </div>
     </body>
 </html>

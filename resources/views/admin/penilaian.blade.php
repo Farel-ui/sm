@@ -96,11 +96,13 @@
                             Data Penilaian Smart City
                         </h3>
                         <div class="flex items-center space-x-3">
-                            <a href="{{ route('penilaian.create') }}"
-                               class="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-blue-700 text-white text-sm font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all btn-animate shadow-lg">
-                                <i class="fas fa-plus mr-2"></i> Tambah Baru
-                            </a>
-                        </div>
+                        <a href="{{ route('penilaian.create') }}"
+                           class="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-blue-700 text-white text-sm font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all btn-animate shadow-lg">
+                            <i class="fas fa-plus mr-2"></i> Tambah Baru
+                        </a>
+                        <input type="text" id="searchInput" placeholder="Cari penilaian..."
+                               class="ml-4 pl-4 pr-4 py-2.5 text-sm border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-blue-500 transition-all" />
+                    </div>
                     </div>
                 </div>
 
@@ -113,12 +115,6 @@
                                     <div class="flex items-center">
                                         <i class="text-blue-500"></i>
                                         No.
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-500 uppercase tracking-wider">
-                                    <div class="flex items-center">
-                                        <i class="text-blue-500"></i>
-                                        Warna
                                     </div>
                                 </th>
                                 <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-500 uppercase tracking-wider">
@@ -143,26 +139,17 @@
                         </thead>
                         <tbody class="bg-white divide-y divide-blue-500">
                             @if(isset($penilaians) && $penilaians->count() > 0)
-                            @foreach ($penilaians as $index => $item)
+                            @foreach ($penilaians as $index => $pn)
                                 <tr class="table-row hover:bg-blue-50 transition-all duration-200 searchable-row">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-500">
-                                        <span class=" px-3 py-1 rounded-full text-sm font-medium">
-                                            {{ $index + 1 }}
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-semibold text-blue-500">
-                                            {{ $item->color }}
+                                     <td class="px-6 py-4 text-sm text-blue-500">{{ $index + $penilaians->firstItem() }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap searchable-title">
+                                        <div class="text-lg text-blue-500">
+                                            {{ $pn->score }}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-lg text-blue-500">
-                                            {{ $item->score }}
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-lg text-blue-500">
-                                            {{ $item->year }}
+                                            {{ $pn->year }}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
@@ -171,12 +158,12 @@
                                                     title="View Details">
                                                 <i class="fas fa-eye"></i>
                                             </button>
-                                            <a href="{{ route('penilaian.edit', $penilaian->id ?? '#') }}"
+                                            <a href="{{ route('penilaian.edit', $pn->id ?? '#') }}"
                                                class="action-btn bg-blue-500 text-white hover:text-yellow-500"
                                                title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('penilaian.destroy', $penilaian->id ?? '#') }}" method="POST"
+                                            <form action="{{ route('penilaian.destroy', $pn->id ?? '#') }}" method="POST"
                                                   onsubmit="return confirm('Yakin ingin menghapus penilaian ini?')"
                                                   class="inline">
                                                 @csrf
@@ -308,17 +295,13 @@
                 const searchTerm = e.target.value.toLowerCase();
 
                 searchableRows.forEach(row => {
-                    const color = row.querySelector('.searchable-color').textContent.toLowerCase();
-                    if (color.includes(searchTerm)) {
+                    const title = row.querySelector('.searchable-title').textContent.toLowerCase();
+                    if (title.includes(searchTerm)) {
                         row.style.display = '';
                     } else {
                         row.style.display = 'none';
                     }
                 });
-
-                // Update results count
-                const visibleRows = Array.from(searchableRows).filter(row => row.style.display !== 'none');
-                console.log(`Showing ${visibleRows.length} results for "${searchTerm}"`);
             });
         });
     </script>

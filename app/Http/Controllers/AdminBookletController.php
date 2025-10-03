@@ -42,13 +42,13 @@ class AdminBookletController extends Controller
         $filename = null;
         if ($request->hasFile('file')) {
             $filename = time() . '_' . $request->file('file')->getClientOriginalName();
-            $request->file('file')->move(public_path('storage/booklets'), $filename); // Change directory
+            $request->file('file')->move(public_path('storage/booklet'), $filename); // Change directory
         }
 
         $imageName = null;
         if ($request->hasFile('image')) {
             $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('storage/booklets/images'), $imageName); // Change directory
+            $request->file('image')->move(public_path('images/booklet'), $imageName); // Change directory
         }
 
         $booklet = Booklet::create([
@@ -57,7 +57,7 @@ class AdminBookletController extends Controller
             'image' => $imageName, // Save image name
         ]);
 
-        return redirect()->route('booklet')->with('success', 'Dokumen Berhasil Ditambahkan');
+        return redirect()->route('admin.booklet')->with('success', 'Dokumen Berhasil Ditambahkan');
     }
 
     /**
@@ -97,27 +97,27 @@ class AdminBookletController extends Controller
         // If user uploads a new file
         if ($request->hasFile('file')) {
             // Delete old file
-            $oldFilePath = public_path('storage/booklets/' . basename($booklet->file));
+            $oldFilePath = public_path('storage/booklet/' . basename($booklet->file));
             if (File::exists($oldFilePath)) {
                 File::delete($oldFilePath);
             }
 
             // Upload new file
             $filename = time() . '_' . $request->file('file')->getClientOriginalName();
-            $request->file('file')->move(public_path('storage/booklets'), $filename);
+            $request->file('file')->move(public_path('storage/booklet'), $filename);
         }
 
         // If user uploads a new image
         if ($request->hasFile('image')) {
             // Delete old image
-            $oldImagePath = public_path('images/' . basename($booklet->image));
+            $oldImagePath = public_path('images/booklet' . basename($booklet->image));
             if (File::exists($oldImagePath)) {
                 File::delete($oldImagePath);
             }
 
             // Upload new image
             $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('storage/booklets/images'), $imageName);
+            $request->file('image')->move(public_path('images/booklet/'), $imageName);
         }
 
         // Update database
@@ -127,7 +127,7 @@ class AdminBookletController extends Controller
             'image' => $imageName, // Update image name
         ]);
 
-        return redirect()->route('booklet')->with('success', 'Dokumen berhasil diperbarui.');
+        return redirect()->route('admin.booklet')->with('success', 'Dokumen berhasil diperbarui.');
     }
 
     /**
@@ -138,7 +138,7 @@ class AdminBookletController extends Controller
         $booklet = Booklet::findOrFail($id); // Change to Booklet model
 
         // Delete physical file from folder if exists
-        $filePath = public_path('storage/booklets/' . basename($booklet->file));
+        $filePath = public_path('storage/booklet/' . basename($booklet->file));
         if (File::exists($filePath)) {
             File::delete($filePath);
         }
@@ -152,6 +152,6 @@ class AdminBookletController extends Controller
         // Delete data from database
         $booklet->delete();
 
-        return redirect()->route('booklet')->with('success', 'Dokumen berhasil dihapus.');
+        return redirect()->route('admin.booklet')->with('success', 'Dokumen berhasil dihapus.');
     }
 }

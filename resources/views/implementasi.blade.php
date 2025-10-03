@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart City Kota Bogor</title>
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.svg') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -79,7 +79,7 @@
             <div class="p-4 bg-gray-50 relative rounded-b-xl">
                     <div id="pdfLoader" class="loader"></div>
                     @foreach ($implementasi as $item)
-                        <div class="border-2 border-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition opacity-0" id="pdfWrapper">
+                        <div class="border-2 border-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition opacity-0 pdfWrapper">
                             <embed
                                 src="{{ asset('storage/implemen/' . $item->file) }}"
                                 type="application/pdf"
@@ -107,9 +107,11 @@
         // Loader PDF
         function hideLoader() {
             document.getElementById("pdfLoader").style.display = "none";
-            let pdf = document.getElementById("pdfWrapper");
-            pdf.classList.remove("opacity-0");
-            pdf.classList.add("animate__animated","animate__fadeIn");
+            let pdfs = document.querySelectorAll(".pdfWrapper");
+            pdfs.forEach(pdf => {
+                pdf.classList.remove("opacity-0");
+                pdf.classList.add("animate__animated","animate__fadeIn");
+            });
         }
         // Back to top
         const backToTop = document.getElementById("backToTop");

@@ -15,7 +15,7 @@ class AdminPenilaianController extends Controller
     {
         $penilaians = Penilaian::paginate(6);
 
-        return view('admin.penilaian', [ 
+        return view('admin.penilaian', [
             'penilaians' => $penilaians
         ]);
     }
@@ -34,19 +34,17 @@ class AdminPenilaianController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'color' => 'required',
             'score' => 'required|numeric',
             'year'  => 'required|integer',
         ]);
 
         // buat penilaian baru
         $penilaian = Penilaian::create([
-            'color' => $request->color,
             'score' => $request->score,
             'year'  => $request->year,
         ]);
 
-        return redirect()->route('penilaian')->with('success', 'Penilaian berhasil ditambahkan.');
+        return redirect()->route('admin.penilaian')->with('success', 'Penilaian berhasil ditambahkan.');
     }
 
     /**
@@ -66,7 +64,6 @@ class AdminPenilaianController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'color' => 'required',
             'score' => 'required|numeric',
             'year'  => 'required|integer',
         ]);
@@ -74,12 +71,11 @@ class AdminPenilaianController extends Controller
         $penilaian = Penilaian::findOrFail($id);
 
         $penilaian->update([
-            'color' => $request->color,
             'score' => $request->score,
             'year'  => $request->year,
         ]);
 
-        return redirect()->route('penilaian')->with('success', 'Penilaian berhasil diperbarui.');
+        return redirect()->route('admin.penilaian')->with('success', 'Penilaian berhasil diperbarui.');
     }
 
     /**
@@ -91,6 +87,6 @@ class AdminPenilaianController extends Controller
 
         $penilaian->delete();
 
-        return redirect()->route('penilaian')->with('success', 'Penilaian berhasil dihapus.');
+        return redirect()->route('admin.penilaian')->with('success', 'Penilaian berhasil dihapus.');
     }
 }

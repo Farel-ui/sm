@@ -17,12 +17,11 @@ class MasterplanController extends Controller
 {
     public function index()
     {
-        $masterplans = Masterplan::orderBy('period')->paginate(7);
+        $masterplans = Masterplan::all();
         $dimensions = Dimension::all();
         $quickwins = QuickWin::all();
         $booklets = Booklet::all();
         $implementasi = implementasi::all();
-        $penghargaan = Masterplan::where('type', 'penghargaan')->orderBy('period')->get();
         $igas = Iga::all();
         $penilaian = Penilaian::orderBy('year')->get();
 
@@ -53,7 +52,7 @@ class MasterplanController extends Controller
 
 public function implementasi()
 {
-    $implementasi = Implementasi::all();
+    $implementasi = Implementasi::where('status', 'public')->get();
     return view('implementasi', compact('implementasi'));
 }
 
@@ -98,17 +97,6 @@ public function implementasi()
             'video' => asset('storage/video/' . $dimension->video)
         ]);
     }
-
-
-    // Tambahan kosong untuk CRUD jika nanti ingin digunakan di admin
-    public function create() {}
-    public function store(Request $request) {}
-    public function show(Masterplan $masterplan) {}
-    public function edit(Masterplan $masterplan) {}
-    public function update(Request $request, Masterplan $masterplan) {}
-    public function destroy(Masterplan $masterplan) {}
-
-
 
     public function chartData(Request $request)
 {

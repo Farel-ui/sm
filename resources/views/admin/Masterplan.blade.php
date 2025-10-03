@@ -169,10 +169,10 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-blue-500">
+                        <tbody class="bg-white">
                             @if(isset($masterplan) && $masterplan->count() > 0)
                                 @foreach ($masterplan as $index => $mp)
-                                <tr class="table-row hover:bg-blue-50 transition-all duration-200 searchable-row">
+                                <tr class="table-row border-b border-blue-500 hover:bg-blue-50 transition-all duration-200 searchable-row">
                                     <!-- No -->
                                     <td class="px-6 py-4 text-sm text-blue-500">{{ $index + $masterplan->firstItem() }}</td>
 
@@ -231,7 +231,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="5" class="px-6 py-12 text-center">
+                                    <td colspan="6" class="px-6 py-12 text-center">
                                         <div class="flex flex-col items-center justify-center">
                                             <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
                                                 <i class="fas fa-folder-open text-blue-300 text-2xl"></i>
