@@ -15,7 +15,7 @@ class AdminDimensionController extends Controller
     {
         $dimensions = Dimension::orderBy('id')->paginate(6); // Fetch paginated dimensions
 
-        return view('admin.dimension', [
+        return view('admin.dimension.index', [
             'dimensions' => $dimensions // Pass dimensions to the view
         ]);
     }
@@ -25,7 +25,7 @@ class AdminDimensionController extends Controller
      */
     public function create()
     {
-        return view('admin.create_dm'); // Return the create view
+        return view('admin.dimension.create_dm'); // Return the create view
     }
 
     /**
@@ -59,7 +59,7 @@ class AdminDimensionController extends Controller
             'video' => $videoName,
         ]);
 
-        return redirect()->route('admin.dimension')->with('success', 'Dimension berhasil ditambahkan.');
+        return redirect()->route('admin.dimension.index')->with('success', 'Dimension berhasil ditambahkan.');
     }
 
     /**
@@ -68,7 +68,7 @@ class AdminDimensionController extends Controller
     public function edit($id)
     {
         $dimension = Dimension::findOrFail($id); // Find the dimension by ID
-        return view('admin.edit_dm', [
+        return view('admin.dimension.edit_dm', [
             'dimension' => $dimension // Pass the dimension to the edit view
         ]);
     }
@@ -124,7 +124,7 @@ class AdminDimensionController extends Controller
         $dimension->description = $request->description;
         $dimension->save(); // Save the updated dimension
 
-        return redirect()->route('admin.dimension')->with('success', 'Dimension berhasil diperbarui.');
+        return redirect()->route('admin.dimension.index')->with('success', 'Dimension berhasil diperbarui.');
     }
 
     /**
@@ -144,7 +144,7 @@ class AdminDimensionController extends Controller
 
         // Delete physical video if exists
         if ($dimension->video) {
-            $videoPath = public_path('storage/dimension/videos/' . basename($dimension->video));
+            $videoPath = public_path('storage/dimension/' . basename($dimension->video));
             if (File::exists($videoPath)) {
                 File::delete($videoPath);
             }
@@ -153,6 +153,6 @@ class AdminDimensionController extends Controller
         // Delete the dimension from the database
         $dimension->delete();
 
-        return redirect()->route('admin.dimension')->with('success', 'Dimension berhasil dihapus.');
+        return back()->with('success', 'Dokumen berhasil dihapus.');
     }
 }

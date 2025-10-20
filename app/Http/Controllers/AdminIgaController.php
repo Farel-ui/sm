@@ -15,7 +15,7 @@ class AdminIgaController extends Controller
     {
         $iga = Iga::paginate(6);
 
-        return view('Admin.Iga', [
+        return view('Admin.Iga.index', [
             'iga' => $iga
         ]);
     }
@@ -25,7 +25,7 @@ class AdminIgaController extends Controller
      */
     public function create()
     {
-        return view('admin.create_ig');
+        return view('admin.iga.create_ig');
     }
 
     /**
@@ -36,6 +36,7 @@ class AdminIgaController extends Controller
         $request->validate([
             'title' => 'required',
             'institution' => 'required',
+            'status' => 'required|in:draft,publish',
             'image' => 'required|image|max:10240' // 10MB
         ]);
 
@@ -49,9 +50,10 @@ class AdminIgaController extends Controller
             'title' => $request->title,
             'institution' => $request->institution,
             'image' => $filename,
+            'status' => $request->status, // Default to draft if not provided
         ]);
 
-        return redirect()->route('admin.iga')->with('success', 'Dokumen Berhasil Ditambahkeun');
+        return redirect()->route('admin.iga.index')->with('success', 'Dokumen Berhasil Ditambahkeun');
     }
 
     /**
@@ -60,7 +62,7 @@ class AdminIgaController extends Controller
     public function edit(string $id)
     {
         $iga = Iga::findOrFail($id);
-        return view('admin.edit_ig', [
+        return view('admin.iga.edit_ig', [
             'iga' => $iga
         ]);
     }
@@ -73,6 +75,7 @@ class AdminIgaController extends Controller
         $request->validate([
             'title' => 'required',
             'institution' => 'required',
+            'status' => 'required|in:draft,publish',
             'image' => 'nullable|image|max:10240', // optional
         ]);
 
@@ -97,9 +100,10 @@ class AdminIgaController extends Controller
             'title' => $request->title,
             'institution' => $request->institution,
             'image' => $filename,
+            'status' => $request->status ?? $iga->status, // Keep old status if not provided
         ]);
 
-        return redirect()->route('admin.iga')->with('success', 'Dokumen berhasil diperbarui.');
+        return redirect()->route('admin.iga.index')->with('success', 'Dokumen berhasil diperbarui.');
     }
 
     /**
@@ -119,6 +123,6 @@ class AdminIgaController extends Controller
         // Delete data from database
         $iga->delete();
 
-        return redirect()->route('admin.iga')->with('success', 'Dokumen berhasil dihapus.');
+        return back()->with('success', 'Dokumen berhasil dihapus.');
     }
 }

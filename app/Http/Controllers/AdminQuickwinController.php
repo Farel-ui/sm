@@ -12,14 +12,14 @@ class AdminQuickwinController extends Controller
     {
         $quickwins = Quickwin::paginate(6);
 
-        return view('Admin.Quickwin',[
+        return view('Admin.Quickwin.index',[
             'quickwins' => $quickwins
         ]);
     }
 
     public function create()
     {
-        return view('admin.create_qw');
+        return view('admin.quickwin.create_qw');
     }
 
     public function store(Request $request)
@@ -27,6 +27,7 @@ class AdminQuickwinController extends Controller
         $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
+            'status'      => 'required|in:draft,publish',
             'image'       => 'required|image|max:10240', // 10MB
         ]);
 
@@ -39,16 +40,17 @@ class AdminQuickwinController extends Controller
         Quickwin::create([
             'title'       => $request->title,
             'description' => $request->description,
+            'status'      => $request->status,
             'image'       => $filename,
         ]);
 
-        return redirect()->route('admin.quickwin')->with('success', 'QuickWin berhasil ditambahkan.');
+        return redirect()->route('admin.quickwin.index')->with('success', 'QuickWin berhasil ditambahkan.');
     }
 
     public function edit($id)
     {
         $quickwin = Quickwin::findOrFail($id);
-        return view('admin.edit_qw', compact('quickwin'));
+        return view('admin.quickwin.edit_qw', compact('quickwin'));
     }
 
     public function update(Request $request, $id)
@@ -56,6 +58,7 @@ class AdminQuickwinController extends Controller
         $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
+            'status'      => 'required|in:draft,publish',
             'image'       => 'nullable|image|max:10240',
         ]);
 
@@ -75,10 +78,11 @@ class AdminQuickwinController extends Controller
         $quickwin->update([
             'title'       => $request->title,
             'description' => $request->description,
+            'status'      => $request->status,
             'image'       => $filename,
         ]);
 
-        return redirect()->route('admin.quickwin')->with('success', 'QuickWin berhasil diperbarui.');
+        return redirect()->route('admin.quickwin.index')->with('success', 'QuickWin berhasil diperbarui.');
     }
 
     public function destroy($id)
@@ -92,6 +96,6 @@ class AdminQuickwinController extends Controller
 
         $quickwin->delete();
 
-        return redirect()->route('admin.quickwin')->with('success', 'QuickWin berhasil dihapus.');
+        return back()->with('success', 'Dokumen berhasil dihapus.');
     }
 }

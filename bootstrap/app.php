@@ -13,6 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         // ✅ ini bikin VisitorMiddleware jalan di SEMUA request
         $middleware->append(\App\Http\Middleware\VisitorMiddleware::class);
+        
+        $middleware->alias([
+        'role' => \App\Http\Middleware\CheckRole::class,
+    ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

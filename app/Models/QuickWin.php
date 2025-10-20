@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class QuickWin extends Model
 {
-    protected $fillable = ['title', 'image', 'description'];
+    protected $fillable = ['title', 'image', 'description', 'status'];
 }

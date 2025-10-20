@@ -17,13 +17,13 @@ class MasterplanController extends Controller
 {
     public function index()
     {
-        $masterplans = Masterplan::all();
-        $dimensions = Dimension::all();
-        $quickwins = QuickWin::all();
-        $booklets = Booklet::all();
-        $implementasi = implementasi::all();
-        $igas = Iga::all();
-        $penilaian = Penilaian::orderBy('year')->get();
+        $masterplans  = Masterplan::all();
+        $dimensions   = Dimension::all();
+        $quickwins    = QuickWin::where('status', 'publish')->get();
+        $booklets     = Booklet::where('status', 'publish')->get();
+        $implementasi = implementasi::where('status', 'publish')->get();
+        $igas         = Iga::where('status', 'publish')->get();
+        $penilaian    = Penilaian::orderBy('year')->get();
 
         return view('welcome', compact(
             'masterplans',
@@ -36,14 +36,6 @@ class MasterplanController extends Controller
         ));
     }
 
-    public function Dokumen()
-    {
-        $title = 'Masterplan Smart City (Dokumen)';
-        $masterplans = Masterplan::where('type', 'Dokumen')->orderBy('period')->get();
-        return view('Dokumen', compact('masterplans', 'title'));
-
-    }
-
     public function admin()
 {
     return view('admin.dashboard');
@@ -52,7 +44,7 @@ class MasterplanController extends Controller
 
 public function implementasi()
 {
-    $implementasi = Implementasi::where('status', 'public')->get();
+    $implementasi = Implementasi::where('status', 'publish')->get();
     return view('implementasi', compact('implementasi'));
 }
 
@@ -61,7 +53,7 @@ public function implementasi()
     {
         $title = 'Paparan Masterplan Smart City';
         $masterplans = Masterplan::where('type', 'paparan')
-        ->where('status', 'public')
+        ->where('status', 'publish')
         ->orderBy('period')
         ->get();
         return view('paparan', compact('title', 'masterplans'));
@@ -70,7 +62,7 @@ public function implementasi()
         public function masterplano()
     {
         $title = 'Masterplan Smart City';
-        $masterplans = Masterplan::where('status', 'public')
+        $masterplans = Masterplan::where('status', 'publish')
         ->where('type', 'buku')
         ->orderBy('period')
         ->get();
@@ -85,8 +77,14 @@ public function implementasi()
 
     public function iga()
     {
-        $igas = Iga::where('status', 'public')->get();
+        $igas = Iga::where('status', 'publish')->get();
         return view('iga', compact('igas'));
+    }
+
+    public function booklet()
+    {
+        $booklets = booklet::where('status', 'draft')->get();
+        return view('booklet', compact('booklets'));
     }
 
     // Ambil video berdasarkan ID Dimension
@@ -97,76 +95,6 @@ public function implementasi()
             'video' => asset('storage/video/' . $dimension->video)
         ]);
     }
-
-    public function chartData(Request $request)
-{
-    $range = $request->get('range', 'monthly');
-    $start = $request->get('start');
-    $end = $request->get('end');
-
-    $defaultEnd = Carbon::now();
-    $defaultStart = Carbon::now()->subYears(5)->startOfMonth();
-
-    try {
-        $start = $start ? Carbon::parse($start) : $defaultStart;
-        $end = $end ? Carbon::parse($end) : $defaultEnd;
-    } catch (\Exception $e) {
-        return response()->json(['error' => 'Invalid date format'], 422);
-    }
-
-    $cacheKey = "chart_data_{$range}_{$start->toDateString()}_{$end->toDateString()}";
-
-    $result = Cache::remember($cacheKey, 300, function () use ($range, $start, $end) {
-        $query = Sale::whereBetween('date', [$start, $end]);
-
-        if ($range === 'daily') {
-            $rows = $query->select(DB::raw("DATE(date) as label, SUM(amount) as value"))
-                          ->groupBy('label')->orderBy('label')->get();
-        } elseif ($range === 'yearly') {
-            $rows = $query->select(DB::raw("YEAR(date) as label, SUM(amount) as value"))
-                          ->groupBy('label')->orderBy('label')->get();
-        } else {
-            $rows = $query->select(DB::raw("DATE_FORMAT(date, '%Y-%m') as label, SUM(amount) as value"))
-                          ->groupBy('label')->orderBy('label')->get();
-        }
-
-        $labels = [];
-        $values = [];
-
-        if ($range === 'daily') {
-            $cursor = $start->copy();
-            $map = $rows->pluck('value', 'label')->toArray();
-            while ($cursor->lte($end)) {
-                $labels[] = $cursor->format('Y-m-d');
-                $values[] = $map[$cursor->format('Y-m-d')] ?? 0;
-                $cursor->addDay();
-            }
-        } elseif ($range === 'yearly') {
-            $cursor = $start->copy()->startOfYear();
-            $map = $rows->pluck('value', 'label')->toArray();
-            while ($cursor->lte($end)) {
-                $labels[] = $cursor->format('Y');
-                $values[] = $map[$cursor->format('Y')] ?? 0;
-                $cursor->addYear();
-            }
-        } else {
-            $cursor = $start->copy()->startOfMonth();
-            $map = $rows->pluck('value', 'label')->toArray();
-            while ($cursor->lte($end)) {
-                $labels[] = $cursor->format('Y-m');
-                $values[] = $map[$cursor->format('Y-m')] ?? 0;
-                $cursor->addMonth();
-            }
-        }
-
-        return [
-            'labels' => $labels,
-            'values' => $values,
-        ];
-    });
-
-    return response()->json($result);
-}
 }
 
 

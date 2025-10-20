@@ -5,7 +5,7 @@
 
     <div class="flex flex-wrap justify-center gap-6">
       @foreach ($dimensions as $dimension)
-        <div class="bg-blue-600 text-white rounded-2xl w-[300px] p-6 shadow-lg flex flex-col items-center text-center">
+        <div class="bg-blue-600 text-white rounded-2xl w-[300px] p-6 shadow-lg flex flex-col items-center text-center z-0">
           <img src="{{ asset('images/dimension/' . $dimension->image) }}" alt="{{ $dimension->name }}" class="w-[111px] h-[73px] mb-4">
           <h3 class="text-xl font-semibold mb-2">{{ $dimension->name }}</h3>
           <p class="text-sm mb-4">{!! $dimension->description !!}</p>
@@ -18,7 +18,7 @@
   </div>
 
  <!-- Modal Video -->
-<div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden z-50">
+<div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden">
     <div id="videoContainer" class="relative w-[90%] max-w-3xl">
         <video id="videoPlayer" controls class="w-full rounded-xl shadow-lg">
             <source src="" type="video/mp4" id="videoSource">

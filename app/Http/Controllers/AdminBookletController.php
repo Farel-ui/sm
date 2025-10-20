@@ -15,7 +15,7 @@ class AdminBookletController extends Controller
     {
         $booklet = Booklet::paginate(6); // Change to Booklet model
 
-        return view('Admin.Booklet', [
+        return view('Admin.Booklet.index', [
             'booklet' => $booklet // Change variable name
         ]);
     }
@@ -25,7 +25,7 @@ class AdminBookletController extends Controller
      */
     public function create()
     {
-        return view('admin.create_bk'); // Change view name
+        return view('admin.booklet.create_bk'); // Change view name
     }
 
     /**
@@ -36,6 +36,7 @@ class AdminBookletController extends Controller
         $request->validate([
             'title' => 'required',
             'file' => 'mimes:pdf|max:20480', // Assuming file is still needed
+            'status' => 'required|in:draft,publish',
             'image' => 'nullable|image|max:2048' // Add image validation
         ]);
 
@@ -55,9 +56,10 @@ class AdminBookletController extends Controller
             'title' => $request->title,
             'file' => $filename,
             'image' => $imageName, // Save image name
+            'status' => $request->status,
         ]);
 
-        return redirect()->route('admin.booklet')->with('success', 'Dokumen Berhasil Ditambahkan');
+        return redirect()->route('admin.booklet.index')->with('success', 'Dokumen Berhasil Ditambahkan');
     }
 
     /**
@@ -74,7 +76,7 @@ class AdminBookletController extends Controller
     public function edit(string $id)
     {
         $booklet = Booklet::findOrFail($id); // Change to Booklet model
-        return view('admin.edit_bk', [
+        return view('admin.booklet.edit_bk', [
             'booklet' => $booklet // Change variable name
         ]);
     }
@@ -87,7 +89,8 @@ class AdminBookletController extends Controller
         $request->validate([
             'title' => 'required',
             'file' => 'nullable|mimes:pdf|max:20480', // optional
-            'image' => 'nullable|image|max:2048' // Add image validation
+            'status' => 'required|in:draft,publish',
+            'image' => 'nullable|image|max:2048', // Add image validation
         ]);
 
         $booklet = Booklet::findOrFail($id); // Change to Booklet model
@@ -125,9 +128,10 @@ class AdminBookletController extends Controller
             'title' => $request->title,
             'file' => $filename,
             'image' => $imageName, // Update image name
+            'status' => $request->status, // Keep old status if not provided
         ]);
 
-        return redirect()->route('admin.booklet')->with('success', 'Dokumen berhasil diperbarui.');
+        return redirect()->route('admin.booklet.index')->with('success', 'Dokumen berhasil diperbarui.');
     }
 
     /**
@@ -144,7 +148,7 @@ class AdminBookletController extends Controller
         }
 
         // Delete physical image from folder if exists
-        $imagePath = public_path('storage/booklets/images/' . basename($booklet->image));
+        $imagePath = public_path('images/booklet/' . basename($booklet->image));
         if (File::exists($imagePath)) {
             File::delete($imagePath);
         }
@@ -152,6 +156,7 @@ class AdminBookletController extends Controller
         // Delete data from database
         $booklet->delete();
 
-        return redirect()->route('admin.booklet')->with('success', 'Dokumen berhasil dihapus.');
+        return back()->with('success', 'Dokumen berhasil dihapus.');
+
     }
 }

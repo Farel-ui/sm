@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart City Kota Bogor</title>
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="icon" type="image/png" href="{{ asset('images/logo.svg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -39,7 +39,7 @@
         .btn-glow:hover { box-shadow: 0 0 15px rgba(59,130,246,0.7); }
     </style>
 </head>
-<body class="bg-gray-100 font-sans">
+<body class="bg-gray-50 font-sans">
 
     <!-- Navbar -->
     @include('components.navbar')
@@ -55,7 +55,7 @@
     </section>
 
     <!-- Konten PDF + Foto -->
-    <div class="max-w-6xl mx-auto px-4 pb-16">
+    <div class="max-w-6xl mx-auto px-4">
         <div class="bg-white rounded-2xl shadow-2xl overflow-hidden animate__animated animate__fadeInUp">
 
             <!-- Header PDF -->
@@ -98,8 +98,6 @@
         </div>
     <!-- Back to top -->
     <div id="backToTop"><i class="fa-solid fa-arrow-up"></i></div>
-
-    <!-- Footer -->
     @include('components.footer')
 
     <!-- JS Tambahan -->
@@ -130,7 +128,16 @@
                 }
             });
         }, { threshold: 0.2 });
-        document.querySelectorAll("section, .bg-white").forEach(el => observer.observe(el));
+        document.querySelectorAll("section, .bg-white").forEach(el => {
+    // skip jika elemen ada di dalam nav atau footer
+    if (el.closest('nav') || el.closest('footer')) return;
+    // skip jika elemen punya class no-animate
+    if (el.classList.contains('no-animate') || el.closest('.no-animate')) return;
+
+    observer.observe(el);
+});
     </script>
+        <!-- Footer -->
+
 </body>
 </html>

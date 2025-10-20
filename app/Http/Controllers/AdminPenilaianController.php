@@ -15,7 +15,7 @@ class AdminPenilaianController extends Controller
     {
         $penilaians = Penilaian::paginate(6);
 
-        return view('admin.penilaian', [
+        return view('admin.penilaian.index', [
             'penilaians' => $penilaians
         ]);
     }
@@ -25,7 +25,7 @@ class AdminPenilaianController extends Controller
      */
     public function create()
     {
-        return view('admin.create_pn'); // form tambah penilaian
+        return view('admin.penilaian.create_pn'); // form tambah penilaian
     }
 
     /**
@@ -44,7 +44,7 @@ class AdminPenilaianController extends Controller
             'year'  => $request->year,
         ]);
 
-        return redirect()->route('admin.penilaian')->with('success', 'Penilaian berhasil ditambahkan.');
+        return redirect()->route('admin.penilaian.index')->with('success', 'Penilaian berhasil ditambahkan.');
     }
 
     /**
@@ -53,7 +53,7 @@ class AdminPenilaianController extends Controller
     public function edit(string $id)
     {
         $penilaian = Penilaian::findOrFail($id);
-        return view('admin.edit_pn', [
+        return view('admin.penilaian.edit_pn', [
             'penilaian' => $penilaian
         ]);
     }
@@ -75,7 +75,7 @@ class AdminPenilaianController extends Controller
             'year'  => $request->year,
         ]);
 
-        return redirect()->route('admin.penilaian')->with('success', 'Penilaian berhasil diperbarui.');
+        return redirect()->route('admin.penilaian.index')->with('success', 'Penilaian berhasil diperbarui.');
     }
 
     /**
@@ -87,6 +87,6 @@ class AdminPenilaianController extends Controller
 
         $penilaian->delete();
 
-        return redirect()->route('admin.penilaian')->with('success', 'Penilaian berhasil dihapus.');
+        return back()->with('success', 'Dokumen berhasil dihapus.');
     }
 }

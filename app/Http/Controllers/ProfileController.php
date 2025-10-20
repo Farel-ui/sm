@@ -12,7 +12,16 @@ use Illuminate\View\View;
 class ProfileController extends Controller
 {
     /**
-     * Display the user's profile form.
+     * Tampilkan halaman profil.
+     */
+    public function index()
+    {
+        $user = auth()->user();
+        return view('profile.index', compact('user'));
+    }
+
+    /**
+     * Form edit profil.
      */
     public function edit(Request $request): View
     {
@@ -22,23 +31,41 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
+     * Update profil user (nama, email, avatar).
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Validasi data dasar
+        $user->fill($request->validated());
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        // Kalau user upload avatar baru
+        if ($request->hasFile('avatar')) {
+            // Hapus avatar lama kalau ada
+            if ($user->avatar && file_exists(public_path('images/avatar/' . $user->avatar))) {
+                unlink(public_path('images/avatar/' . $user->avatar));
+            }
+
+            // Simpan avatar baru
+            $file = $request->file('avatar');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('images/avatar'), $filename);
+
+            $user->avatar = $filename;
+        }
+
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**
-     * Delete the user's account.
+     * Hapus akun user.
      */
     public function destroy(Request $request): RedirectResponse
     {
@@ -49,12 +76,28 @@ class ProfileController extends Controller
         $user = $request->user();
 
         Auth::logout();
-
         $user->delete();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    /**
+     * Hapus avatar user.
+     */
+    public function destroyAvatar(Request $request): RedirectResponse
+    {
+        $user = Auth::user();
+
+        if ($user->avatar && file_exists(public_path('images/avatar/' . $user->avatar))) {
+            unlink(public_path('images/avatar/' . $user->avatar));
+        }
+
+        $user->avatar = null;
+        $user->save();
+
+        return Redirect::route('profile.edit')->with('status', 'avatar-deleted');
     }
 }

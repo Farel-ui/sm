@@ -7,15 +7,14 @@ use App\Http\Controllers\AdminIgaController;
 use App\Http\Controllers\AdminImplementasiController;
 use App\Http\Controllers\AdminMasterplanController;
 use App\Http\Controllers\AdminQuickwinController;
+use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MasterplanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VisitorController;
 
-
-
-// ✅ Tampilan awal website
+// ✅ Tampilan awal website (public)
 Route::get('/', [MasterplanController::class, 'index'])->name('home');
 Route::get('/penilaian', [MasterplanController::class, 'penilaian'])->name('penilaian');
 Route::get('/iga', [MasterplanController::class, 'iga'])->name('iga');
@@ -27,88 +26,111 @@ Route::get('/paparan', [MasterplanController::class, 'paparan'])->name('paparan'
 Route::get('/Dokumen', [MasterplanController::class, 'Dokumen'])->name('Dokumen');
 Route::get('/masterplano', [MasterplanController::class, 'masterplano'])->name('masterplano');
 
-   // ✅ Halaman dashboard admin
+// ✅ Middleware auth: hanya admin/login yang bisa akses dashboard
 Route::middleware(['auth'])->group(function () {
+
+    // 🏠 Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/stats', [DashboardController::class, 'stats'])->name('dashboard.stats');
-});
-// ✅ Middleware auth: semua route admin/dashboard hanya bisa diakses setelah login
-Route::middleware(['auth'])->group(function () {
 
-    Route::get('/dokumen', function () {
-    return view('dokumen');
-})->name('dokumen');
+    Route::get('/profile/index', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar.update');
+    Route::delete('/profile/avatar', [ProfileController::class, 'destroyAvatar'])->name('profile.avatar.destroy');
 
+    Route::get('/dokumen', fn () => view('dokumen'))->name('dokumen');
 
+    // 📌 Prefix Admin Disatukan
+    Route::prefix('admin')->name('admin.')->middleware(['role:admin,super_admin'])->group(function () {
 
-    // ✅ CRUD Masterplan
-    Route::get('/admin/masterplan', [AdminMasterplanController::class, 'index'])->name('admin.masterplan');
-    Route::get('/admin/masterplan/create', [AdminMasterplanController::class, 'create'])->name('masterplan.create');
-    Route::post('/admin/masterplan/store', [AdminMasterplanController::class, 'store'])->name('masterplan.store');
-    Route::get('/admin/masterplan/{id}/edit', [AdminMasterplanController::class, 'edit'])->name('masterplan.edit');
-    Route::put('/admin/masterplan/update/{id}', [AdminMasterplanController::class, 'update'])->name('masterplan.update');
-    Route::delete('/admin/masterplan/{id}', [AdminMasterplanController::class, 'destroy'])->name('masterplan.destroy');
+        // 📚 Masterplan
+        Route::prefix('masterplan')->name('masterplan.')->group(function () {
+            Route::get('/', [AdminMasterplanController::class, 'index'])->name('index');
+            Route::get('/create', [AdminMasterplanController::class, 'create'])->name('create');
+            Route::post('/store', [AdminMasterplanController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [AdminMasterplanController::class, 'edit'])->name('edit');
+            Route::put('/update/{id}', [AdminMasterplanController::class, 'update'])->name('update');
+            Route::delete('/{id}', [AdminMasterplanController::class, 'destroy'])->name('destroy');
+        });
 
-    // ✅ CRUD Iga
-    Route::get('/admin/iga/', [AdminIgaController::class, 'index'])->name('admin.iga');
-    Route::get('/admin/iga/create', [AdminIgaController::class, 'create'])->name('iga.create');
-    Route::post('/admin/iga/store', [AdminIgaController::class, 'store'])->name('iga.store');
-    Route::get('/admin/iga/{id}/edit', [AdminIgaController::class, 'edit'])->name('iga.edit');
-    Route::post('/admin/iga/update/{id}', [AdminIgaController::class, 'update'])->name('iga.update');
-    Route::post('/admin/iga/{id}', [AdminIgaController::class, 'destroy'])->name('iga.destroy');
+        // 💡 IGA
+        Route::prefix('iga')->name('iga.')->group(function () {
+            Route::get('/', [AdminIgaController::class, 'index'])->name('index');
+            Route::get('/create', [AdminIgaController::class, 'create'])->name('create');
+            Route::post('/store', [AdminIgaController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [AdminIgaController::class, 'edit'])->name('edit');
+            Route::put('/update/{id}', [AdminIgaController::class, 'update'])->name('update');
+            Route::delete('/{id}', [AdminIgaController::class, 'destroy'])->name('destroy');
+        });
 
-    // ✅ CRUD penilaian
-    Route::get('/admin/penilaian/', [AdminPenilaianController::class, 'index'])->name('admin.penilaian');
-    Route::get('/admin/penilaian/create', [AdminPenilaianController::class, 'create'])->name('penilaian.create');
-    Route::post('/admin/penilaian/store', [AdminPenilaianController::class, 'store'])->name('penilaian.store');
-    Route::get('/admin/penilaian/{id}/edit', [AdminPenilaianController::class, 'edit'])->name('penilaian.edit');
-    Route::put('/admin/penilaian/update/{id}', [AdminPenilaianController::class, 'update'])->name('penilaian.update');
-    Route::delete('/admin/penilaian/{id}', [AdminPenilaianController::class, 'destroy'])->name('penilaian.destroy');
+        // 📑 Booklet
+        Route::prefix('booklet')->name('booklet.')->group(function () {
+            Route::get('/', [AdminBookletController::class, 'index'])->name('index');
+            Route::get('/create', [AdminBookletController::class, 'create'])->name('create');
+            Route::post('/store', [AdminBookletController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [AdminBookletController::class, 'edit'])->name('edit');
+            Route::put('/update/{id}', [AdminBookletController::class, 'update'])->name('update');
+            Route::delete('/{id}', [AdminBookletController::class, 'destroy'])->name('destroy');
+        });
 
+        // ⚡ Quickwin
+        Route::prefix('quickwin')->name('quickwin.')->group(function () {
+            Route::get('/', [AdminQuickwinController::class, 'index'])->name('index');
+            Route::get('/create', [AdminQuickwinController::class, 'create'])->name('create');
+            Route::post('/store', [AdminQuickwinController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [AdminQuickwinController::class, 'edit'])->name('edit');
+            Route::put('/update/{id}', [AdminQuickwinController::class, 'update'])->name('update');
+            Route::delete('/{id}', [AdminQuickwinController::class, 'destroy'])->name('destroy');
+        });
 
-    // ✅ CRUD Booklet
-    Route::get('/admin/booklet/', [AdminBookletController::class, 'index'])->name('admin.booklet');
-    Route::get('/admin/booklet/create', [AdminBookletController::class, 'create'])->name('booklet.create');
-    Route::post('/admin/booklet/store', [AdminBookletController::class, 'store'])->name('booklet.store');
-    Route::get('/admin/booklet/{id}/edit', [AdminBookletController::class, 'edit'])->name('booklet.edit');
-    Route::put('/admin/booklet/update/{id}', [AdminBookletController::class, 'update'])->name('booklet.update');
-    Route::delete('/admin/booklet/{id}', [AdminBookletController::class, 'destroy'])->name('booklet.destroy');
+        // 🌐 Dimension
+        Route::prefix('dimension')->name('dimension.')->group(function () {
+            Route::get('/', [AdminDimensionController::class, 'index'])->name('index');
+            Route::get('/create', [AdminDimensionController::class, 'create'])->name('create');
+            Route::post('/store', [AdminDimensionController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [AdminDimensionController::class, 'edit'])->name('edit');
+            Route::put('/update/{id}', [AdminDimensionController::class, 'update'])->name('update');
+            Route::delete('/{id}', [AdminDimensionController::class, 'destroy'])->name('destroy');
+        });
 
-    // ✅ CRUD Quickwin
-    Route::get('/admin/quickwin/', [AdminQuickwinController::class, 'index'])->name('admin.quickwin');
-    Route::get('/admin/quickwin/create', [AdminQuickwinController::class, 'create'])->name('quickwin.create');
-    Route::post('/admin/quickwin/store', [AdminQuickwinController::class, 'store'])->name('quickwin.store');
-    Route::get('/admin/quickwin/{id}/edit', [AdminQuickwinController::class, 'edit'])->name('quickwin.edit');
-    Route::put('/admin/quickwin/update/{id}', [AdminQuickwinController::class, 'update'])->name('quickwin.update');
-    Route::delete('/admin/quickwin/{id}', [AdminQuickwinController::class, 'destroy'])->name('quickwin.destroy');
+        // 🏗️ Implementasi
+        Route::prefix('implementasi')->name('implementasi.')->group(function () {
+            Route::get('/', [AdminImplementasiController::class, 'index'])->name('index');
+            Route::get('/create', [AdminImplementasiController::class, 'create'])->name('create');
+            Route::post('/store', [AdminImplementasiController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [AdminImplementasiController::class, 'edit'])->name('edit');
+            Route::put('/update/{id}', [AdminImplementasiController::class, 'update'])->name('update');
+            Route::delete('/{id}', [AdminImplementasiController::class, 'destroy'])->name('destroy');
+        });
 
-    // ✅ CRUD Dimension
-    Route::get('/admin/dimension/', [AdminDimensionController::class, 'index'])->name('admin.dimension');
-    Route::get('/admin/dimension/create', [AdminDimensionController::class, 'create'])->name('dimension.create');
-    Route::post('/admin/dimension/store', [AdminDimensionController::class, 'store'])->name('dimension.store');
-    Route::get('/admin/dimension/{id}/edit', [AdminDimensionController::class, 'edit'])->name('dimension.edit');
-    Route::put('/admin/dimension/update/{id}', [AdminDimensionController::class, 'update'])->name('dimension.update');
-    Route::delete('/admin/dimension/{id}', [AdminDimensionController::class, 'destroy'])->name('dimension.destroy');
+        // Routes accessible only by super_admin
+        Route::middleware(['role:super_admin'])->group(function () {
+            // 📊 Penilaian - Only Super Admin
+            Route::prefix('penilaian')->name('penilaian.')->group(function () {
+                Route::get('/', [AdminPenilaianController::class, 'index'])->name('index');
+                Route::get('/create', [AdminPenilaianController::class, 'create'])->name('create');
+                Route::post('/store', [AdminPenilaianController::class, 'store'])->name('store');
+                Route::get('/{id}/edit', [AdminPenilaianController::class, 'edit'])->name('edit');
+                Route::put('/update/{id}', [AdminPenilaianController::class, 'update'])->name('update');
+                Route::delete('/{id}', [AdminPenilaianController::class, 'destroy'])->name('destroy');
+            });
 
-    // ✅ CRUD Implementasi (Admin)
-    Route::get('/admin/implementasi', [AdminImplementasiController::class, 'index'])->name('admin.implementasi');
-    Route::get('/implementasi/create', [AdminImplementasiController::class, 'create'])->name('implementasi.create');
-    Route::post('/implementasi/store', [AdminImplementasiController::class, 'store'])->name('implementasi.store');
-    Route::get('/implementasi/{id}/edit', [AdminImplementasiController::class, 'edit'])->name('implementasi.edit');
-    Route::put('/implementasi/{id}', [AdminImplementasiController::class, 'update'])->name('implementasi.update');
-    Route::delete('/implementasi/{id}', [AdminImplementasiController::class, 'destroy'])->name('implementasi.destroy');
+            // 👥 Users Management - Only Super Admin
+            Route::prefix('users')->name('users.')->group(function () {
+                Route::get('/', [AdminUsersController::class, 'index'])->name('index');
+                Route::get('/create', [AdminUsersController::class, 'create'])->name('create');
+                Route::post('/store', [AdminUsersController::class, 'store'])->name('store');
+                Route::get('/{id}/edit', [AdminUsersController::class, 'edit'])->name('edit');
+                Route::put('/update/{id}', [AdminUsersController::class, 'update'])->name('update');
+                Route::delete('/{id}', [AdminUsersController::class, 'destroy'])->name('destroy');
+            });
+        });
+    });
 
-
-    // ✅ Breeze profile routes
+    // 👤 Breeze profile route
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-
-// ✅ Breeze auth route
+// ✅ Breeze Auth (login/register/logout)
 require __DIR__.'/auth.php';
-
-
-

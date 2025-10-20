@@ -13,6 +13,7 @@ class Iga extends Model
         'title',
         'institution',
         'image',
+        'status',
     ];
 }
 

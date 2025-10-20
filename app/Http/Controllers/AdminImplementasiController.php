@@ -15,7 +15,7 @@ class AdminImplementasiController extends Controller
     {
         $implementasi = Implementasi::get();
 
-        return view('admin.implementasi', [
+        return view('admin.implementasi.index', [
             'implementasi' => $implementasi
         ]);
     }
@@ -25,7 +25,7 @@ class AdminImplementasiController extends Controller
      */
     public function create()
     {
-        return view('admin.create_im');
+        return view('admin.implementasi.create_im');
     }
 
     /**
@@ -34,8 +34,9 @@ class AdminImplementasiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'file' => 'required|mimes:pdf|max:20480'
+            'title'  => 'required',
+            'status' => 'required|in:draft,publish',
+            'file'   => 'required|mimes:pdf|max:20480'
         ]);
 
         $filename = null;
@@ -45,11 +46,12 @@ class AdminImplementasiController extends Controller
         }
 
         Implementasi::create([
-            'title' => $request->title,
-            'file' => $filename,
+            'title'  => $request->title,
+            'status' => $request->status,
+            'file'   => $filename,
         ]);
 
-        return redirect()->route('admin.implementasi')->with('success', 'Dokumen berhasil ditambahkan.');
+        return redirect()->route('admin.implementasi.index')->with('success', 'Dokumen berhasil ditambahkan.');
     }
 
     /**
@@ -58,7 +60,7 @@ class AdminImplementasiController extends Controller
     public function edit(string $id)
     {
         $implementasi = Implementasi::findOrFail($id);
-        return view('admin.edit_im', [
+        return view('admin.implementasi.edit_im', [
             'implementasi' => $implementasi
         ]);
     }
@@ -69,8 +71,9 @@ class AdminImplementasiController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'title' => 'required',
-            'file' => 'nullable|mimes:pdf|max:204800'
+            'title'  => 'required',
+            'status' => 'required|in:draft,publish',
+            'file'   => 'nullable|mimes:pdf|max:204800'
         ]);
 
         $implementasi = Implementasi::findOrFail($id);
@@ -87,11 +90,12 @@ class AdminImplementasiController extends Controller
         }
 
         $implementasi->update([
-            'title' => $request->title,
-            'file' => $filename,
+            'title'  => $request->title,
+            'status' => $request->status,
+            'file'   => $filename,
         ]);
 
-        return redirect()->route('admin.implementasi')->with('success', 'Dokumen berhasil diperbarui.');
+        return redirect()->route('admin.implementasi.index')->with('success', 'Dokumen berhasil diperbarui.');
     }
 
     /**
@@ -108,6 +112,6 @@ class AdminImplementasiController extends Controller
 
         $implementasi->delete();
 
-        return redirect()->route('admin.implementasi')->with('success', 'Dokumen berhasil dihapus.');
+        return back()->with('success', 'Dokumen berhasil dihapus.');
     }
 }

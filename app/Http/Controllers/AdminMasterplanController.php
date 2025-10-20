@@ -15,7 +15,7 @@ class AdminMasterplanController extends Controller
     {
         $masterplan = Masterplan::paginate(6);
 
-        return view('admin.masterplan', [
+        return view('admin.masterplan.index', [
             'masterplan' => $masterplan
         ]);
     }
@@ -25,7 +25,7 @@ class AdminMasterplanController extends Controller
      */
     public function create()
     {
-        return view('admin.create_mp');
+        return view('admin.masterplan.create_mp');
     }
 
     /**
@@ -37,7 +37,7 @@ class AdminMasterplanController extends Controller
             'title'  => 'required|string|max:255',
             'period' => 'required|string|max:50',
             'type'   => 'required|in:buku,paparan',
-            'status' => 'required|in:draft,public',
+            'status' => 'required|in:draft,publish',
             'file'   => 'nullable|mimes:pdf|max:20480',
         ]);
 
@@ -55,7 +55,7 @@ class AdminMasterplanController extends Controller
             'file'   => $filename,
         ]);
 
-        return redirect()->route('admin.masterplan')->with('success', 'Dokumen berhasil ditambahkan.');
+        return redirect()->route('admin.masterplan.index')->with('success', 'Dokumen berhasil ditambahkan.');
     }
 
     /**
@@ -64,7 +64,7 @@ class AdminMasterplanController extends Controller
     public function edit(string $id)
     {
         $masterplan = Masterplan::findOrFail($id);
-        return view('admin.edit_mp', [
+        return view('admin.masterplan.edit_mp', [
             'masterplan' => $masterplan
         ]);
     }
@@ -78,7 +78,7 @@ class AdminMasterplanController extends Controller
             'title'  => 'required|string|max:255',
             'period' => 'required|string|max:50',
             'type'   => 'required|in:buku,paparan',
-            'status' => 'required|in:draft,public',
+            'status' => 'required|in:draft,publish',
             'file'   => 'nullable|mimes:pdf|max:10240',
         ]);
 
@@ -104,7 +104,7 @@ class AdminMasterplanController extends Controller
         ]);
  $page = $request->input('page', 1);
 
-    return redirect()->route('admin.masterplan', ['page' => $page])
+    return redirect()->route('admin.masterplan.index', ['page' => $page])
                      ->with('success', 'Dokumen berhasil diperbarui.');
 }
 
@@ -124,8 +124,7 @@ class AdminMasterplanController extends Controller
         $masterplan->delete();
  $page = $request->input('page', 1);
 
-    return redirect()->route('admin.masterplan', ['page' => $page])
-                     ->with('success', 'Dokumen berhasil dihapus.');
+   return back()->with('success', 'Dokumen berhasil dihapus.');
     }
 }
 
