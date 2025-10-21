@@ -11,10 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // ✅ ini bikin VisitorMiddleware jalan di SEMUA request
-        $middleware->group('web', [
-        \App\Http\Middleware\VisitorMiddleware::class,
-    ]);
+    // Tambahkan VisitorMiddleware ke akhir group web bawaan Laravel
+    $middleware->appendToGroup('web', \App\Http\Middleware\VisitorMiddleware::class);
+
         $middleware->alias([
         'role' => \App\Http\Middleware\CheckRole::class,
     ]);
