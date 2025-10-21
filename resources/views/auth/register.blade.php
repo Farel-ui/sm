@@ -82,18 +82,6 @@
             display: none;
         }
 
-        /* Tombol Tema */
-        .theme-toggle {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-
         /* Link to Login */
         .login-link {
             margin-top: 1rem;
@@ -105,37 +93,20 @@
         }
 
         /* ==================== Light Mode ==================== */
-        body.light #networkBg { background: #f5f5f5; }
-        body.light .register-container {
+        #networkBg { background: #f5f5f5; }
+        .register-container {
             background: rgba(255,255,255,0.9);
             color: black;
         }
-        body.light h2 { color: #0077ff; }
-        body.light label { color: #333; }
-        body.light input { background: #eaeaea; color: black; }
-        body.light .register-btn { background: #0d6fc4; color: white; }
-        body.light .register-btn:hover { background: rgb(164, 211, 252); }
-        body.light .theme-toggle { color: black; background: rgba(0,0,0,0.1); }
-
-        /* ==================== Dark Mode ==================== */
-        body.dark #networkBg { background: #1f1f1f; }
-        body.dark .register-container {
-            background: rgba(31, 31, 31, 0.85);
-            color: white;
-        }
-        body.dark h2 { color: #0d6fc4; }
-        body.dark label { color: #bbb; }
-        body.dark input { background: #2a2a2a; color: white; }
-        body.dark .register-btn { background: #0d6fc4; color: white; }
-        body.dark .register-btn:hover { background: rgb(164, 211, 252); }
-        body.dark .theme-toggle { color: white; background: rgba(255,255,255,0.1); }
+        h2 { color: #0077ff; }
+        label { color: #333; }
+        input { background: #eaeaea; color: black; }
+        .register-btn { background: #0d6fc4; color: white; }
+        .register-btn:hover { background: rgb(164, 211, 252); }
     </style>
 </head>
 <body class="light">
     <canvas id="networkBg"></canvas>
-
-    <!-- Tombol Tema -->
-    <button class="theme-toggle" id="toggleTheme">Dark Mode</button>
 
     <!-- Register Form -->
     <div class="register-container">
@@ -209,7 +180,7 @@
 
         function drawParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = document.body.classList.contains("light") ? "#0077ff" : "#0d6fc4";
+            ctx.fillStyle = "#0077ff";
             particles.forEach(p => {
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
@@ -225,9 +196,7 @@
                         particles[a].y - particles[b].y
                     );
                     if (dist < maxDistance) {
-                        ctx.strokeStyle = document.body.classList.contains("light")
-                            ? `rgba(0, 119, 255, ${(1 - dist / maxDistance)})`
-                            : `rgba(13, 111, 196, ${(1 - dist / maxDistance)})`;
+                        ctx.strokeStyle = `rgba(0, 119, 255, ${(1 - dist / maxDistance)})`;
                         ctx.lineWidth = 0.7;
                         ctx.beginPath();
                         ctx.moveTo(particles[a].x, particles[a].y);
@@ -257,14 +226,6 @@
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-        });
-
-        // ======================= Toggle Tema =======================
-        const toggleTheme = document.getElementById("toggleTheme");
-        toggleTheme.addEventListener("click", () => {
-            document.body.classList.toggle("dark");
-            document.body.classList.toggle("light");
-            toggleTheme.textContent = document.body.classList.contains("dark") ? "Light Mode" : "Dark Mode";
         });
 
         // Set initial class

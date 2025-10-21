@@ -164,13 +164,11 @@
                             <div class="relative">
                                 <i class="fas fa-search absolute rounded-xl left-3 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
                                 <input type="text" placeholder="Pencarian" id="searchInput"
-                                       class="pl-10 pr-8 py-2.5 text-blue-600  text-sm border border-blue-600 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-blue-500 transition-all" />
+                                        class="pl-10 pr-8 py-2.5 text-blue-600  text-sm border border-blue-600 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-blue-500 transition-all" />
                             </div>
-                            @if(auth()->user()->role === 'super_admin')
                             <a href="{{ route('admin.masterplan.create') }}" class="btn-gradient  rounded-4xl">
                                 <i class="fas fa-plus rounded-2xl"></i> Tambah Baru
                             </a>
-                            @endif
                         </div>
                     </div>
                 </div>

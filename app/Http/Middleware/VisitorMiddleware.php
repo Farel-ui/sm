@@ -11,7 +11,7 @@ class VisitorMiddleware
     public function handle(Request $request, Closure $next)
     {
         // ✅ Lewatin kalau URL mulai dengan /admin atau /dashboard
-        if ($request->is('/')) 
+        if ($request->is('/'))
 
         try {
             Visitor::create([
