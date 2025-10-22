@@ -191,17 +191,19 @@
                         <h2 id="radarTitle" class="text-base font-bold text-gray-800">
                             Perbandingan Evaluasi Implementasi Smart City
                         </h2>
-                        <div class="relative inline-block">
-                        <select id="comparisonSelect"
-                            class="appearance-none border border-gray-300 rounded-md text-sm font-medium text-gray-700 pl-3 pr-8 py-2 bg-white cursor-pointer hover:border-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
-                            <option value="2023-2024">2023 & 2024</option>
-                            <option value="2022-2023">2022 & 2023</option>
-                            <option value="2021-2022">2021 & 2022</option>
-                        </select>
-                        <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                            <i class=" text-gray-500 text-xs"></i>
-                        </span>
-                    </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="{{ route('admin.evaluasi.create') }}"
+                               class="bg-blue-600 hover:bg-blue-700 text-white rounded-full w-8 h-8 flex items-center justify-center transition"
+                               title="Tambah Data Evaluasi Baru">
+                                <i class="fas fa-plus text-sm"></i>
+                            </a>
+                            <select id="comparisonSelect"
+                                class="appearance-none border border-gray-300 rounded-md text-sm font-medium text-gray-700 pl-3 pr-8 py-2 bg-white cursor-pointer hover:border-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+                            </select>
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <i class=" text-gray-500 text-xs"></i>
+                            </span>
+                        </div>
 
                     </div>
                     <div class="chart-wrapper">

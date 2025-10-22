@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminImplementasiController;
 use App\Http\Controllers\AdminMasterplanController;
 use App\Http\Controllers\AdminQuickwinController;
 use App\Http\Controllers\AdminAgendaController;
+use App\Http\Controllers\AdminEvaluasiController;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\DashboardController;
@@ -50,6 +51,16 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{id}/edit', [AdminAgendaController::class, 'edit'])->name('edit');
             Route::put('/update/{id}', [AdminAgendaController::class, 'update'])->name('update');
             Route::delete('/{id}', [AdminAgendaController::class, 'destroy'])->name('destroy');
+        });
+
+        // 📊 Evaluasi
+        Route::prefix('evaluasi')->name('evaluasi.')->group(function () {
+            Route::get('/', [AdminEvaluasiController::class, 'index'])->name('index');
+            Route::get('/create', [AdminEvaluasiController::class, 'create'])->name('create');
+            Route::post('/store', [AdminEvaluasiController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [AdminEvaluasiController::class, 'edit'])->name('edit');
+            Route::put('/update/{id}', [AdminEvaluasiController::class, 'update'])->name('update');
+            Route::delete('/{id}', [AdminEvaluasiController::class, 'destroy'])->name('destroy');
         });
 
         // 📚 Masterplan

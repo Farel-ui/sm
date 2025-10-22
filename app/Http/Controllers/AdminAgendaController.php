@@ -42,7 +42,7 @@ class AdminAgendaController extends Controller
             'tanggal' => $request->tanggal,
         ]);
 
-        return redirect()->route('admin.agenda.index')->with('success', 'Agenda berhasil ditambahkan.');
+        return redirect()->route('dashboard')->with('success', 'Agenda berhasil ditambahkan.');
     }
 
     /**
@@ -74,7 +74,7 @@ class AdminAgendaController extends Controller
 
         $page = $request->input('page', 1);
 
-        return redirect()->route('admin.agenda.index', ['page' => $page])
+        return redirect()->route('dashboard', ['page' => $page])
                          ->with('success', 'Agenda berhasil diperbarui.');
     }
 
