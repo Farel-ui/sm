@@ -199,12 +199,6 @@
                                 <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-blue-500 uppercase tracking-wider">
                                     <div class="flex items-center justify-center">
                                         <i class="text-blue-400"></i>
-                                        Password
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-blue-500 uppercase tracking-wider">
-                                    <div class="flex items-center justify-center">
-                                        <i class="text-blue-400"></i>
                                         Avatar
                                     </div>
                                 </th>
@@ -239,14 +233,7 @@
                                     <td class="px-6 py-4 text-sm text-blue-700">
                                         <i class="fas fa-envelope mr-1"></i> {{ $user->email }}
                                     </td>
-
-                                    <!-- Password -->
-                                    <td class="px-6 py-4 text-center">
-                                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                            ********
-                                        </span>
-                                    </td>
-
+                                    
                                     <!-- Avatar -->
                                     <td class="px-6 py-4 text-center">
                                         @if($user->avatar)

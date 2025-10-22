@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminIgaController;
 use App\Http\Controllers\AdminImplementasiController;
 use App\Http\Controllers\AdminMasterplanController;
 use App\Http\Controllers\AdminQuickwinController;
+use App\Http\Controllers\AdminAgendaController;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\DashboardController;
@@ -41,6 +42,15 @@ Route::middleware(['auth'])->group(function () {
 
     // 📌 Prefix Admin Disatukan
     Route::prefix('admin')->name('admin.')->middleware(['role:admin,super_admin'])->group(function () {
+        // 📅 Agenda
+        Route::prefix('agenda')->name('agenda.')->group(function () {
+            Route::get('/', [AdminAgendaController::class, 'index'])->name('index');
+            Route::get('/create', [AdminAgendaController::class, 'create'])->name('create');
+            Route::post('/store', [AdminAgendaController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [AdminAgendaController::class, 'edit'])->name('edit');
+            Route::put('/update/{id}', [AdminAgendaController::class, 'update'])->name('update');
+            Route::delete('/{id}', [AdminAgendaController::class, 'destroy'])->name('destroy');
+        });
 
         // 📚 Masterplan
         Route::prefix('masterplan')->name('masterplan.')->group(function () {

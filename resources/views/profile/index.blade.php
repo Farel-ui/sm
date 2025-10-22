@@ -10,15 +10,21 @@
 </head>
 
 <body class="min-h-screen p-4 bg-blue-50">
-    <div class="max-w-3xl mx-auto">
+    <div class="max-w-4xl mx-auto">
         <!-- Top Header -->
         <div class="bg-blue-600 text-white flex justify-end items-center px-4 py-5 rounded-b-none rounded-lg shadow-sm mb-5">
             <div class="flex items-center space-x-2 text-lg">
                 <span class="font-medium">ADMIN</span>
                 <div class="w-px h-9 bg-white opacity-50"></div>
-                <div class="w-6 h-6 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                    <i class="fas fa-user text-xs"></i>
-                </div>
+                    @if(Auth::user()->avatar)
+            <!-- Jika user punya avatar -->
+            <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center">
+                <img
+                    src="{{ asset('images/avatar/' . Auth::user()->avatar) }}"
+                    alt="User Avatar"
+                    class="w-full h-full object-cover">
+            </div>
+            @endif
             </div>
         </div>
 

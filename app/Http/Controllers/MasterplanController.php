@@ -54,7 +54,7 @@ public function implementasi()
         $title = 'Paparan Masterplan Smart City';
         $masterplans = Masterplan::where('type', 'paparan')
         ->where('status', 'publish')
-        ->orderBy('period')
+        ->orderBy('period', 'desc')
         ->get();
         return view('paparan', compact('title', 'masterplans'));
     }
@@ -64,7 +64,7 @@ public function implementasi()
         $title = 'Masterplan Smart City';
         $masterplans = Masterplan::where('status', 'publish')
         ->where('type', 'buku')
-        ->orderBy('period')
+        ->orderBy('period', 'desc')
         ->get();
         return view('masterplano', compact('title', 'masterplans'));
     }
@@ -79,12 +79,6 @@ public function implementasi()
     {
         $igas = Iga::where('status', 'publish')->get();
         return view('iga', compact('igas'));
-    }
-
-    public function booklet()
-    {
-        $booklets = booklet::where('status', 'draft')->get();
-        return view('booklet', compact('booklets'));
     }
 
     // Ambil video berdasarkan ID Dimension

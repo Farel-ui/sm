@@ -42,7 +42,7 @@
     /* Chart container */
     .chart-container {
         position: relative;
-        height: 320px;
+        height: 360px;
         width: 100%;
     }
 
@@ -63,7 +63,7 @@
 </style>
 
 <body class="bg-blue-100 min-h-screen p-3">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mr-64">
         <!-- Header -->
         <div class="bg-blue-600 text-white flex justify-end items-center px-4 py-5 rounded-lg shadow-sm mb-3">
             <div class="flex items-center space-x-2 text-lg">
@@ -72,8 +72,8 @@
                 @if(Auth::user()->avatar)
                     <div class="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center">
                         <img src="{{ asset('images/avatar/' . Auth::user()->avatar) }}"
-                             alt="User Avatar"
-                             class="w-full h-full object-cover">
+                            alt="User Avatar"
+                            class="w-full h-full object-cover">
                     </div>
                 @endif
             </div>
@@ -123,29 +123,41 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-white rounded-lg shadow-sm p-4 card-hover h-fit">
-                    <h2 class="text-base font-bold text-gray-800 mb-3">Agenda Smart City</h2>
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-600">Evaluasi Tahap 2</span>
-                            <span class="text-sm font-semibold text-gray-800">25 Okt 2025</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-600">Upload Quick Win Baru</span>
-                            <span class="text-sm font-semibold text-gray-800">10 Nov 2025</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-600">Rapat Monitoring Tahunan</span>
-                            <span class="text-sm font-semibold text-gray-800">20 Nov 2025</span>
-                        </div>
-                        <div class="flex justify-between items-center pt-2 border-t border-gray-200">
-                            <span class="text-sm font-medium text-gray-800">Agenda Berikutnya</span>
-                            <span class="text-sm font-bold text-blue-600">5 Des 2025</span>
-                        </div>
-                    </div>
+                <div class="bg-white rounded-lg shadow-sm p-4 card-hover h-fit relative">
+                <div class="flex justify-between items-center mb-3">
+                    <h2 class="text-base font-bold text-gray-800">Agenda Smart City</h2>
+
+                    <!-- Tombol Tambah Agenda -->
+                    <a href="{{ route('admin.agenda.create') }}"
+                        class="text-blue-600 rounded-full w-8 h-8 flex items-center justify-center transition"
+                        title="Kelola Agenda">
+                        <i class="fas fa-calendar text-sm"></i>
+                    </a>
                 </div>
 
+                <div class="space-y-3">
+                    @forelse($agendas as $agenda)
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600">{{ $agenda->judul }}</span>
+                            <span class="text-sm font-semibold text-gray-800">
+                                {{ \Carbon\Carbon::parse($agenda->tanggal)->format('d M Y') }}
+                            </span>
+                        </div>
+                    @empty
+                        <p class="text-sm text-gray-500 text-center py-2">Belum ada agenda</p>
+                    @endforelse
+
+                    @if($nextAgenda)
+                        <div class="flex justify-between items-center pt-2 border-t border-gray-200">
+                            <span class="text-sm font-medium text-gray-800">Agenda Berikutnya</span>
+                            <span class="text-sm font-bold text-blue-600">
+                                {{ \Carbon\Carbon::parse($nextAgenda->tanggal)->format('d M Y') }}
+                            </span>
+                        </div>
+                    @endif
+                </div>
             </div>
+        </div>
 
             <!-- Ringkasan Penilaian Tahunan -->
             <div class="lg:col-span-4">
@@ -205,90 +217,107 @@
 <!-- ================== SCRIPT ================== -->
 <script>
     // Data for comparisons
-    const radarLabels = ['BASELINE', 'OUTPUT', 'OUTCOME', 'IMPACT', 'QUICK WINS'];
-    const data2021 = [3.0, 2.5, 3.5, 3.0, 4.0];
-    const data2022 = [4.0, 3.0, 3.5, 3.0, 4.0];
-    const data2023 = [3.7, 3.0, 3.2, 3.1, 3.8];
-    const data2024 = [3.9, 3.5, 3.6, 3.5, 4.0];
-    let radarChart;
+    // Ambil data dari Laravel
+const evaluasiData = {!! json_encode($evaluasi) !!};
 
-    // Function to create or update radar chart
-    function updateRadarChart(year1, year2, data1, data2) {
-        const ctx = document.getElementById('radarChart').getContext('2d');
-        if (radarChart) {
-            radarChart.destroy();
-        }
-        radarChart = new Chart(ctx, {
-            type: 'radar',
-            data: {
-                labels: radarLabels,
-                datasets: [
-                    {
-                        label: year1,
-                        data: data1,
-                        borderColor: 'rgba(37,99,235,1)',
-                        backgroundColor: 'rgba(37,99,235,0.2)',
-                        pointBackgroundColor: 'rgba(37,99,235,1)',
-                        borderWidth: 2,
-                    },
-                    {
-                        label: year2,
-                        data: data2,
-                        borderColor: 'rgba(255,165,0,1)',
-                        backgroundColor: 'rgba(255,165,0,0.2)',
-                        pointBackgroundColor: 'rgba(255,165,0,1)',
-                        borderWidth: 2,
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    r: {
-                        min: 0,
-                        max: 4,
-                        ticks: {
-                            stepSize: 1,
-                            color: '#64748b',
-                            backdropColor: 'transparent'
-                        },
-                        grid: { color: '#e2e8f0' },
-                        angleLines: { color: '#cbd5e1' },
-                        pointLabels: {
-                            color: '#334155',
-                            font: { size: 14, weight: '600' }
-                        }
-                    }
+// Ambil label dari kolom tabel
+const radarLabels = ['BASELINE', 'OUTPUT', 'OUTCOME', 'IMPACT', 'QUICK WINS'];
+
+// Buat data tahun ke objek
+const evaluasiByYear = {};
+evaluasiData.forEach(item => {
+    evaluasiByYear[item.tahun] = [
+        parseFloat(item.baseline) || 0,
+        parseFloat(item.output) || 0,
+        parseFloat(item.outcome) || 0,
+        parseFloat(item.impact) || 0,
+        parseFloat(item.quick_wins) || 0,
+    ];
+});
+
+// Ambil semua tahun yang tersedia
+const years = Object.keys(evaluasiByYear)
+    .map(Number) // ubah ke angka
+    .sort((a, b) => a - b); // urutkan secara numerik
+
+
+// Fungsi update radar chart
+let radarChart;
+function updateRadarChart(year1, year2) {
+    const ctx = document.getElementById('radarChart').getContext('2d');
+    if (radarChart) radarChart.destroy();
+
+    radarChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: radarLabels,
+            datasets: [
+                {
+                    label: year1,
+                    data: evaluasiByYear[year1] || [0,0,0,0,0],
+                    borderColor: 'rgba(37,99,235,1)',
+                    backgroundColor: 'rgba(37,99,235,0.2)',
+                    pointBackgroundColor: 'rgba(37,99,235,1)',
+                    borderWidth: 2,
                 },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        labels: { font: { size: 16, weight: '600' } }
-                    }
+                {
+                    label: year2,
+                    data: evaluasiByYear[year2] || [0,0,0,0,0],
+                    borderColor: 'rgba(255,165,0,1)',
+                    backgroundColor: 'rgba(255,165,0,0.2)',
+                    pointBackgroundColor: 'rgba(255,165,0,1)',
+                    borderWidth: 2,
                 }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    min: 0,
+                    max: 4,
+                    ticks: { stepSize: 1, color: '#64748b', backdropColor: 'transparent' },
+                    grid: { color: '#e2e8f0' },
+                    angleLines: { color: '#cbd5e1' },
+                    pointLabels: { color: '#334155', font: { size: 14, weight: '600' } }
+                }
+            },
+            plugins: {
+                legend: { position: 'top', labels: { font: { size: 14, weight: '600' } } }
             }
-        });
-    }
-
-    // Initial chart
-    updateRadarChart('2023', '2024', data2023, data2024);
-
-    // Dropdown change event
-    document.getElementById('comparisonSelect').addEventListener('change', function() {
-        const value = this.value;
-        const title = document.getElementById('radarTitle');
-        if (value === '2023-2024') {
-            title.textContent = 'Perbandingan Evaluasi Implementasi Smart City 2023 dan 2024';
-            updateRadarChart('2023', '2024', data2023, data2024);
-        } else if (value === '2022-2023') {
-            title.textContent = 'Perbandingan Evaluasi Implementasi Smart City 2022 dan 2023';
-            updateRadarChart('2022', '2023', data2022, data2023);
-        } else if (value === '2021-2022') {
-            title.textContent = 'Perbandingan Evaluasi Implementasi Smart City 2021 dan 2022';
-            updateRadarChart('2021', '2022', data2021, data2022);
         }
     });
+}
+
+// ==== Dropdown dinamis ====
+const comparisonSelect = document.getElementById('comparisonSelect');
+comparisonSelect.innerHTML = ''; // kosongkan dulu
+
+for (let i = 0; i < years.length - 1; i++) {
+    const option = document.createElement('option');
+    option.value = `${years[i]}-${years[i+1]}`;
+    option.textContent = `${years[i]} & ${years[i+1]}`;
+    comparisonSelect.appendChild(option);
+}
+
+// Chart awal
+if (years.length >= 2) {
+    updateRadarChart(years[1], years[0]); // karena descending
+    document.getElementById('radarTitle').textContent =
+        `Perbandingan Evaluasi Smart City ${years[1]} dan ${years[0]}`;
+}
+
+
+// Event listener dropdown
+comparisonSelect.addEventListener('change', function() {
+    const [y1, y2] = this.value.split('-');
+    updateRadarChart(y1, y2);
+    document.getElementById('radarTitle').textContent =
+        `Perbandingan Evaluasi Smart City ${y1} dan ${y2}`;
+});
+
+
 
     // ===== Bar Chart (Penilaian Tahunan) =====
     const ctx = document.getElementById('penilaianChart').getContext('2d');

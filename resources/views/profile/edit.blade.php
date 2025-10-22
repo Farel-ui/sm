@@ -46,11 +46,10 @@
         margin: 0;
     }
 </style>
-
 </head>
 
 <body class="min-h-screen p-4 bg-blue-50">
-    <div class="max-w-3xl mx-auto">
+    <div class="max-w-4xl mx-auto">
         <!-- Header -->
         <div class="bg-blue-600 text-white flex justify-end items-center px-4 py-5 rounded-b-none rounded-lg shadow-sm mb-5">
             <div class="flex items-center space-x-2 text-lg">
@@ -98,9 +97,9 @@
                     <div class="avatar-container relative cursor-pointer" id="avatarContainer">
                         <div class="w-40 h-40 bg-gray-300 m-6 rounded-full flex items-center justify-center overflow-hidden">
                             <img id="avatarPreview"
-                                 src="{{ Auth::user()->avatar ? asset('images/avatar/' . Auth::user()->avatar) : 'https://ui-avatars.com/api/?name=' . Auth::user()->name }}"
-                                 alt="Avatar"
-                                 class="w-full h-full object-cover">
+                                src="{{ Auth::user()->avatar ? asset('images/avatar/' . Auth::user()->avatar) : 'https://ui-avatars.com/api/?name=' . Auth::user()->name }}"
+                                alt="Avatar"
+                                class="w-full h-full object-cover">
                         </div>
                         <div class="avatar-overlay absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 rounded-full flex items-center justify-center opacity-0 hover:opacity-100 transition">
                             <i class="fas fa-camera text-white text-2xl"></i>

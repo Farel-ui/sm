@@ -103,7 +103,7 @@ class AdminIgaController extends Controller
             'status' => $request->status ?? $iga->status, // Keep old status if not provided
         ]);
 
-        return redirect()->route('admin.iga.index')->with('success', 'Dokumen berhasil diperbarui.');
+        return back()->route('admin.iga.index')->with('success', 'Dokumen berhasil diperbarui.');
     }
 
     /**
