@@ -28,9 +28,10 @@
         </style>
 
 </head>
-@include('components.navbar')
-<body>
-<section class="relative font-poppins overflow-hidden pt-24 pb-20 px-4 md:px-20">
+
+<body class="overflow-x-hidden">
+    @include('components.navbar')
+<section class="relative font-poppins pt-24 pb-20 px-4 md:px-20">
   <!-- 🔵 Background -->
   <div class="absolute top-0 left-0 right-0 bottom-0 w-[95%] md:w-[90%] mx-auto bg-gradient-to-br from-blue-200 to-blue-200 rounded-b-[40px] md:rounded-b-[100px] z-0"></div>
 
@@ -60,7 +61,7 @@
     </div>
 
     <!-- Kanan: Card Gambar -->
-    <div class="rounded-[12px] md:rounded-[20px] shadow-md h-full w-full min-h-[180px] sm:min-h-[280px] md:min-h-[540px] flex items-center justify-center overflow-hidden">
+    <div class="rounded-[12px] md:rounded-[20px] shadow-md h-full w-full min-h-[180px] sm:min-h-[280px] md:min-h-[540px] flex items-center justify-center">
       <img src="{{ asset('images/smar.jpg') }}"
            alt="Smart City"
            class="w-full h-full object-cover rounded-[12px] md:rounded-[20px]">

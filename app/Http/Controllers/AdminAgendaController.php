@@ -12,7 +12,7 @@ class AdminAgendaController extends Controller
      */
     public function index()
     {
-        $agendas = Agenda::paginate(3);
+        $agendas = Agenda::paginate(6);
 
         return view('admin.agenda.index', [
             'agendas' => $agendas
@@ -42,7 +42,7 @@ class AdminAgendaController extends Controller
             'tanggal' => $request->tanggal,
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Agenda berhasil ditambahkan.');
+        return redirect()->route('admin.agenda.index')->with('success', 'Agenda berhasil ditambahkan.');
     }
 
     /**
@@ -74,7 +74,7 @@ class AdminAgendaController extends Controller
 
         $page = $request->input('page', 1);
 
-        return redirect()->route('dashboard', ['page' => $page])
+        return redirect()->route('admin.agenda.index', ['page' => $page])
                          ->with('success', 'Agenda berhasil diperbarui.');
     }
 

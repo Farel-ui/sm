@@ -104,6 +104,14 @@
             </div>
           </div>
 
+          <!-- Tanggal -->
+          <div>
+            <label class="block text-lg font-semibold mb-1">Tanggal</label>
+            <input type="date" name="tanggal"
+                   value="{{ old('tanggal', $masterplan->tanggal) }}"
+                   class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
+          </div>
+
           <!-- Upload PDF -->
         <div>
             <label class="block text-lg font-medium mb-2">UNGGAH FILE PDF</label>

@@ -14,7 +14,7 @@ class AdminEvaluasiController extends Controller
     {
         $evaluasis = Evaluasi::orderBy('tahun', 'desc')->paginate(6);
 
-        return view('admin.dashboard', [
+        return view('admin.evaluasi.index', [
             'evaluasis' => $evaluasis
         ]);
     }

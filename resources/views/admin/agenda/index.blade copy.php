@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Daftar Evaluasi - Admin</title>
+    <title>Daftar Agenda - Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="icon" href="{{ asset('images/logo.png') }}">
@@ -124,8 +124,8 @@
             <div class="bg-blue-600 text-white flex justify-between items-center px-6 py-6 rounded-lg shadow-md">
                 <!-- Kiri -->
                 <div class="flex items-center space-x-2">
-                    <i class="fas fa-chart-line text-3xl mr-2"></i>
-                    <span class="font-semibold text-xl">Daftar Evaluasi Smart City</span>
+                    <i class="fas fa-calendar-alt text-3xl mr-2"></i>
+                    <span class="font-semibold text-xl">Daftar Agenda Smart City</span>
                 </div>
                 <!-- Kanan -->
                 <div class="flex items-center space-x-3">
@@ -146,9 +146,9 @@
             <!-- Action Buttons -->
             <div class="mt-6 flex justify-between items-center">
                 <div class="flex items-center space-x-4">
-                    <a href="{{ route('admin.evaluasi.create') }}" class="btn-gradient">
+                    <a href="{{ route('admin.agenda.create') }}" class="btn-gradient">
                         <i class="fas fa-plus"></i>
-                        Tambah Evaluasi
+                        Tambah Agenda
                     </a>
                     <a href="{{ route('dashboard') }}" class="btn-secondary">
                         <i class="fas fa-arrow-left"></i>
@@ -156,56 +156,37 @@
                     </a>
                 </div>
                 <div class="text-sm text-gray-600">
-                    Total: {{ $evaluasis->total() }} evaluasi
+                    Total: {{ $agendas->total() }} agenda
                 </div>
             </div>
 
-            <!-- Evaluasi List -->
+            <!-- Agenda List -->
             <div class="bg-white overflow-hidden shadow-sm rounded-2xl mt-6 card-hover fade-in border border-blue-100">
                 <div class="p-8">
-                    @if($evaluasis->count() > 0)
+                    @if($agendas->count() > 0)
                         <div class="space-y-4">
-                            @foreach($evaluasis as $evaluasi)
+                            @foreach($agendas as $agenda)
                                 <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition">
                                     <div class="flex justify-between items-start">
                                         <div class="flex-1">
-                                            <h3 class="text-lg font-semibold text-gray-800">Evaluasi Tahun {{ $evaluasi->tahun }}</h3>
-                                            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mt-2">
-                                                <p class="text-sm text-gray-600">
-                                                    <i class="fas fa-chart-bar mr-2 text-blue-500"></i>
-                                                    <strong>Baseline:</strong> {{ $evaluasi->baseline ?? 'N/A' }}
-                                                </p>
-                                                <p class="text-sm text-gray-600">
-                                                    <i class="fas fa-chart-line mr-2 text-blue-500"></i>
-                                                    <strong>Output:</strong> {{ $evaluasi->output ?? 'N/A' }}
-                                                </p>
-                                                <p class="text-sm text-gray-600">
-                                                    <i class="fas fa-chart-pie mr-2 text-blue-500"></i>
-                                                    <strong>Outcome:</strong> {{ $evaluasi->outcome ?? 'N/A' }}
-                                                </p>
-                                                <p class="text-sm text-gray-600">
-                                                    <i class="fas fa-bullseye mr-2 text-blue-500"></i>
-                                                    <strong>Impact:</strong> {{ $evaluasi->impact ?? 'N/A' }}
-                                                </p>
-                                                <p class="text-sm text-gray-600">
-                                                    <i class="fas fa-trophy mr-2 text-blue-500"></i>
-                                                    <strong>Quick Wins:</strong> {{ $evaluasi->quick_wins ?? 'N/A' }}
-                                                </p>
-                                            </div>
-                                            <p class="text-xs text-gray-500 mt-2">
-                                                Dibuat: {{ $evaluasi->created_at ? $evaluasi->created_at->format('d/m/Y H:i') : 'N/A' }}
+                                            <h3 class="text-lg font-semibold text-gray-800">{{ $agenda->judul }}</h3>
+                                            <p class="text-sm text-gray-600 mt-1">
+                                                <i class="fas fa-calendar mr-2"></i>
+                                                {{ \Carbon\Carbon::parse($agenda->tanggal)->format('l, d F Y') }}
+                                            </p>
+                                            <p class="text-xs text-gray-500 mt-1">
+                                                Dibuat: {{ $agenda->created_at ? $agenda->created_at->format('d/m/Y H:i') : 'N/A' }}
                                             </p>
                                         </div>
                                         <div class="flex space-x-2">
-                                            <a href="{{ route('admin.evaluasi.edit', $evaluasi->id) }}"
+                                            <a href="{{ route('admin.agenda.edit', $agenda->id) }}"
                                                class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition">
                                                 <i class="fas fa-edit"></i> Edit
                                             </a>
-                                            @if(auth()->user()->role === 'super_admin')
-                                            <form action="{{ route('admin.evaluasi.destroy', $evaluasi->id) }}"
+                                            <form action="{{ route('admin.agenda.destroy', $agenda->id) }}"
                                                   method="POST"
                                                   class="inline"
-                                                  onsubmit="return confirm('Apakah Anda yakin ingin menghapus evaluasi ini?')">
+                                                  onsubmit="return confirm('Apakah Anda yakin ingin menghapus agenda ini?')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
@@ -213,7 +194,6 @@
                                                     <i class="fas fa-trash"></i> Hapus
                                                 </button>
                                             </form>
-                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -222,16 +202,16 @@
 
                         <!-- Pagination -->
                         <div class="mt-8">
-                            {{ $evaluasis->links() }}
+                            {{ $agendas->links() }}
                         </div>
                     @else
                         <div class="text-center py-12">
-                            <i class="fas fa-chart-line text-6xl text-gray-300 mb-4"></i>
-                            <h3 class="text-xl font-semibold text-gray-600 mb-2">Belum ada data evaluasi</h3>
-                            <p class="text-gray-500 mb-6">Mulai tambahkan data evaluasi pertama Anda untuk Smart City.</p>
-                            <a href="{{ route('admin.evaluasi.create') }}" class="btn-gradient">
+                            <i class="fas fa-calendar-times text-6xl text-gray-300 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-600 mb-2">Belum ada agenda</h3>
+                            <p class="text-gray-500 mb-6">Mulai tambahkan agenda pertama Anda untuk Smart City.</p>
+                            <a href="{{ route('admin.agenda.create') }}" class="btn-gradient">
                                 <i class="fas fa-plus"></i>
-                                Tambah Evaluasi Pertama
+                                Tambah Agenda Pertama
                             </a>
                         </div>
                     @endif

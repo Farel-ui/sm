@@ -1,126 +1,173 @@
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
 <section class="py-16">
   <h2 class="text-3xl font-bold text-center mb-12">PROGRAM IMPLEMENTASI SMART CITY</h2>
 
-  <div class="relative max-w-7xl mx-auto overflow-hidden" id="slider-wrapper">
-    <div id="slider" class="flex transition-transform duration-700 ease-in-out w-max">
-      {{-- Card akan dimasukkan lewat JS --}}
-    </div>
+  <div class="mx-12">
 
-    <!-- Navigasi -->
-    <div class="absolute top-1/2 left-0 transform -translate-y-1/2 z-10">
-      <button id="prevBtn"
-        class="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:bg-blue-700">
-        ←
-      </button>
-    </div>
-    <div class="absolute top-1/2 right-0 transform -translate-y-1/2 z-10">
-      <button id="nextBtn"
-        class="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:bg-blue-700">
-        →
-      </button>
-    </div>
+      <div class="relative max-w-7xl mx-auto px-20" style="padding-top: 60px; padding-bottom: 60px;">
+        <div class="swiper quickwinSwiper pb-12">
+          <div class="swiper-wrapper">
+            @foreach($quickwins as $quickwin)
+            <div class="swiper-slide">
+              <div class="card rounded-xl shadow-md text-center text-white flex flex-col overflow-hidden mx-auto">
+                <img src="{{ asset('images/quickwins/' . $quickwin->image) }}"
+                     alt="{{ $quickwin->title }}"
+                     class="w-full h-64 object-cover rounded-t-xl">
+                <div class="p-4 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h2 class="font-bold text-lg mb-2">{{ $quickwin->title }}</h2>
+                    <p class="text-sm">{{ $quickwin->description }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            @endforeach
+          </div>
+
+          <!-- Navigasi -->
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+
+          <!-- Pagination -->
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
   </div>
 </section>
 
 <style>
-  .card {
-    transition: transform 0.5s ease, opacity 0.5s ease, background-color 0.5s ease;
-    width: 100%;
-    max-width: 384px;
-    min-width: 384px;
-    transform: scale(0.85);
-    opacity: 0.6;
-    background-color: #D6E4F0;
+  .quickwinSwiper {
+    padding-top: 30px;
+    padding-bottom: 30px;
   }
 
-  .card.active {
-    transform: scale(1);
-    opacity: 1;
+  .swiper-wrapper {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 350px;
+    height: 400px;
+    background-color: #D6E4F0;
+    transition: all 0.3s ease;
+  }
+
+  .swiper-slide-active .card {
     background-color: #1E60D5;
+    transform: scale(1.05);
+  }
+
+  /* Tombol navigasi */
+  .quickwinSwiper .swiper-button-next,
+  .quickwinSwiper .swiper-button-prev {
+    color: #1E60D5;
+    font-weight: bold;
+    width: 50px;
+    height: 50px;
+    border: 3px solid #1E60D5;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    top: 50%;
+    transform: translateY(-50%);
     z-index: 10;
+  }
+
+  .quickwinSwiper .swiper-button-next::after,
+  .quickwinSwiper .swiper-button-prev::after {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .quickwinSwiper .swiper-button-prev {
+    left: 0;
+  }
+
+  .quickwinSwiper .swiper-button-next {
+    right: 0;
+  }
+
+  /* Pagination */
+  .swiper-pagination {
+    position: relative;
+    margin-top: 32px;
+  }
+
+  .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background-color: #ccc;
+    opacity: 1;
+  }
+
+  .swiper-pagination-bullet-active {
+    background-color: #1E60D5;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .quickwinSwiper .swiper-button-next,
+    .quickwinSwiper .swiper-button-prev {
+      width: 40px;
+      height: 40px;
+    }
+
+    .quickwinSwiper .swiper-button-next::after,
+    .quickwinSwiper .swiper-button-prev::after {
+      font-size: 16px;
+    }
   }
 </style>
 
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    // Data dari Laravel
-    const cardData = @json($quickwins);
-
-    // Base URL gambar (dari Laravel asset)
-    const quickwinBaseUrl = "{{ asset('images/quickwins') }}";
-
-    // Elemen slider
-    const slider = document.getElementById('slider');
-    const wrapper = document.getElementById('slider-wrapper');
-
-    const cardWidth = 384 + 32; // width + margin
-    let index = 1; // mulai dari kartu pertama (bukan clone)
-    const total = cardData.length;
-
-    // Fungsi buat card
-    const createCard = (data) => {
-      const card = document.createElement('div');
-      card.className = 'card rounded-xl shadow-md text-center mx-4 text-white';
-      card.innerHTML = `
-        <img src="${quickwinBaseUrl}/${data.image}" alt="${data.title}" class="w-full h-64 object-cover rounded-t-xl">
-        <div class="p-4">
-          <h2 class="font-bold text-lg mb-2">${data.title}</h2>
-          <p class="text-sm">${data.description}</p>
-        </div>
-      `;
-      return card;
-    };
-
-    // Clone untuk looping
-    slider.appendChild(createCard(cardData[total - 1])); // Clone terakhir di depan
-    cardData.forEach(item => slider.appendChild(createCard(item)));
-    slider.appendChild(createCard(cardData[0])); // Clone pertama di belakang
-
-    const cards = () => Array.from(slider.children);
-
-    function updateSlider(animate = true) {
-      const offset = -(index * cardWidth - wrapper.offsetWidth / 2 + cardWidth / 2);
-      slider.style.transition = animate ? 'transform 0.6s ease-in-out' : 'none';
-      slider.style.transform = `translateX(${offset}px)`;
-
-      // Update active card
-      cards().forEach((card, i) => {
-        card.classList.remove('active');
-        if (i === index) card.classList.add('active');
-      });
-    }
-
-    // Tombol next
-    document.getElementById('nextBtn').addEventListener('click', () => {
-      if (index <= total) {
-        index++;
-        updateSlider();
-      }
+    const swiper = new Swiper('.quickwinSwiper', {
+      slidesPerView: 3,
+      spaceBetween: 40,
+      centeredSlides: true,
+      loop: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      breakpoints: {
+        320: {
+          slidesPerView: 1,
+          spaceBetween: 20,
+          centeredSlides: true
+        },
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 30,
+          centeredSlides: true
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 40,
+          centeredSlides: true
+        },
+      },
     });
-
-    // Tombol prev
-    document.getElementById('prevBtn').addEventListener('click', () => {
-      if (index >= 0) {
-        index--;
-        updateSlider();
-      }
-    });
-
-    // Loop halus
-    slider.addEventListener('transitionend', () => {
-      if (index === 0) {
-        index = total;
-        updateSlider(false);
-      } else if (index === total + 1) {
-        index = 1;
-        updateSlider(false);
-      }
-    });
-
-    // Responsif
-    window.addEventListener('resize', () => updateSlider(false));
-
-    // Jalankan awal
-    updateSlider(false);
   });
 </script>

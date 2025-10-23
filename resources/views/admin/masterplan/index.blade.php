@@ -257,7 +257,7 @@
                                     <!-- Dibuat -->
                                     <td class="px-6 py-4 text-center text-sm text-blue-700">
                                         <i class="fas fa-clock mr-1"></i>
-                                        {{ $mp->created_at ? $mp->created_at->format('d/m/Y H:i') : 'N/A' }}
+                                        {{ \Carbon\Carbon::parse($mp->tanggal)->format('l, d F Y') }}
                                     </td>
 
                                     <!-- Aksi -->

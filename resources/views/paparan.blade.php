@@ -244,7 +244,7 @@
     </thead>
     <tbody>
       {{-- ✅ Loop data masterplan --}}
-      @foreach ($masterplans->where('type', 'paparan')->sortBy('period') as $item)
+      @foreach ($masterplans->where('type', 'paparan')->sortByDesc('tanggal') as $item)
         <tr>
           <td style="text-align:center;">{{ $item->period }}</td>
           <td>{{ $item->title }}</td>

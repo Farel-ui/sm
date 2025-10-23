@@ -13,7 +13,8 @@ class AdminMasterplanController extends Controller
      */
     public function index()
     {
-        $masterplan = Masterplan::paginate(6);
+        // Urutkan dari yang terbaru berdasarkan tanggal dibuat
+        $masterplan = Masterplan::orderByDesc('created_at')->paginate(6);
 
         return view('admin.masterplan.index', [
             'masterplan' => $masterplan
@@ -38,6 +39,8 @@ class AdminMasterplanController extends Controller
             'period' => 'required|string|max:50',
             'type'   => 'required|in:buku,paparan',
             'status' => 'required|in:draft,publish',
+            'tanggal' => 'nullable|date',
+            'tahun' => 'nullable|integer|min:2000|max:2100',
             'file'   => 'nullable|mimes:pdf|max:20480',
         ]);
 
@@ -52,6 +55,8 @@ class AdminMasterplanController extends Controller
             'period' => $request->period,
             'type'   => $request->type,
             'status' => $request->status,
+            'tanggal' => $request->tanggal,
+            'tahun' => $request->tahun,
             'file'   => $filename,
         ]);
 
@@ -79,7 +84,9 @@ class AdminMasterplanController extends Controller
             'period' => 'required|string|max:50',
             'type'   => 'required|in:buku,paparan',
             'status' => 'required|in:draft,publish',
-            'file'   => 'nullable|mimes:pdf|max:10240',
+            'tanggal' => 'nullable|date',
+            'tahun' => 'nullable|integer|min:2000|max:2100',
+            'file'   => 'nullable|mimes:pdf|max:10240'
         ]);
 
         $masterplan = Masterplan::findOrFail($id);
@@ -100,13 +107,16 @@ class AdminMasterplanController extends Controller
             'period' => $request->period,
             'type'   => $request->type,
             'status' => $request->status,
+            'tanggal' => $request->tanggal,
+            'tahun' => $request->tahun,
             'file'   => $filename,
         ]);
- $page = $request->input('page', 1);
 
-    return redirect()->route('admin.masterplan.index', ['page' => $page])
-                     ->with('success', 'Dokumen berhasil diperbarui.');
-}
+        $page = $request->input('page', 1);
+
+        return redirect()->route('admin.masterplan.index', ['page' => $page])
+                         ->with('success', 'Dokumen berhasil diperbarui.');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -122,9 +132,7 @@ class AdminMasterplanController extends Controller
         }
 
         $masterplan->delete();
- $page = $request->input('page', 1);
 
-   return back()->with('success', 'Dokumen berhasil dihapus.');
+        return back()->with('success', 'Dokumen berhasil dihapus.');
     }
 }
-

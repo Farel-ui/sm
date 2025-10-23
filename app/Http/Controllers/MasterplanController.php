@@ -54,7 +54,7 @@ public function implementasi()
         $title = 'Paparan Masterplan Smart City';
         $masterplans = Masterplan::where('type', 'paparan')
         ->where('status', 'publish')
-        ->orderBy('period', 'desc')
+        ->orderByDesc('tanggal')
         ->get();
         return view('paparan', compact('title', 'masterplans'));
     }
@@ -64,7 +64,7 @@ public function implementasi()
         $title = 'Masterplan Smart City';
         $masterplans = Masterplan::where('status', 'publish')
         ->where('type', 'buku')
-        ->orderBy('period', 'desc')
+        ->orderByDesc('tanggal')
         ->get();
         return view('masterplano', compact('title', 'masterplans'));
     }

@@ -49,7 +49,8 @@
 </head>
 
 <body class="min-h-screen p-4 bg-blue-50">
-    <div class="max-w-4xl mx-auto">
+    <div class="ml-64">
+    <div class="max-w-6xl mx-auto">
         <!-- Header -->
         <div class="bg-blue-600 text-white flex justify-end items-center px-4 py-5 rounded-b-none rounded-lg shadow-sm mb-5">
             <div class="flex items-center space-x-2 text-lg">
@@ -167,6 +168,7 @@
             </div>
         </div>
     </div>
+</div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const avatarInput = document.getElementById('avatarInput');

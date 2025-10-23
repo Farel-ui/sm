@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Masterplan extends Model
 {
-    protected $fillable = ['title', 'period', 'type', 'status','file'];
+    protected $fillable = ['title', 'period', 'type', 'status','file', 'tanggal'];
 }

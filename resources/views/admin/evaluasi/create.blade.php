@@ -119,7 +119,7 @@
 </head>
 <body class="bg-blue-50 min-h-screen font-sans">
     <main class="pb-12 ml-64">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header -->
             <div class="bg-blue-600 text-white flex justify-between items-center px-6 py-6 rounded-lg shadow-md">
                 <!-- Kiri -->
@@ -156,7 +156,7 @@
                             </label>
                             <input type="number" id="tahun" name="tahun" value="{{ old('tahun') }}"
                                    class="form-input w-full @error('tahun') border-red-500 @enderror"
-                                   placeholder="Masukkan tahun evaluasi" min="2000" max="{{ date('Y') + 5 }}" required>
+                                   placeholder="Masukkan tahun evaluasi" min="2000" max="{{ date('Y') + 1 }}" required>
                             @error('tahun')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
@@ -230,7 +230,7 @@
 
                     <!-- Buttons -->
                     <div class="flex justify-end space-x-4 mt-8 pt-6 border-t border-gray-200">
-                        <a href="{{ route('dashboard') }}" class="btn-secondary">
+                        <a href="{{ route('admin.evaluasi.index') }}" class="btn-secondary">
                             <i class="fas fa-arrow-left"></i>
                             Kembali
                         </a>

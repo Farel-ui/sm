@@ -119,7 +119,7 @@
 </head>
 <body class="bg-blue-50 min-h-screen font-sans">
     <main class="pb-12 ml-64">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header -->
             <div class="bg-blue-600 text-white flex justify-between items-center px-6 py-6 rounded-lg shadow-md">
                 <!-- Kiri -->
@@ -144,15 +144,15 @@
             </div>
 
             <!-- Form Card -->
-            <div class="max-w-7xl bg-white overflow-hidden shadow-sm rounded-2xl mt-6 card-hover fade-in border border-blue-100">
+            <div class="bg-white overflow-hidden shadow-sm rounded-2xl mt-6 card-hover fade-in border border-blue-100">
                 <form action="{{ route('admin.agenda.store') }}" method="POST" class="p-8">
                     @csrf
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Judul -->
-                        <div class="md:col-span-2 text-xl font-medium">
-                            <label for="judul" class="form-label text-llg">
-                                <i class="mr-2 text-blue-500"></i>Judul Agenda
+                        <div class="md:col-span-2">
+                            <label for="judul" class="form-label">
+                                <i class="fas fa-heading mr-2 text-blue-500"></i>Judul Agenda
                             </label>
                             <input type="text" id="judul" name="judul" value="{{ old('judul') }}"
                                    class="form-input w-full @error('judul') border-red-500 @enderror"
@@ -163,7 +163,7 @@
                         </div>
 
                         <!-- Tanggal -->
-                        <div class="md:col-span-2 text-xl">
+                        <div class="md:col-span-2">
                             <label for="tanggal" class="form-label">
                                 <i class="fas fa-calendar mr-2 text-blue-500"></i>Tanggal Agenda
                             </label>
@@ -178,7 +178,7 @@
 
                     <!-- Buttons -->
                     <div class="flex justify-end space-x-4 mt-8 pt-6 border-t border-gray-200">
-                        <a href="{{ route('dashboard') }}" class="btn-secondary">
+                        <a href="{{ route('admin.agenda.index') }}" class="btn-secondary">
                             <i class="fas fa-arrow-left"></i>
                             Kembali
                         </a>

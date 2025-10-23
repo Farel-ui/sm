@@ -119,7 +119,7 @@
 </head>
 <body class="bg-blue-50 min-h-screen font-sans">
     <main class="pb-12 ml-64">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header -->
             <div class="bg-blue-600 text-white flex justify-between items-center px-6 py-6 rounded-lg shadow-md">
                 <!-- Kiri -->
