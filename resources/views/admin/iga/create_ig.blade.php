@@ -11,6 +11,10 @@
       border-color: #3b82f6;
       background-color: #eff6ff;
     }
+    .file-input:hover {
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+    }
   </style>
 </head>
 <body class="bg-blue-100 min-h-screen font-sans">
@@ -86,11 +90,12 @@
                 <!-- Upload PDF -->
                  <div>
                     <label class="block text-sm font-medium mb-2">UNGGAH FILE</label>
-            <div id="uploadContainer" class="w-full max-w-[100%] h-[25vh] border-2 border-dashed border-gray-300 rounded-lg p-8 text-center flex flex-col items-center justify-center transition-colors cursor-pointer">
+            <div id="uploadContainer" class="w-full max-w-[100%] h-[25vh] border-2 border-dashed border-gray-300 rounded-lg p-8 text-center flex flex-col items-center justify-center transition-colors cursor-pointer file-input">
                 <input id="image" type="file" name="image" accept="image/*" class="hidden">
                 <div id="uploadArea" class="flex flex-col items-center justify-center w-full h-full">
                     <i class="fas fa-cloud-upload-alt text-center text-gray-400 text-3xl mb-2"></i>
                     <p class="text-gray-500 text-lg">Klik atau seret file di sini</p>
+                    <p class="text-gray-400 text-sm mt-1">Maksimal ukuran file: 5MB</p>
                 </div>
                 <div id="filePreview" class="hidden mt-3">
                     <p class="text-sm text-blue-600"></p>

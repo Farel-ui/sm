@@ -6,12 +6,16 @@
   <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="{{ asset('images/logo.png') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    .drag-over {
-      border-color: #3b82f6;
-      background-color: #eff6ff;
-    }
-  </style>
+    <style>
+      .drag-over {
+        border-color: #3b82f6;
+        background-color: #eff6ff;
+      }
+      .file-input:hover {
+        border-color: #3b82f6;
+        background-color: #eff6ff;
+      }
+    </style>
 </head>
 
         <!-- Header -->
@@ -127,11 +131,12 @@
             @endif
             <div>
                     <label class="block text-sm font-medium mb-2">UNGGAH FILE</label>
-                    <div id="uploadContainer" class="w-full max-w-[100%] h-[25vh] border-2 border-dashed border-gray-300 rounded-lg p-8 text-center flex flex-col items-center justify-center transition-colors cursor-pointer">
+                    <div id="uploadContainer" class="w-full max-w-[100%] h-[25vh] border-2 border-dashed border-gray-300 rounded-lg p-8 text-center flex flex-col items-center justify-center transition-colors cursor-pointer file-input">
                         <input id="file" type="file" name="file" accept="application/pdf" class="hidden">
                         <div id="uploadArea" class="flex flex-col items-center justify-center w-full h-full">
                             <i class="fas fa-cloud-upload-alt text-center text-gray-400 text-3xl mb-2"></i>
                             <p class="text-gray-500 text-lg">Klik atau seret file di sini</p>
+                            <p class="text-gray-400 text-sm mt-1">Accepted: PDF up to 10MB</p>
                         </div>
                         <div id="filePreview" class="hidden mt-3">
                             <p class="text-sm text-green-600"></p>

@@ -11,6 +11,11 @@
     nav.bg-white.border-b {
         display: none !important;
     }
+
+    .file-input:hover {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
 </style>
 
 <!-- Header -->
@@ -36,7 +41,7 @@
 
   <!-- Form Section -->
   <section class="flex justify-center items-center px-3 md:px-9 py-6 ml-64">
-    <div class="w-full max-w-[90%] h-[65vh] bg-white rounded-lg shadow-lg">
+    <div class="w-full max-w-[90%] h-[65,5vh] bg-white rounded-lg shadow-lg">
     <!-- Header -->
     <div class="bg-blue-600 text-white px-6 py-4 rounded-t-lg flex justify-between items-center">
         <h2 class="text-lg font-bold">TAMBAHKAN DATA QUICK WINS</h2>
@@ -56,10 +61,15 @@
         </div>
 
         <!-- Unggah Gambar -->
-        <div>
+        <div class="" id="file-input">
             <label class="block text-sm font-semibold mb-2">UNGGAH GAMBAR</label>
-            <input type="file" name="image" accept="image/*" required
-                class="w-full border border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+            <div class="file-input w-full border border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer">
+                <input type="file" name="image" accept="image/*" required class="hidden" />
+                <div class="text-center py-2">
+                    <p class="text-gray-500">Klik untuk memilih gambar</p>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm mt-1">Maksimal ukuran file: 5MB</p>
         </div>
         </div>
 
@@ -121,13 +131,18 @@
       const descInput = form.querySelector('textarea[name="description"]');
       const statusInputs = form.querySelectorAll('input[name="status"]');
 
+      // Add click handler for file input
+      const fileInputDiv = document.querySelector('.file-input');
+      fileInputDiv.addEventListener('click', () => imageInput.click());
+
       form.addEventListener('submit', (e) => {
         let isValid = true;
 
         // Reset error styles
-        [titleInput, imageInput, descInput].forEach(input => {
+        [titleInput, descInput].forEach(input => {
           input.classList.remove('border-red-500', 'ring-red-500');
         });
+        fileInputDiv.classList.remove('border-red-500', 'ring-red-500');
 
         // Validate title
         if (!titleInput.value.trim()) {
@@ -138,7 +153,7 @@
         // Validate image
         const file = imageInput.files[0];
         if (!file) {
-          imageInput.classList.add('border-red-500', 'ring-red-500');
+          fileInputDiv.classList.add('border-red-500', 'ring-red-500');
           isValid = false;
         } else {
           if (!file.type.startsWith('image/')) {

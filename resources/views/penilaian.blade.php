@@ -14,10 +14,27 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
   <style>
-    body { font-family: 'Poppins', sans-serif; transition: background 0.3s, color 0.3s; }
-    body.dark { background: #1f2937; color: #f9fafb; }
-    .award-list li:hover { transform: scale(1.02); transition: 0.3s; color: #1d4ed8; }
-    #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    body {
+        padding-top: 80px;
+        font-family: 'Poppins', sans-serif;
+        transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark {
+        background: #1f2937; color: #f9fafb;
+    }
+
+    .award-list li:hover {
+         transform: scale(1.02); transition: 0.3s; color: #1d4ed8;
+        }
+
+    #lightbox {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
       background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 999; }
     #lightbox img { max-width: 90%; max-height: 90%; border-radius: 10px; }
     #backToTop {

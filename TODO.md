@@ -1,4 +1,0 @@
-- [x] Update create_dm.blade.php: Replace video input with drag-and-drop container like masterplan, add CSS, JS validation.
-- [x] Update edit_dm.blade.php: Replace video input with drag-and-drop container, adapt JS for video handling.
-- [ ] Test forms locally to ensure drag-and-drop works, validation triggers.
-- [ ] Check backend if video storage needs config (e.g., S3 for cloud).

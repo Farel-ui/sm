@@ -68,6 +68,7 @@
                 <div id="imageArea" class="flex flex-col items-center justify-center w-full h-full">
                   <i class="fas fa-cloud-upload-alt text-gray-400 text-2xl mb-2"></i>
                   <p class="text-gray-500 text-sm">Klik atau seret gambar di sini</p>
+                  <p class="text-gray-400 text-xs mt-1">Maksimal ukuran file: 5MB</p>
                 </div>
                 <div id="imagePreview" class="hidden mt-3">
                   <p class="text-sm text-blue-600"></p>
@@ -99,6 +100,7 @@
                 <div id="pdfArea" class="cursor-pointer flex flex-col items-center justify-center">
                   <i class="fas fa-file-pdf text-gray-400 text-3xl mb-2"></i>
                   <p class="text-gray-500 text-lg">Klik atau seret file PDF di sini</p>
+                  <p class="text-gray-400 text-sm mt-1">Maksimal ukuran file: 10MB</p>
                 </div>
                 <div id="pdfPreview" class="hidden mt-3">
                   <p class="text-sm text-blue-600"></p>

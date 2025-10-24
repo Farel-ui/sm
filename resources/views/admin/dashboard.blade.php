@@ -67,10 +67,38 @@
         <!-- Header -->
         <div class="bg-blue-600 text-white flex justify-end items-center px-4 py-5 rounded-lg shadow-sm mb-3">
             <div class="flex items-center space-x-2 text-lg">
-                <span class="font-bold text-2xl">ADMIN</span>
+                <div x-data="{ open: false }" class="relative inline-block text-left">
+                <!-- Tombol utama (menampilkan role user) -->
+                <button @click="open = !open"
+                        class="flex items-center space-x-2 transition">
+                    <span class="font-bold text-2xl">{{ Auth::user()->role }}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+
+                <!-- Dropdown menu -->
+                <div x-show="open" @click.away="open = false"
+                    class="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+                    <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                    Edit Profil
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                    Dashboard
+                    </a>
+                    <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        Logout
+                    </button>
+                    </form>
+                </div>
+                </div>
                 <div class="w-1 h-9 bg-white"></div>
                 @if(Auth::user()->avatar)
-                    <div class="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center">
+                    <div class="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center ml-4">
                         <img src="{{ asset('images/avatar/' . Auth::user()->avatar) }}"
                             alt="User Avatar"
                             class="w-full h-full object-cover">
@@ -128,8 +156,8 @@
                     <h2 class="text-base font-bold text-gray-800">Agenda Smart City</h2>
 
                     <!-- Tombol Tambah Agenda -->
-                    <a href="{{ route('admin.agenda.create') }}"
-                        class="text-blue-600 rounded-full w-8 h-8 flex items-center justify-center transition"
+                    <a href="{{ route('admin.agenda.index') }}"
+                        class="bg-blue-600 hover:bg-blue-700 text-white rounded-full w-8 h-8 flex items-center justify-center transition"
                         title="Kelola Agenda">
                         <i class="fas fa-calendar text-sm"></i>
                     </a>
@@ -192,7 +220,7 @@
                             Perbandingan Evaluasi Implementasi Smart City
                         </h2>
                         <div class="flex items-center space-x-2">
-                            <a href="{{ route('admin.evaluasi.create') }}"
+                            <a href="{{ route('admin.evaluasi.index') }}"
                                class="bg-blue-600 hover:bg-blue-700 text-white rounded-full w-8 h-8 flex items-center justify-center transition"
                                title="Tambah Data Evaluasi Baru">
                                 <i class="fas fa-plus text-sm"></i>

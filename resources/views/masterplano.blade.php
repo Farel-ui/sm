@@ -23,6 +23,7 @@
 <style>
     body {
       margin: 0;
+      padding-top: 80px;
         font-family: 'Segoe UI', Arial, sans-serif;
         background-color: #f7f7f7;
     }
@@ -47,8 +48,8 @@
         margin: 10px 0 10px;
         font-size: 48px;
         font-weight: bold;
-        text-align: center;
-        margin-right: 740px;
+        text-align: left;
+        margin-left: 80px;
     }
 
         .tab-container {

@@ -136,7 +136,7 @@ class AdminDimensionController extends Controller
 
         // Delete physical image if exists
         if ($dimension->image) {
-            $imagePath = public_path('storage/dimension/images/' . basename($dimension->image));
+            $imagePath = public_path('images/dimension/' . basename($dimension->image));
             if (File::exists($imagePath)) {
                 File::delete($imagePath);
             }

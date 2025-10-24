@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
+         body {
+        padding-top: 80px; /* Ruang untuk fixed navbar */
+    }
         /* Back to top */
         #backToTop {
             position: fixed;
@@ -90,32 +93,46 @@
   </div>
 
   <!-- Video (hidden awalnya) -->
-  <video
-    id="inlineVideo"
-    class="hidden w-full h-auto object-cover"
-    muted
-    loop
-    playsinline>
-    <source src="{{ asset('video/0807.mp4') }}" type="video/mp4">
-    Browser tidak mendukung video ini.
-  </video>
+  <div id="videoWrapper" class="hidden relative w-full">
+    <!-- Loading Spinner -->
+    <div id="videoLoader" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
+      <div class="loader-spinner"></div>
+    </div>
+    
+    <video
+      id="inlineVideo"
+      class="w-full h-auto object-cover"
+      controls
+      playsinline
+      preload="metadata">
+      <source src="{{ asset('video/0807.mp4') }}" type="video/mp4">
+      Browser tidak mendukung video ini.
+    </video>
+    
+    <!-- Tombol Close/Stop -->
+    <button
+      onclick="stopInlineVideo()"
+      class="absolute top-4 right-4 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg transition flex items-center gap-2 z-10">
+      <i class="fas fa-times"></i> Tutup Video
+    </button>
+  </div>
 </section>
 
-<script>
-function playInlineVideo() {
-  const thumbnail = document.getElementById('thumbnail');
-  const video = document.getElementById('inlineVideo');
-
-  // sembunyikan thumbnail
-  thumbnail.style.display = 'none';
-
-  // tampilkan video dan mulai main
-  video.classList.remove('hidden');
-  video.play();
-}
-</script>
-
-
+<style>
+  .loader-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #2563eb;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
 
 @include('components.igi')
 @include('components.quickwin')
@@ -143,6 +160,54 @@ function playInlineVideo() {
 @include('components.footer')
 
 <script>
+   function playInlineVideo() {
+  const thumbnail = document.getElementById('thumbnail');
+  const videoWrapper = document.getElementById('videoWrapper');
+  const video = document.getElementById('inlineVideo');
+  const loader = document.getElementById('videoLoader');
+
+  // Sembunyikan thumbnail
+  thumbnail.style.display = 'none';
+
+  // Tampilkan video wrapper
+  videoWrapper.classList.remove('hidden');
+  
+  // Tampilkan loader
+  loader.style.display = 'flex';
+
+  // Event: video siap diputar
+  video.addEventListener('canplay', function() {
+    loader.style.display = 'none';
+  }, { once: true });
+
+  // Event: video sudah cukup buffer
+  video.addEventListener('canplaythrough', function() {
+    loader.style.display = 'none';
+  }, { once: true });
+
+  // Mulai play video
+  video.play().catch(function(error) {
+    console.error('Error playing video:', error);
+    loader.style.display = 'none';
+  });
+}
+
+function stopInlineVideo() {
+  const thumbnail = document.getElementById('thumbnail');
+  const videoWrapper = document.getElementById('videoWrapper');
+  const video = document.getElementById('inlineVideo');
+
+  // Stop dan reset video
+  video.pause();
+  video.currentTime = 0;
+
+  // Sembunyikan video wrapper
+  videoWrapper.classList.add('hidden');
+
+  // Tampilkan kembali thumbnail
+  thumbnail.style.display = 'block';
+}
+
 // Back to top
 const backToTop = document.getElementById("backToTop");
 window.addEventListener("scroll", () => {

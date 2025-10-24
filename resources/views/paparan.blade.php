@@ -22,7 +22,8 @@
 @include('components.navbar')
 <style>
     body {
-      margin: 0;
+        padding-top: 80px;
+        margin: 0;
         font-family: 'Segoe UI', Arial, sans-serif;
         background-color: #f7f7f7;
     }
@@ -47,8 +48,8 @@
         margin: 5px 0 10px;
         font-size: 48px;
         font-weight: bold;
-        text-align: center;
-        margin-right: 830px;
+        text-align: left;
+        margin-left: 20px;
     }
 
         .tab-container {
@@ -113,15 +114,16 @@
       text-align: left;
     }
 
-    th:first-child, td:first-child {
-      width: 60px;
-      text-align: center;
-    }
+    /* Khusus kolom JUDUL - rata kiri dengan padding */
+th:first-child {
+    text-align: left;
+    padding-left: 30px;
+}
 
-    th:last-child, td:last-child {
-      width: 140px;
-      text-align: center;
-    }
+td:first-child {
+    text-align: left;
+    padding-left: 30px;
+}
 
     tbody tr:hover {
       background-color: #f0f4ff;
@@ -232,7 +234,6 @@
   <table id="dataTable">
     <thead>
       <tr>
-        <th style="width: 150px; text-align:center;">Period</th>
         <th style="width: auto;">JUDUL</th>
         <th class="search-cell" style="width: 200px;">
           <div class="search-box">
@@ -246,7 +247,6 @@
       {{-- ✅ Loop data masterplan --}}
       @foreach ($masterplans->where('type', 'paparan')->sortByDesc('tanggal') as $item)
         <tr>
-          <td style="text-align:center;">{{ $item->period }}</td>
           <td>{{ $item->title }}</td>
           <td>
             <a href="{{ asset('storage/masterplans/' . $item->file) }}" target="_blank">Lihat</a>
@@ -288,7 +288,7 @@ document.getElementById('searchInput').addEventListener('keyup', function () {
         let tr = document.createElement('tr');
         tr.classList.add('no-data');
         let td = document.createElement('td');
-        td.colSpan = 3; // jumlah kolom tabel
+        td.colSpan = 2; // jumlah kolom tabel
         td.textContent = 'Data tidak ditemukan';
         tr.appendChild(td);
         tbody.appendChild(tr);

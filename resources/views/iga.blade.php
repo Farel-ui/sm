@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-
+<style>
+    body {
+        padding-top: 80px;
+    }
+</style>
 @include('components.navbar')
 
 <section class="py-16 bg-gray-100" x-data="{ open: false, photo: '' }">

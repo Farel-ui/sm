@@ -71,6 +71,7 @@
           <input type="file" id="image" name="image" accept="image/*" required class="hidden" />
           <div id="uploadArea" class="flex flex-col items-center justify-center w-full h-full py-3">
             <p class="text-gray-500 text-sm text-center">Klik atau seret file gambar di sini</p>
+            <p class="text-gray-400 text-xs mt-1">Maksimal ukuran file: 5MB</p>
           </div>
           <div id="filePreview" class="hidden mt-3">
             <p class="text-sm text-blue-600"></p>
@@ -100,6 +101,7 @@
           <div id="uploadVideoArea" class="flex flex-col items-center justify-center w-full h-full">
             <i class="fas fa-cloud-upload-alt text-center text-gray-400 text-3xl mb-2"></i>
             <p class="text-gray-500 text-lg">Klik atau seret file video di sini</p>
+            <p class="text-gray-400 text-sm mt-1">Maksimal ukuran file: 50MB</p>
           </div>
           <div id="videoPreview" class="hidden mt-3">
             <p class="text-sm text-green-600"></p>

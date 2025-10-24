@@ -42,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dokumen', fn () => view('dokumen'))->name('dokumen');
 
     // 📌 Prefix Admin Disatukan
-    Route::prefix('admin')->name('admin.')->middleware(['role:admin,super_admin'])->group(function () {
+    Route::prefix('admin')->name('admin.')->middleware(['role:ADMIN,SUPERADMIN'])->group(function () {
         // 📅 Agenda
         Route::prefix('agenda')->name('agenda.')->group(function () {
             Route::get('/', [AdminAgendaController::class, 'index'])->name('index');
@@ -124,7 +124,7 @@ Route::middleware(['auth'])->group(function () {
         });
 
         // Routes accessible only by super_admin
-        Route::middleware(['role:super_admin'])->group(function () {
+        Route::middleware(['role:SUPERADMIN'])->group(function () {
             // 📊 Penilaian - Only Super Admin
             Route::prefix('penilaian')->name('penilaian.')->group(function () {
                 Route::get('/', [AdminPenilaianController::class, 'index'])->name('index');

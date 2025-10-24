@@ -6,6 +6,12 @@
   <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="{{ asset('images/logo.png') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    .file-input:hover {
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+    }
+  </style>
 </head>
 <body class="bg-blue-100 min-h-screen font-sans">
   <!-- Header -->
@@ -81,11 +87,12 @@
                     <p class="text-xs text-gray-500 mt-1">File PDF saat ini</p>
                 </div>
             @endif
-            <div class="w-full max-w-[100%] h-[30vh] border-2 border-dashed border-gray-300 rounded-lg p-8 text-center justify-center flex flex-col items-center">
+            <div class="w-full max-w-[100%] h-[30vh] border-2 border-dashed border-gray-300 rounded-lg p-8 text-center justify-center flex flex-col items-center file-input">
               <input id="file" type="file" name="file" accept="application/pdf" class="hidden">
               <div id="uploadArea" class="cursor-pointer flex flex-col items-center justify-center">
                 <i class="fas fa-cloud-upload-alt text-center text-gray-400 text-3xl mb-2"></i>
                 <p class="text-gray-500 text-lg">Klik untuk mengunggah file</p>
+                <p class="text-gray-400 text-sm mt-1">Maksimal ukuran file: 10MB</p>
               </div>
               <div id="filePreview" class="hidden mt-3">
                 <p class="text-sm text-green-600"></p>
@@ -119,6 +126,15 @@
 
     // Klik area upload → buka file picker
     uploadArea.addEventListener('click', () => fileInput.click());
+
+    // Add hover effect
+    const uploadContainer = document.querySelector('.file-input');
+    uploadContainer.addEventListener('mouseenter', () => {
+      uploadContainer.classList.add('hover');
+    });
+    uploadContainer.addEventListener('mouseleave', () => {
+      uploadContainer.classList.remove('hover');
+    });
 
     const tanggalEl = document.getElementById('tanggalSekarang');
     const namaBulan = [

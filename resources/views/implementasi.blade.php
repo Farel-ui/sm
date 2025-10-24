@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        body {
+            padding-top: 80px;
+        }
         /* Efek glowing animasi */
         .glow-text { animation: glow 2s ease-in-out infinite alternate; }
         @keyframes glow {
@@ -55,7 +56,7 @@
     </section>
 
     <!-- Konten PDF + Foto -->
-    <div class="max-w-6xl mx-auto px-4">
+    <div class="max-w-6xl mx-auto px-4 mb-12">
         <div class="bg-white rounded-2xl shadow-2xl overflow-hidden animate__animated animate__fadeInUp">
 
             <!-- Header PDF -->
@@ -77,27 +78,31 @@
             <!-- Isi: PDF + Galeri -->
             <!-- Frame PDF -->
             <div class="p-4 bg-gray-50 relative rounded-b-xl">
-                    <div id="pdfLoader" class="loader"></div>
-                    @foreach ($implementasi as $item)
-                        <div class="border-2 border-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition opacity-0 pdfWrapper">
-                            <embed
-                                src="{{ asset('storage/implemen/' . $item->file) }}"
-                                type="application/pdf"
-                                class="w-full h-[600px] md:h-[800px]"
-                                onload="hideLoader()"
-                            />
-                        </div>
-                        <p class="text-sm text-gray-500 text-center mt-3">
-                            Jika PDF tidak tampil,
-                            <a href="{{ asset('storage/implemen/' . $item->file) }}" target="_blank" class="text-blue-600 hover:underline">
-                                klik di sini
-                            </a> untuk membuka di tab baru.
-                        </p>
-                    @endforeach
-                </div>
+                <div id="pdfLoader" class="loader"></div>
+                @foreach ($implementasi as $item)
+                    <div class="border-2 border-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition opacity-0 pdfWrapper">
+                        <embed
+                            src="{{ asset('storage/implemen/' . $item->file) }}"
+                            type="application/pdf"
+                            class="w-full h-[600px] md:h-[800px]"
+                            onload="hideLoader()"
+                        />
+                    </div>
+                    <p class="text-sm text-gray-500 text-center mt-3">
+                        Jika PDF tidak tampil,
+                        <a href="{{ asset('storage/implemen/' . $item->file) }}" target="_blank" class="text-blue-600 hover:underline">
+                            klik di sini
+                        </a> untuk membuka di tab baru.
+                    </p>
+                @endforeach
+            </div>
         </div>
+    </div>
+
     <!-- Back to top -->
     <div id="backToTop"><i class="fa-solid fa-arrow-up"></i></div>
+
+    <!-- Footer - PINDAHKAN KELUAR DARI CONTAINER -->
     @include('components.footer')
 
     <!-- JS Tambahan -->
@@ -129,15 +134,13 @@
             });
         }, { threshold: 0.2 });
         document.querySelectorAll("section, .bg-white").forEach(el => {
-    // skip jika elemen ada di dalam nav atau footer
-    if (el.closest('nav') || el.closest('footer')) return;
-    // skip jika elemen punya class no-animate
-    if (el.classList.contains('no-animate') || el.closest('.no-animate')) return;
+            // skip jika elemen ada di dalam nav atau footer
+            if (el.closest('nav') || el.closest('footer')) return;
+            // skip jika elemen punya class no-animate
+            if (el.classList.contains('no-animate') || el.closest('.no-animate')) return;
 
-    observer.observe(el);
-});
+            observer.observe(el);
+        });
     </script>
-        <!-- Footer -->
 
 </body>
-</html>

@@ -60,7 +60,7 @@
             </x-nav-link>
 
             <!-- Penilaian -->
-            @if(auth()->user()->role === 'super_admin')
+            @if(auth()->user()->role === 'SUPERADMIN')
             <x-nav-link :href="route('admin.penilaian.index')" :active="request()->routeIs('admin.penilaian.*')"
                 class="w-full flex items-center px-4 py-3 rounded-lg group
                 {{ request()->routeIs('admin.penilaian.*') ? 'bg-blue-600 text-white shadow-lg'
@@ -117,7 +117,7 @@
             </x-nav-link>
 
             <!-- Users -->
-            @if(auth()->user()->role === 'super_admin')
+            @if(auth()->user()->role === 'SUPERADMIN')
             <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')"
                 class="w-full flex items-center px-4 py-3 rounded-lg group
                 {{ request()->routeIs('admin.users.*') ? 'bg-blue-600 text-white shadow-lg'
@@ -128,34 +128,6 @@
                 <span class="ml-4 font-medium">{{ __('USERS') }}</span>
             </x-nav-link>
             @endif
-        <!-- User Section -->
-    <div class="p-4 border-t border-gray-100">
-    <a href="{{ route('profile.index') }}" class="flex items-center mb-4 hover:bg-blue-50 rounded-lg p-2 transition">
-            @if(Auth::user()->avatar)
-            <!-- Jika user punya avatar -->
-            <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center">
-                <img
-                    src="{{ asset('images/avatar/' . Auth::user()->avatar) }}"
-                    alt="User Avatar"
-                    class="w-full h-full object-cover">
-            </div>
-            @endif
-
-        <div class="ml-3">
-            <div class="font-medium text-sm text-gray-800">{{ Auth::user()->name }}</div>
-            <div class="text-xs text-gray-500">{{ Auth::user()->email }}</div>
-        </div>
-    </a>
-
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit"
-            class="w-full flex items-center px-4 py-3 text-gray-600 hover:bg-red-50 hover:text-red-600 rounded-lg">
-            <i class="fas fa-sign-out-alt text-sm"></i>
-            <span class="ml-4 font-medium">{{ __('LOGOUT') }}</span>
-        </button>
-    </form>
-</div>
     </div>
 
     <!-- Main Content -->
