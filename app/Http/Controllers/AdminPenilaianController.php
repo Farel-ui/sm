@@ -13,7 +13,7 @@ class AdminPenilaianController extends Controller
      */
     public function index()
     {
-        $penilaians = Penilaian::paginate(6);
+        $penilaians = Penilaian::orderByDesc('created_at')->paginate(6);
 
         return view('admin.penilaian.index', [
             'penilaians' => $penilaians

@@ -41,7 +41,7 @@
 
 <body class="bg-blue-50 min-h-screen font-sans">
   <section class="flex justify-center items-center px-4 md:px-10 py-6 ml-64">
-    <div class="w-full max-w-[90%] h-[80vh] bg-white rounded-lg shadow-lg flex flex-col">
+    <div class="w-full max-w-[90%] bg-white rounded-lg shadow-lg flex flex-col">
 
       <div class="bg-blue-600 text-white px-6 py-4 rounded-t-lg flex justify-between items-center">
         <h2 class="text-lg font-semibold">EDIT DATA MASTERPLAN</h2>

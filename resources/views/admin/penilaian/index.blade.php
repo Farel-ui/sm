@@ -154,7 +154,7 @@
                 @endif
             </div>
         </div>
-        
+
             <!-- Card Container -->
             <div class="bg-white overflow-hidden shadow-sm rounded-xl mt-6 card-hover fade-in border border-blue-100">
                 <!-- Card Header -->
@@ -234,8 +234,6 @@
                                             title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <!-- Tombol Hapus -->
-                                            @if(auth()->user()->role === 'super_admin')
                                             <button type="button"
                                                     onclick="confirmDelete({{ $pn->id }})"
                                                     class="action-btn bg-blue-500 text-white hover:text-red-500"
@@ -251,7 +249,6 @@
                                                 @csrf
                                                 @method('DELETE')
                                             </form>
-                                            @endif
                                         </div>
                                     </td>
                                 </tr>

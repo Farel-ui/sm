@@ -10,7 +10,7 @@ class AdminQuickwinController extends Controller
 {
     public function index()
     {
-        $quickwins = Quickwin::paginate(6);
+        $quickwins = Quickwin::orderByDesc('created_at')->paginate(6);
 
         return view('Admin.Quickwin.index',[
             'quickwins' => $quickwins

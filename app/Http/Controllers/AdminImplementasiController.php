@@ -13,7 +13,7 @@ class AdminImplementasiController extends Controller
      */
     public function index()
     {
-        $implementasi = Implementasi::get();
+        $implementasi = Implementasi::orderByDesc('created_at')->get();
 
         return view('admin.implementasi.index', [
             'implementasi' => $implementasi

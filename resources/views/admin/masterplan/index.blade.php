@@ -10,6 +10,11 @@
     <link rel="icon" href="{{ asset('images/logo.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
+        /* Fix untuk Alpine.js FOUC (Flash of Unstyled Content) */
+        [x-cloak] {
+            display: none !important;
+        }
+
         /* Custom scrollbar for modern browsers */
         ::-webkit-scrollbar {
             width: 8px;
@@ -52,8 +57,9 @@
 
         .card-hover:hover {
             transform: translateY(-2px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-                        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            box-shadow:
+                0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
         /* Action buttons */
@@ -70,24 +76,6 @@
         /* Table enhancements */
         .table-header {
             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-        }
-
-        /* Button gradient */
-        .btn-gradient {
-            background: linear-gradient(to right, #3b82f6, #1e40af);
-            color: white;
-            font-weight: 600;
-            border-radius: 0.5rem;
-            padding: 0.625rem 1.5rem;
-            transition: background 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-        }
-        .btn-gradient:hover {
-            background: linear-gradient(to right, #1e40af, #1e3a8a);
-        }
-        .btn-gradient i {
-            margin-right: 0.5rem;
         }
         .swal2-confirm-btn {
             background-color: red;
@@ -126,7 +114,7 @@
         }
     </style>
 </head>
-<body class="bg-blue-50 min-h-screen font-sans">
+<body class="gradient-bg min-h-screen">
     <main class="pb-12 ml-64">
         <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
              <!-- Header -->
@@ -144,9 +132,17 @@
                     </svg>
                 </button>
 
-                <!-- Dropdown menu -->
-                <div x-show="open" @click.away="open = false"
-                    class="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+                <!-- Dropdown menu dengan x-cloak -->
+                <div x-show="open"
+                     x-cloak
+                     @click.away="open = false"
+                     x-transition:enter="transition ease-out duration-100"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100"
+                     x-transition:leave="transition ease-in duration-75"
+                     x-transition:leave-start="opacity-100 scale-100"
+                     x-transition:leave-end="opacity-0 scale-95"
+                     class="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
                     <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                     Edit Profil
                     </a>
@@ -173,7 +169,7 @@
         </div>
 
             <!-- Card Container -->
-            <div class="bg-white overflow-hidden shadow-sm rounded-2xl mt-6 card-hover fade-in border border-blue-100">
+            <div class="bg-white overflow-hidden shadow-sm rounded-xl mt-6 card-hover fade-in border border-blue-100">
                 <!-- Card Header -->
                 <div class="px-6 py-5 table-header">
                     <div class="flex items-center justify-between">
@@ -186,8 +182,9 @@
                                 <input type="text" placeholder="Pencarian" id="searchInput"
                                         class="pl-10 pr-8 py-2.5 text-blue-600  text-sm border border-blue-600 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-blue-500 transition-all" />
                             </div>
-                            <a href="{{ route('admin.masterplan.create') }}" class="btn-gradient  rounded-4xl">
-                                <i class="fas fa-plus rounded-2xl"></i> Tambah Baru
+                            <a href="{{ route('admin.masterplan.create') }}"
+                               class="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-blue-700 text-white text-sm font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                                <i class="fas fa-plus mr-2"></i> Tambah Baru
                             </a>
                         </div>
                     </div>
@@ -318,8 +315,8 @@
                                 <tr>
                                     <td colspan="7" class="px-6 py-12 text-center">
                                         <div class="flex flex-col items-center justify-center">
-                                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                                                <i class="fas fa-folder-open text-blue-300 text-2xl"></i>
+                                            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-4">
+                                                <i class="fas fa-folder-open text-blue-500 text-2xl"></i>
                                             </div>
                                             <h3 class="text-lg font-medium text-blue-500 mb-2">Belum ada masterplan</h3>
                                             <p class="text-blue-500 mb-4">Mulai dengan menambahkan masterplan pertama Anda</p>

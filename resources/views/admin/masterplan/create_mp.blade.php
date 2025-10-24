@@ -41,7 +41,7 @@
 
     <!-- Form Section -->
     <section class="flex justify-center items-center px-3 md:px-9 py-6 ml-64">
-        <div class="w-full max-w-[90%] h-[80vh] bg-white rounded-lg shadow-lg flex flex-col">
+        <div class="w-full max-w-[90%] bg-white rounded-lg shadow-lg flex flex-col">
         <!-- Card Header -->
         <div class="bg-blue-600 text-white px-6 py-4 rounded-t-lg flex justify-between items-center">
             <h2 class="text-xl font-bold">TAMBAHKAN DATA MASTERPLAN</h2>

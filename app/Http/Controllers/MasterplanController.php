@@ -81,6 +81,12 @@ public function implementasi()
         return view('iga', compact('igas'));
     }
 
+    public function igi()
+    {
+        $igas = Iga::where('status', 'publish')->get();
+        return view('iga', compact('igas'));
+    }
+
     // Ambil video berdasarkan ID Dimension
     public function dimensionVideo($id)
     {

@@ -13,7 +13,7 @@ class AdminBookletController extends Controller
      */
     public function index()
     {
-        $booklet = Booklet::paginate(6); // Change to Booklet model
+        $booklet = Booklet::orderByDesc('created_at')->paginate(6); // Change to Booklet model
 
         return view('Admin.Booklet.index', [
             'booklet' => $booklet // Change variable name

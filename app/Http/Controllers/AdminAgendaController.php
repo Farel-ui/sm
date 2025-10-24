@@ -12,7 +12,7 @@ class AdminAgendaController extends Controller
      */
     public function index()
     {
-        $agendas = Agenda::paginate(6);
+        $agendas = Agenda::orderByDesc('created_at')->paginate(6);
 
         return view('admin.agenda.index', [
             'agendas' => $agendas
