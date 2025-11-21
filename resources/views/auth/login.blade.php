@@ -120,7 +120,10 @@
             <!-- Password -->
             <div class="form-group">
                 <label for="password">Password</label>
-                <input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password">
+                <div style="position: relative;">
+                    <input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" style="padding-right: 40px;">
+                    <button type="button" id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 18px; color: #0077ff;">👁️</button>
+                </div>
                 @error('password')
                     <div class="error-msg" style="display: block;">{{ $message }}</div>
                 @enderror
@@ -258,6 +261,20 @@
         }
         drawCaptcha();
         document.getElementById("refreshCaptcha").addEventListener("click", drawCaptcha);
+
+        // ======================= Show Password Toggle =======================
+        const togglePasswordBtn = document.getElementById("togglePassword");
+        const passwordInput = document.getElementById("password");
+
+        togglePasswordBtn.addEventListener("click", function() {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                this.textContent = "🙈"; // mata tertutup
+            } else {
+                passwordInput.type = "password";
+                this.textContent = "👁️"; // mata terbuka
+            }
+        });
 
         // ======================= Validasi Login =======================
         const loginForm = document.querySelector("form");

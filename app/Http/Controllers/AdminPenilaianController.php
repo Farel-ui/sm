@@ -25,7 +25,7 @@ class AdminPenilaianController extends Controller
      */
     public function create()
     {
-        return view('admin.penilaian.create_pn'); // form tambah penilaian
+        return view('admin.penilaian.create_pn');
     }
 
     /**
@@ -38,7 +38,6 @@ class AdminPenilaianController extends Controller
             'year'  => 'required|integer',
         ]);
 
-        // buat penilaian baru
         $penilaian = Penilaian::create([
             'score' => $request->score,
             'year'  => $request->year,

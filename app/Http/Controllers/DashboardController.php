@@ -13,16 +13,16 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // 📊 Data penilaian
+        // Data penilaian
         $penilaian = Penilaian::orderBy('year')->get();
 
-        // 📈 Data pengunjung
+        // Data pengunjung
         $today = Visitor::whereDate('created_at', Carbon::today())->count();
         $month = Visitor::whereMonth('created_at', Carbon::now()->month)->count();
         $year  = Visitor::whereYear('created_at', Carbon::now()->year)->count();
         $total = Visitor::count();
 
-        // 📉 Statistik penilaian tahunan
+        // Statistik penilaian tahunan
         $scores = $penilaian->pluck('score')->map(fn($s) => floatval($s))->filter();
         $maxScore = $scores->max();
         $minScore = $scores->min();
@@ -30,7 +30,7 @@ class DashboardController extends Controller
         $maxYear = $penilaian->where('score', $maxScore)->first()?->year ?? 'N/A';
         $minYear = $penilaian->where('score', $minScore)->first()?->year ?? 'N/A';
 
-        // 🔺 Kenaikan terakhir
+        // Kenaikan terakhir
         $lastTwo = $penilaian->sortByDesc('year')->take(2);
         $increase = 0;
         if ($lastTwo->count() == 2) {

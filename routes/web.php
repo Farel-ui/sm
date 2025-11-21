@@ -16,64 +16,28 @@ use App\Http\Controllers\MasterplanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VisitorController;
 
-// ✅ Tampilan awal website (public)
 Route::get('/', [MasterplanController::class, 'index'])->name('home');
 Route::get('/penilaian', [MasterplanController::class, 'penilaian'])->name('penilaian');
 Route::get('/iga', [MasterplanController::class, 'iga'])->name('iga');
-Route::get('/chart', [ChartController::class, 'index'])->name('chart.index');
 Route::get('/masterplan/buku', [MasterplanController::class, 'buku'])->name('masterplan.buku');
 Route::get('/masterplan/paparan', [MasterplanController::class, 'paparan'])->name('masterplan.paparan');
 Route::get('/implementasi', [MasterplanController::class, 'implementasi'])->name('implementasi');
 Route::get('/paparan', [MasterplanController::class, 'paparan'])->name('paparan');
-Route::get('/Dokumen', [MasterplanController::class, 'Dokumen'])->name('Dokumen');
 Route::get('/masterplano', [MasterplanController::class, 'masterplano'])->name('masterplano');
 
-// ✅ Middleware auth: hanya admin/login yang bisa akses dashboard
 Route::middleware(['auth'])->group(function () {
 
-    // 🏠 Dashboard
+    // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/stats', [DashboardController::class, 'stats'])->name('dashboard.stats');
-
+    // Profile
     Route::get('/profile/index', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar.update');
     Route::delete('/profile/avatar', [ProfileController::class, 'destroyAvatar'])->name('profile.avatar.destroy');
 
-    Route::get('/dokumen', fn () => view('dokumen'))->name('dokumen');
-
-    // 📌 Prefix Admin Disatukan
     Route::prefix('admin')->name('admin.')->middleware(['role:ADMIN,SUPERADMIN'])->group(function () {
-        // 📅 Agenda
-        Route::prefix('agenda')->name('agenda.')->group(function () {
-            Route::get('/', [AdminAgendaController::class, 'index'])->name('index');
-            Route::get('/create', [AdminAgendaController::class, 'create'])->name('create');
-            Route::post('/store', [AdminAgendaController::class, 'store'])->name('store');
-            Route::get('/{id}/edit', [AdminAgendaController::class, 'edit'])->name('edit');
-            Route::put('/update/{id}', [AdminAgendaController::class, 'update'])->name('update');
-            Route::delete('/{id}', [AdminAgendaController::class, 'destroy'])->name('destroy');
-        });
 
-        // 📊 Evaluasi
-        Route::prefix('evaluasi')->name('evaluasi.')->group(function () {
-            Route::get('/', [AdminEvaluasiController::class, 'index'])->name('index');
-            Route::get('/create', [AdminEvaluasiController::class, 'create'])->name('create');
-            Route::post('/store', [AdminEvaluasiController::class, 'store'])->name('store');
-            Route::get('/{id}/edit', [AdminEvaluasiController::class, 'edit'])->name('edit');
-            Route::put('/update/{id}', [AdminEvaluasiController::class, 'update'])->name('update');
-            Route::delete('/{id}', [AdminEvaluasiController::class, 'destroy'])->name('destroy');
-        });
-
-        // 📚 Masterplan
-        Route::prefix('masterplan')->name('masterplan.')->group(function () {
-            Route::get('/', [AdminMasterplanController::class, 'index'])->name('index');
-            Route::get('/create', [AdminMasterplanController::class, 'create'])->name('create');
-            Route::post('/store', [AdminMasterplanController::class, 'store'])->name('store');
-            Route::get('/{id}/edit', [AdminMasterplanController::class, 'edit'])->name('edit');
-            Route::put('/update/{id}', [AdminMasterplanController::class, 'update'])->name('update');
-            Route::delete('/{id}', [AdminMasterplanController::class, 'destroy'])->name('destroy');
-        });
-
-        // 💡 IGA
+        // IGA
         Route::prefix('iga')->name('iga.')->group(function () {
             Route::get('/', [AdminIgaController::class, 'index'])->name('index');
             Route::get('/create', [AdminIgaController::class, 'create'])->name('create');
@@ -83,7 +47,37 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/{id}', [AdminIgaController::class, 'destroy'])->name('destroy');
         });
 
-        // 📑 Booklet
+        // Agenda
+        Route::prefix('agenda')->name('agenda.')->group(function () {
+            Route::get('/', [AdminAgendaController::class, 'index'])->name('index');
+            Route::get('/create', [AdminAgendaController::class, 'create'])->name('create');
+            Route::post('/store', [AdminAgendaController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [AdminAgendaController::class, 'edit'])->name('edit');
+            Route::put('/update/{id}', [AdminAgendaController::class, 'update'])->name('update');
+            Route::delete('/{id}', [AdminAgendaController::class, 'destroy'])->name('destroy');
+        });
+
+        // Evaluasi
+        Route::prefix('evaluasi')->name('evaluasi.')->group(function () {
+            Route::get('/', [AdminEvaluasiController::class, 'index'])->name('index');
+            Route::get('/create', [AdminEvaluasiController::class, 'create'])->name('create');
+            Route::post('/store', [AdminEvaluasiController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [AdminEvaluasiController::class, 'edit'])->name('edit');
+            Route::put('/update/{id}', [AdminEvaluasiController::class, 'update'])->name('update');
+            Route::delete('/{id}', [AdminEvaluasiController::class, 'destroy'])->name('destroy');
+        });
+
+        // Masterplan
+        Route::prefix('masterplan')->name('masterplan.')->group(function () {
+            Route::get('/', [AdminMasterplanController::class, 'index'])->name('index');
+            Route::get('/create', [AdminMasterplanController::class, 'create'])->name('create');
+            Route::post('/store', [AdminMasterplanController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [AdminMasterplanController::class, 'edit'])->name('edit');
+            Route::put('/update/{id}', [AdminMasterplanController::class, 'update'])->name('update');
+            Route::delete('/{id}', [AdminMasterplanController::class, 'destroy'])->name('destroy');
+        });
+
+        // Booklet
         Route::prefix('booklet')->name('booklet.')->group(function () {
             Route::get('/', [AdminBookletController::class, 'index'])->name('index');
             Route::get('/create', [AdminBookletController::class, 'create'])->name('create');
@@ -93,7 +87,7 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/{id}', [AdminBookletController::class, 'destroy'])->name('destroy');
         });
 
-        // ⚡ Quickwin
+        // Quickwin
         Route::prefix('quickwin')->name('quickwin.')->group(function () {
             Route::get('/', [AdminQuickwinController::class, 'index'])->name('index');
             Route::get('/create', [AdminQuickwinController::class, 'create'])->name('create');
@@ -103,7 +97,7 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/{id}', [AdminQuickwinController::class, 'destroy'])->name('destroy');
         });
 
-        // 🌐 Dimension
+        // Dimension
         Route::prefix('dimension')->name('dimension.')->group(function () {
             Route::get('/', [AdminDimensionController::class, 'index'])->name('index');
             Route::get('/create', [AdminDimensionController::class, 'create'])->name('create');
@@ -113,7 +107,7 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/{id}', [AdminDimensionController::class, 'destroy'])->name('destroy');
         });
 
-        // 🏗️ Implementasi
+        // Implementasi
         Route::prefix('implementasi')->name('implementasi.')->group(function () {
             Route::get('/', [AdminImplementasiController::class, 'index'])->name('index');
             Route::get('/create', [AdminImplementasiController::class, 'create'])->name('create');
@@ -125,7 +119,7 @@ Route::middleware(['auth'])->group(function () {
 
         // Routes accessible only by super_admin
         Route::middleware(['role:SUPERADMIN'])->group(function () {
-            // 📊 Penilaian - Only Super Admin
+            // Penilaian - Only Super Admin
             Route::prefix('penilaian')->name('penilaian.')->group(function () {
                 Route::get('/', [AdminPenilaianController::class, 'index'])->name('index');
                 Route::get('/create', [AdminPenilaianController::class, 'create'])->name('create');
