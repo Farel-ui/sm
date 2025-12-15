@@ -226,8 +226,8 @@
                             <select id="role" name="role"
                                     class="form-input w-full @error('role') border-red-500 @enderror" required>
                                 <option value="">Pilih Role</option>
-                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                                <option value="super_admin" {{ old('role') == 'super_admin' ? 'selected' : '' }}>Super Admin</option>
+                                <option value="ADMIN" {{ old('role') == 'ADMIN' ? 'selected' : '' }}>Admin</option>
+                                <option value="SUPERADMIN" {{ old('role') == 'SUPERADMIN' ? 'selected' : '' }}>Super Admin</option>
                             </select>
                             @error('role')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>

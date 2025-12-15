@@ -229,22 +229,15 @@
                                    placeholder="Konfirmasi password baru">
                         </div>
 
-                        <!-- Role -->
-                        <div>
-                            <label for="role" class="form-label">
-                                <i class="fas fa-user-shield mr-2 text-blue-500"></i>Role
-                            </label>
-                            <select id="role" name="role"
-                                    class="form-input w-full @error('role') border-red-500 @enderror" required>
-                                <option value="">Pilih Role</option>
-                                <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
-                                <option value="super_admin" {{ old('role', $user->role) == 'super_admin' ? 'selected' : '' }}>Super Admin</option>
-                            </select>
-                            @error('role')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-
+                        <select id="role" name="role"
+                            class="form-input w-full @error('role') border-red-500 @enderror">
+                            <option value="ADMIN" {{ old('role', $user->role) == 'ADMIN' ? 'selected' : '' }}>
+                                Admin
+                            </option>
+                            <option value="SUPERADMIN" {{ old('role', $user->role) == 'SUPERADMIN' ? 'selected' : '' }}>
+                                Super Admin
+                            </option>
+                        </select>
                         <!-- Current Avatar Display -->
                         <div class="md:col-span-2">
                             <label class="form-label">

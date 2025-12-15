@@ -38,7 +38,7 @@ class AdminUsersController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|in:user,admin,super_admin',
+            'role' => 'required|in:ADMIN,SUPERADMIN',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -79,7 +79,7 @@ class AdminUsersController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
             'password' => 'nullable|string|min:8|confirmed',
-            'role' => 'required|in:user,admin,super_admin',
+            'role' => 'required|in:ADMIN,SUPERADMIN',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
